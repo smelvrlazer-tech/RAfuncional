@@ -51,3 +51,24 @@ export async function definirConfig(chave: string, valor: string): Promise<void>
   const { error } = await admin.from('configuracoes').update({ valor }).eq('chave', chave)
   if (error) throw error
 }
+
+/**
+ * Cria uma turma+sessão que começa daqui a N minutos.
+ * "Agora" vem do relógio do servidor (criado_em da turma), não de Date.now():
+ * o relógio local pode estar adiantado em relação ao Postgres e isso quebraria
+ * os testes de borda da regra de 1h.
+ */
+export async function criarSessao(minutosAteInicio: number, vagas = 2) {
+  const { data: turma, error: erroTurma } = await admin.from('turmas')
+    .insert({ nome: 'Turma Teste', dia_semana: 1, hora_inicio: '06:00', duracao_min: 60, vagas })
+    .select().single()
+  if (erroTurma) throw erroTurma
+
+  const agoraServidor = new Date(turma!.criado_em).getTime()
+  const inicia = new Date(agoraServidor + minutosAteInicio * 60_000).toISOString()
+  const { data: sessao, error } = await admin.from('sessoes')
+    .insert({ turma_id: turma!.id, inicia_em: inicia, vagas })
+    .select().single()
+  if (error) throw error
+  return sessao as { id: string; inicia_em: string; vagas: number }
+}
