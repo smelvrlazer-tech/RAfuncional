@@ -43,7 +43,7 @@ export async function limparDados(): Promise<void> {
   const tabelas = ['checkins', 'notificacoes', 'inscricoes_push', 'sessoes', 'turmas', 'treinos', 'convites']
   for (const tabela of tabelas) {
     const { error } = await admin.from(tabela).delete().gte('criado_em', '1970-01-01')
-    if (error && !error.message.includes('does not exist')) throw error
+    if (error && !/does not exist|Could not find the table/.test(error.message)) throw error
   }
 }
 
