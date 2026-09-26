@@ -1,0 +1,87 @@
+/*
+ * RA Funcional — design tokens (identidade PROVISÓRIA).
+ * Toda cor, fonte, raio e sombra do app mora aqui. Para aplicar a marca
+ * definitiva do cliente, altere só este arquivo.
+ *
+ * Contrastes verificados (WCAG AA, texto normal >= 4.5:1):
+ *   --cor-tinta sobre --cor-papel ........ 14.4
+ *   --cor-texto-suave sobre --cor-papel ... 5.1
+ *   branco sobre --cor-acento ............. 4.6
+ *   --cor-acento-texto sobre superfície ... 5.6
+ *   --cor-sucesso-texto / fundo ........... 5.7
+ *   --cor-aviso-texto / fundo ............. 5.0
+ *   --cor-bloqueio-texto / fundo .......... 4.8
+ */
+:root {
+  /* Papel e tinta */
+  --cor-papel: #f4efe6;
+  --cor-papel-escuro: #e9e1d3;
+  --cor-superficie: #fffdf9;
+  --cor-superficie-2: #fbf8f2;
+  --cor-tinta: #221e1a;
+  --cor-tinta-2: #3a332c;
+  --cor-texto-suave: #6e6358;
+  --cor-texto-invertido: #f4efe6;
+  --cor-texto-invertido-suave: #c9bfb2;
+  --cor-linha: #ddd3c4;
+
+  /* Acento único */
+  --cor-acento: #c0562b;
+  --cor-acento-hover: #a94a23;
+  --cor-acento-texto: #a94a23;
+  --cor-acento-claro: #e07a4f;
+  --cor-sobre-acento: #ffffff;
+
+  /* Estados */
+  --cor-sucesso: #5b7050;
+  --cor-sucesso-texto: #4a5e40;
+  --cor-sucesso-fundo: #e3ead9;
+  --cor-aviso: #b7791f;
+  --cor-aviso-texto: #83560f;
+  --cor-aviso-fundo: #f3e3c0;
+  --cor-bloqueio: #9c3d26;
+  --cor-bloqueio-texto: #9c3d26;
+  --cor-bloqueio-fundo: #ebd5cc;
+  --cor-info-fundo: #f1dccb;
+  --cor-foco: #c0562b;
+
+  /* Tipografia */
+  --fonte-display: 'League Gothic', 'Oswald', 'Arial Narrow', sans-serif;
+  --fonte-texto: 'Newsreader', 'Iowan Old Style', Georgia, serif;
+  --tamanho-texto: 1.0625rem;
+  --tamanho-pequeno: 0.875rem;
+  --tamanho-mini: 0.75rem;
+  --entrelinha: 1.5;
+
+  /* Raios */
+  --raio-p: 8px;
+  --raio-m: 14px;
+  --raio-g: 22px;
+  --raio-pilula: 999px;
+
+  /* Sombras de papel (camadas suaves e quentes) */
+  --sombra-cartao:
+    0 1px 0 rgba(34, 30, 26, 0.04),
+    0 1px 2px rgba(34, 30, 26, 0.06),
+    0 6px 16px -6px rgba(34, 30, 26, 0.12);
+  --sombra-elevada:
+    0 1px 0 rgba(34, 30, 26, 0.05),
+    0 4px 10px -2px rgba(34, 30, 26, 0.1),
+    0 18px 36px -12px rgba(34, 30, 26, 0.22);
+
+  /* Espaço e layout */
+  --espaco-1: 4px;
+  --espaco-2: 8px;
+  --espaco-3: 12px;
+  --espaco-4: 16px;
+  --espaco-5: 24px;
+  --espaco-6: 32px;
+  --largura-coluna: 480px;
+  --alvo-toque: 44px;
+
+  /* Grão do papel (ruído SVG) */
+  --grao-opacidade: 0.07;
+
+  /* PWA (manter em sincronia com o manifest em vite.config.ts) */
+  --cor-tema: #221e1a;
+}

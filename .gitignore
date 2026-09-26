@@ -7,3 +7,5 @@ supabase/.temp/
 supabase/.branches/
 .superpowers/
 *.log
+web/.dev-credenciais.txt
+dev-dist/
