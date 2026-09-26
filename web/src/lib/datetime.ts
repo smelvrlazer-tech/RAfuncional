@@ -4,7 +4,7 @@
  */
 export const FUSO = 'America/Sao_Paulo'
 
-const SEMANA_CURTA = ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SÁB'] as const
+export const SEMANA_CURTA = ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SÁB'] as const
 const SEMANA_LONGA = [
   'Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado',
 ] as const
@@ -70,7 +70,7 @@ export function somarDias(chave: string, dias: number): string {
   return `${dt.getUTCFullYear()}-${dois(dt.getUTCMonth() + 1)}-${dois(dt.getUTCDate())}`
 }
 
-function diaDaSemana(chave: string): number {
+export function diaDaSemana(chave: string): number {
   const [a, m, d] = decompor(chave)
   return new Date(Date.UTC(a, m - 1, d)).getUTCDay()
 }

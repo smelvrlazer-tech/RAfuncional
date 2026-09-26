@@ -8,8 +8,22 @@ import { formatarPrazo } from './datetime'
 const BACKEND = [
   'sessao_bloqueada', 'sessao_cancelada', 'aluno_inativo', 'checkin_ja_existe', 'checkin_inexistente',
   'convite_invalido', 'perfil_ja_existe', 'nome_obrigatorio', 'nao_autenticado', 'sessao_inexistente',
-  'acesso_negado',
+  'acesso_negado', 'apenas_alunos', 'perfil_inexistente', 'ativo_obrigatorio',
 ] as const
+
+/** Códigos SQLSTATE de escrita direta nas tabelas (painel do treinador). */
+const POSTGRES: Record<string, string> = {
+  '23505': 'Já existe um registro com esses dados (ex.: um treino nessa data). Atualize a tela.',
+  '23514': 'Confira os valores informados (ex.: as vagas precisam ser maiores que zero).',
+  '42501': 'Você não tem permissão para fazer isso.',
+}
+
+/** No painel do treinador, algumas mensagens falam do aluno, não com o aluno. */
+const TREINADOR: Record<string, string> = {
+  checkin_inexistente: 'Esse aluno já não está nessa aula — a lista pode estar desatualizada. Atualizamos para você.',
+  sessao_cancelada: 'Essa aula já estava cancelada.',
+  sessao_inexistente: 'Essa aula não existe mais. Atualize o painel.',
+}
 
 const AUTH: Record<string, string> = {
   invalid_credentials: 'E-mail ou senha incorretos.',
@@ -53,9 +67,10 @@ export function codigoErro(erro: unknown): string | null {
   return null
 }
 
-export function mensagemErro(erro: unknown, opcoes: { limiteMin?: number } = {}): string {
+export function mensagemErro(erro: unknown, opcoes: { limiteMin?: number; treinador?: boolean } = {}): string {
   const prazo = formatarPrazo(opcoes.limiteMin ?? 60)
   const codigo = codigoErro(erro)
+  if (opcoes.treinador && codigo && TREINADOR[codigo]) return TREINADOR[codigo]
   switch (codigo) {
     case 'sessao_bloqueada':
       return `Essa aula já está bloqueada: faltam menos de ${prazo} para começar. Check-in e cancelamento fecham ${prazo} antes.`
@@ -79,8 +94,16 @@ export function mensagemErro(erro: unknown, opcoes: { limiteMin?: number } = {})
       return 'Essa aula não existe mais. Atualize a agenda.'
     case 'acesso_negado':
       return 'Você não tem permissão para fazer isso.'
+    case 'apenas_alunos':
+      return 'Só alunos podem ser ativados ou desativados.'
+    case 'perfil_inexistente':
+      return 'Esse aluno não foi encontrado. Atualize a lista.'
+    case 'ativo_obrigatorio':
+      return 'Escolha se o aluno deve ficar ativo: não foi possível ativar ou desativar.'
   }
   if (codigo && AUTH[codigo]) return AUTH[codigo]
+  const sqlstate = campo(erro, 'code')
+  if (sqlstate && POSTGRES[sqlstate]) return POSTGRES[sqlstate]
 
   const mensagem = campo(erro, 'message') ?? ''
   if (erro instanceof TypeError || /failed to fetch|networkerror|network request failed|load failed/i.test(mensagem)) {

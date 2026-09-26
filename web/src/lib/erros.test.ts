@@ -56,6 +56,31 @@ describe('mensagemErro', () => {
   })
 })
 
+describe('mensagemErro — painel do treinador', () => {
+  it.each([
+    ['apenas_alunos', /só alunos/i],
+    ['perfil_inexistente', /aluno não foi encontrado/],
+    ['ativo_obrigatorio', /ativar ou desativar/],
+  ])('código do backend %s', (codigo, esperado) => {
+    expect(mensagemErro(rpc(codigo), { treinador: true })).toMatch(esperado)
+  })
+
+  it('reescreve as mensagens que no app do aluno falam com o aluno', () => {
+    expect(mensagemErro(rpc('checkin_inexistente'), { treinador: true })).toMatch(/aluno já não está nessa aula/)
+    expect(mensagemErro(rpc('sessao_cancelada'), { treinador: true })).toMatch(/já estava cancelada/)
+    expect(mensagemErro(rpc('checkin_inexistente'))).toMatch(/Você não tem check-in/)
+  })
+
+  it('erros do Postgres vindos de escrita direta nas tabelas', () => {
+    expect(mensagemErro({ code: '23505', message: 'duplicate key value violates unique constraint "treinos_data_key"' }))
+      .toMatch(/Já existe um registro/)
+    expect(mensagemErro({ code: '23514', message: 'new row violates check constraint "turmas_vagas_check"' }))
+      .toMatch(/Confira os valores/)
+    expect(mensagemErro({ code: '42501', message: 'new row violates row-level security policy for table "turmas"' }))
+      .toMatch(/permissão/)
+  })
+})
+
 describe('codigoErro', () => {
   it('extrai o código do backend ou do auth', () => {
     expect(codigoErro(rpc('sessao_bloqueada'))).toBe('sessao_bloqueada')
