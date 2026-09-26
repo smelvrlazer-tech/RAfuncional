@@ -65,3 +65,71 @@ export function validarTurma(e: EntradaTurma): { dados: DadosTurma | null; erros
 export function formatarHoraTurma(hora: string): string {
   return hora.slice(0, 5)
 }
+
+/* ------------------------------------------------ edição pela RPC treinador_atualizar_turma (0011) */
+
+/** Aula futura que tinha alguém confirmado ou na espera: ficou com o horário e as vagas antigos. */
+export interface AulaPreservada {
+  id: string
+  inicia_em: string
+  vagas: number
+  confirmados: number
+  na_espera: number
+}
+
+/** Retorno de treinador_atualizar_turma. */
+export interface RelatorioTurma {
+  movidas: number
+  atualizadas: number
+  removidas: number
+  criadas: number
+  preservadas: AulaPreservada[]
+  canceladas: { id: string; inicia_em: string }[]
+}
+
+const n = (v: unknown) => (typeof v === 'number' && Number.isFinite(v) ? v : 0)
+const lista = <T>(v: unknown): T[] => (Array.isArray(v) ? (v as T[]) : [])
+
+/** Normaliza o jsonb da RPC (campos ausentes viram 0 / lista vazia). */
+export function lerRelatorioTurma(dados: unknown): RelatorioTurma {
+  const d = (dados && typeof dados === 'object' ? dados : {}) as Record<string, unknown>
+  return {
+    movidas: n(d.movidas),
+    atualizadas: n(d.atualizadas),
+    removidas: n(d.removidas),
+    criadas: n(d.criadas),
+    preservadas: lista<AulaPreservada>(d.preservadas),
+    canceladas: lista<{ id: string; inicia_em: string }>(d.canceladas),
+  }
+}
+
+const aulas = (q: number) => (q === 1 ? '1 aula' : `${q} aulas`)
+
+/** Frase curta de sucesso após editar uma turma. A lista de preservadas vai à parte. */
+export function resumoEdicaoTurma(r: RelatorioTurma, vagas: number): string {
+  const partes = ['Turma atualizada.']
+  const soVagas = r.atualizadas - r.movidas
+  if (r.movidas > 0) {
+    partes.push(`${aulas(r.movidas)} sem check-in ${r.movidas === 1 ? 'foi' : 'foram'} para o novo dia e horário.`)
+  }
+  if (soVagas > 0) {
+    partes.push(`${aulas(soVagas)} sem check-in ${soVagas === 1 ? 'passou' : 'passaram'} a ter ${vagas} vagas.`)
+  }
+  if (r.criadas > 0) {
+    partes.push(`${aulas(r.criadas)} ${r.criadas === 1 ? 'nova criada' : 'novas criadas'} no novo horário.`)
+  }
+  if (r.removidas > 0) {
+    partes.push(`${aulas(r.removidas)} sem check-in que não ${r.removidas === 1 ? 'cabia' : 'cabiam'} no novo horário ` +
+      `${r.removidas === 1 ? 'foi removida' : 'foram removidas'}.`)
+  }
+  partes.push('Nome e duração já valem em todas as aulas.')
+  return partes.join(' ')
+}
+
+/** "2 confirmados, 1 na espera" — o que segura a aula no horário antigo. */
+export function descreverOcupacao(a: AulaPreservada): string {
+  const itens: string[] = []
+  if (a.confirmados > 0) itens.push(`${a.confirmados} ${a.confirmados === 1 ? 'confirmado' : 'confirmados'}`)
+  if (a.na_espera > 0) itens.push(`${a.na_espera} na espera`)
+  return itens.join(', ')
+}

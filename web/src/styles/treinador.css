@@ -415,6 +415,13 @@
 .form-painel__botoes .botao--primario { min-height: var(--alvo-toque); font-size: 1.3rem; }
 
 /* ------------------------------------------------------------ turmas */
+.aulas-nao-alteradas {
+  display: grid;
+  gap: 4px;
+  margin: 8px 0 10px;
+  padding-left: 18px;
+  font-variant-numeric: tabular-nums;
+}
 .grade-dias { display: grid; gap: 22px; align-items: start; }
 .dia-turmas { display: grid; gap: 10px; }
 .dia-turmas__titulo {

@@ -1,5 +1,5 @@
 import { supabase } from '../../../lib/supabase'
-import type { DadosTurma } from '../../../lib/turmas'
+import { lerRelatorioTurma, type DadosTurma, type RelatorioTurma } from '../../../lib/turmas'
 import type { Turma } from '../../../lib/tipos'
 
 const COLUNAS = 'id, nome, dia_semana, hora_inicio, duracao_min, vagas, ativa'
@@ -20,10 +20,22 @@ export async function criarTurma(dados: DadosTurma): Promise<void> {
   if (error) throw error
 }
 
-/** Na edição, dia e horário não mudam (ver FormTurma): só nome, duração e vagas. */
-export async function atualizarTurma(id: string, dados: Pick<DadosTurma, 'nome' | 'duracao_min' | 'vagas'>): Promise<void> {
-  const { error } = await supabase.from('turmas').update(dados).eq('id', id)
+/**
+ * Edição completa pela RPC (0011_treinador_atualizar_turma.sql): move as aulas futuras sem
+ * check-in para o novo dia/horário/vagas e devolve as que ficaram como estavam (com alunos).
+ * Nunca faz UPDATE direto em turmas: isso deixaria as aulas já geradas no horário antigo.
+ */
+export async function atualizarTurma(id: string, dados: DadosTurma): Promise<RelatorioTurma> {
+  const { data, error } = await supabase.rpc('treinador_atualizar_turma', {
+    p_turma_id: id,
+    p_nome: dados.nome,
+    p_dia_semana: dados.dia_semana,
+    p_hora_inicio: dados.hora_inicio,
+    p_duracao_min: dados.duracao_min,
+    p_vagas: dados.vagas,
+  })
   if (error) throw error
+  return lerRelatorioTurma(data)
 }
 
 /** Desativar só para de gerar aulas novas. Nunca apagamos turmas (o delete apagaria o histórico em cascata). */

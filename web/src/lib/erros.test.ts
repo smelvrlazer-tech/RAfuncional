@@ -61,6 +61,12 @@ describe('mensagemErro — painel do treinador', () => {
     ['apenas_alunos', /só alunos/i],
     ['perfil_inexistente', /aluno não foi encontrado/],
     ['ativo_obrigatorio', /ativar ou desativar/],
+    ['turma_inexistente', /turma não foi encontrada/],
+    ['turma_nome_obrigatorio', /nome da turma/],
+    ['turma_dia_invalido', /dia da semana/],
+    ['turma_hora_obrigatoria', /horário de início/],
+    ['turma_duracao_invalida', /duração/],
+    ['turma_vagas_invalidas', /vagas/],
   ])('código do backend %s', (codigo, esperado) => {
     expect(mensagemErro(rpc(codigo), { treinador: true })).toMatch(esperado)
   })
@@ -69,6 +75,15 @@ describe('mensagemErro — painel do treinador', () => {
     expect(mensagemErro(rpc('checkin_inexistente'), { treinador: true })).toMatch(/aluno já não está nessa aula/)
     expect(mensagemErro(rpc('sessao_cancelada'), { treinador: true })).toMatch(/já estava cancelada/)
     expect(mensagemErro(rpc('checkin_inexistente'))).toMatch(/Você não tem check-in/)
+  })
+
+  it('RPC ainda não aplicada no banco (PostgREST PGRST202) vira aviso sem texto técnico', () => {
+    const m = mensagemErro({
+      code: 'PGRST202',
+      message: 'Could not find the function public.treinador_atualizar_turma(p_dia_semana, ...) in the schema cache',
+    }, { treinador: true })
+    expect(m).toMatch(/ainda não está disponível no servidor/)
+    expect(m).not.toMatch(/schema cache|treinador_atualizar_turma/)
   })
 
   it('erros do Postgres vindos de escrita direta nas tabelas', () => {

@@ -9,6 +9,8 @@ const BACKEND = [
   'sessao_bloqueada', 'sessao_cancelada', 'aluno_inativo', 'checkin_ja_existe', 'checkin_inexistente',
   'convite_invalido', 'perfil_ja_existe', 'nome_obrigatorio', 'nao_autenticado', 'sessao_inexistente',
   'acesso_negado', 'apenas_alunos', 'perfil_inexistente', 'ativo_obrigatorio',
+  'turma_inexistente', 'turma_nome_obrigatorio', 'turma_dia_invalido', 'turma_hora_obrigatoria',
+  'turma_duracao_invalida', 'turma_vagas_invalidas',
 ] as const
 
 /** Códigos SQLSTATE de escrita direta nas tabelas (painel do treinador). */
@@ -16,6 +18,8 @@ const POSTGRES: Record<string, string> = {
   '23505': 'Já existe um registro com esses dados (ex.: um treino nessa data). Atualize a tela.',
   '23514': 'Confira os valores informados (ex.: as vagas precisam ser maiores que zero).',
   '42501': 'Você não tem permissão para fazer isso.',
+  // PostgREST: a função não existe no banco (ex.: migration ainda não aplicada).
+  PGRST202: 'Essa função ainda não está disponível no servidor. Nada foi alterado — tente mais tarde ou avise o suporte.',
 }
 
 /** No painel do treinador, algumas mensagens falam do aluno, não com o aluno. */
@@ -100,6 +104,18 @@ export function mensagemErro(erro: unknown, opcoes: { limiteMin?: number; treina
       return 'Esse aluno não foi encontrado. Atualize a lista.'
     case 'ativo_obrigatorio':
       return 'Escolha se o aluno deve ficar ativo: não foi possível ativar ou desativar.'
+    case 'turma_inexistente':
+      return 'Essa turma não foi encontrada. Atualize a lista.'
+    case 'turma_nome_obrigatorio':
+      return 'Informe o nome da turma.'
+    case 'turma_dia_invalido':
+      return 'Escolha o dia da semana.'
+    case 'turma_hora_obrigatoria':
+      return 'Informe o horário de início.'
+    case 'turma_duracao_invalida':
+      return 'A duração precisa ser maior que zero.'
+    case 'turma_vagas_invalidas':
+      return 'As vagas precisam ser maiores que zero.'
   }
   if (codigo && AUTH[codigo]) return AUTH[codigo]
   const sqlstate = campo(erro, 'code')

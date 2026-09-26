@@ -3,9 +3,12 @@ import { Aviso, Botao } from '../../../components/Basicos'
 import { Chip } from '../../../components/Chip'
 import { Dialogo } from '../../../components/Dialogo'
 import { Icone } from '../../../components/Icone'
+import { SEMANA_CURTA, chaveDiaSP, diaDaSemana, formatarDataHoraCurta } from '../../../lib/datetime'
 import { mensagemErro } from '../../../lib/erros'
 import type { Turma } from '../../../lib/tipos'
-import { DIAS_SEMANA, ORDEM_DIAS, formatarHoraTurma } from '../../../lib/turmas'
+import {
+  DIAS_SEMANA, ORDEM_DIAS, descreverOcupacao, formatarHoraTurma, type RelatorioTurma,
+} from '../../../lib/turmas'
 import { Anuncio, Controle, EstadoLista, type Retorno } from '../comum'
 import { useCarga } from '../useCarga'
 import { contarAulasFuturas, definirTurmaAtiva, listarTurmas } from './api'
@@ -16,10 +19,57 @@ interface Desativar { turma: Turma; aulas: number | null }
 
 const descreverTurma = (t: Turma) => `${t.nome} (${DIAS_SEMANA[t.dia_semana]!.toLowerCase()}, ${formatarHoraTurma(t.hora_inicio)})`
 
+/** "SEG 05/10 · 06:00", no fuso de São Paulo. */
+const quando = (iso: string) => `${SEMANA_CURTA[diaDaSemana(chaveDiaSP(iso))]} ${formatarDataHoraCurta(iso)}`
+
+/**
+ * Depois de editar: aulas que tinham alunos (ficaram com horário e vagas antigos) e aulas
+ * canceladas (continuam canceladas no horário antigo). O treinador decide no painel do dia.
+ */
+function AulasNaoAlteradas({ relatorio, onFechar }: { relatorio: RelatorioTurma; onFechar: () => void }) {
+  const { preservadas, canceladas } = relatorio
+  if (!preservadas.length && !canceladas.length) return null
+  const titulo = preservadas.length === 0 ? 'Aulas canceladas não foram alteradas'
+    : preservadas.length === 1 ? '1 aula com alunos ficou como estava'
+    : `${preservadas.length} aulas com alunos ficaram como estavam`
+  return (
+    <Aviso tom="alerta" titulo={titulo}>
+      {preservadas.length > 0 && (
+        <>
+          <p>
+            Estas aulas já tinham alunos confirmados ou na espera, então mantiveram o horário e as vagas anteriores.
+            Se não vão acontecer assim, cancele-as no painel do dia (os alunos são avisados).
+          </p>
+          <ul className="aulas-nao-alteradas" aria-label="Aulas com alunos que ficaram como estavam">
+            {preservadas.map((a) => (
+              <li key={a.id}>
+                <strong>{quando(a.inicia_em)}</strong> · {a.vagas} vagas · {descreverOcupacao(a)}
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+      {canceladas.length > 0 && (
+        <>
+          <p>
+            Aulas canceladas continuam canceladas no horário anterior. Se a aula no novo horário dessas semanas
+            também não vai acontecer, cancele-a no painel do dia.
+          </p>
+          <ul className="aulas-nao-alteradas" aria-label="Aulas canceladas">
+            {canceladas.map((a) => <li key={a.id}><strong>{quando(a.inicia_em)}</strong> · cancelada</li>)}
+          </ul>
+        </>
+      )}
+      <Botao variante="texto" onClick={onFechar}>Entendi</Botao>
+    </Aviso>
+  )
+}
+
 export function Turmas() {
   const { dados, erro, carregando, recarregar } = useCarga(listarTurmas, 'turmas')
   const [form, setForm] = useState<Form>(null)
   const [retorno, setRetorno] = useState<Retorno>(null)
+  const [relatorio, setRelatorio] = useState<RelatorioTurma | null>(null)
   const [desativar, setDesativar] = useState<Desativar | null>(null)
   const [enviando, setEnviando] = useState<string | null>(null)
   const [erroDialogo, setErroDialogo] = useState<string | null>(null)
@@ -27,10 +77,20 @@ export function Turmas() {
   const turmas = dados ?? []
   const semTurma = ORDEM_DIAS.filter((d) => !turmas.some((t) => t.dia_semana === d))
 
-  async function salvo(mensagem: string) {
+  async function salvo(mensagem: string, rel?: RelatorioTurma) {
     setForm(null)
-    setRetorno({ tom: 'sucesso', texto: mensagem })
+    const n = rel?.preservadas.length ?? 0
+    const aviso = n === 1 ? ' Atenção: 1 aula com alunos ficou como estava — veja abaixo.'
+      : n > 1 ? ` Atenção: ${n} aulas com alunos ficaram como estavam — veja abaixo.` : ''
+    setRetorno({ tom: 'sucesso', texto: mensagem + aviso })
+    setRelatorio(rel ?? null)
     await recarregar()
+  }
+
+  function abrirForm(turma: Turma | null) {
+    setRetorno(null)
+    setRelatorio(null)
+    setForm({ turma })
   }
 
   function pedirDesativar(t: Turma) {
@@ -76,14 +136,15 @@ export function Turmas() {
       <Controle compacto sobre="Agenda semanal" titulo="Turmas"
         subtitulo="Os horários fixos da semana. A partir deles, as aulas são geradas automaticamente todos os dias para as próximas 4 semanas.">
         {!form && (
-          <Botao variante="primario" onClick={() => { setRetorno(null); setForm({ turma: null }) }}>
+          <Botao variante="primario" onClick={() => abrirForm(null)}>
             <Icone nome="mais" /> Nova turma
           </Botao>
         )}
       </Controle>
 
-      {form && <FormTurma key={form.turma?.id ?? 'nova'} turma={form.turma} onSalvo={(m) => void salvo(m)} onCancelar={() => setForm(null)} />}
+      {form && <FormTurma key={form.turma?.id ?? 'nova'} turma={form.turma} onSalvo={(m, r) => void salvo(m, r)} onCancelar={() => setForm(null)} />}
       <Anuncio retorno={retorno} />
+      {relatorio && <AulasNaoAlteradas relatorio={relatorio} onFechar={() => setRelatorio(null)} />}
 
       <EstadoLista carregando={carregando} erro={erro} vazio={!turmas.length}
         textoCarregando="Carregando as turmas…" tituloErro="Não foi possível carregar as turmas"
@@ -104,7 +165,7 @@ export function Turmas() {
                     <Chip tom={t.ativa ? 'disponivel' : 'cancelada'}>{t.ativa ? 'Ativa' : 'Inativa'}</Chip>
                     <div className="turma__acoes">
                       <Botao variante="contorno" aria-label={`Editar ${descreverTurma(t)}`}
-                        onClick={() => { setRetorno(null); setForm({ turma: t }) }}>
+                        onClick={() => abrirForm(t)}>
                         <Icone nome="lapis" /> Editar
                       </Botao>
                       {t.ativa ? (
@@ -130,8 +191,10 @@ export function Turmas() {
       </EstadoLista>
 
       <Aviso titulo="Como as mudanças chegam à agenda">
-        Criar ou reativar uma turma faz as aulas aparecerem na próxima geração automática (diária). Turmas nunca são
-        apagadas: desativar só interrompe a geração de aulas novas e preserva todo o histórico de presença.
+        Criar ou reativar uma turma faz as aulas aparecerem na próxima geração automática (diária). Editar dia,
+        horário ou vagas muda na hora as aulas futuras sem check-in; as que já têm alunos ficam como estão e são
+        listadas para você. Turmas nunca são apagadas: desativar só interrompe a geração de aulas novas e preserva
+        todo o histórico de presença.
       </Aviso>
 
       <Dialogo

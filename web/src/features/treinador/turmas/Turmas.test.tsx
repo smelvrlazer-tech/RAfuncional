@@ -16,6 +16,7 @@ const TURMA = { id: 't1', nome: 'Funcional Manhã', dia_semana: 1, hora_inicio: 
 describe('Turmas', () => {
   beforeEach(() => {
     h.estado.chamadas.length = 0
+    h.estado.rpc.mockClear()
     h.estado.responder = (c) => ({ data: c.tabela === 'turmas' ? [TURMA] : [], error: null, count: 8 })
   })
 
@@ -57,12 +58,82 @@ describe('Turmas', () => {
     })
   })
 
-  it('edição trava dia e horário', async () => {
+  it('edição libera dia, horário e vagas e grava pela RPC (nunca UPDATE direto em turmas)', async () => {
+    h.estado.rpc.mockResolvedValueOnce({
+      data: { movidas: 4, atualizadas: 4, removidas: 0, criadas: 0, preservadas: [], canceladas: [] }, error: null,
+    })
     render(<Turmas />)
     await userEvent.click(await screen.findByRole('button', { name: /Editar Funcional Manhã/ }))
-    expect(screen.getByLabelText('Dia da semana')).toBeDisabled()
-    expect(screen.getByLabelText('Horário de início')).toBeDisabled()
-    expect(screen.getByText('Dia e horário não mudam na edição')).toBeInTheDocument()
+    const dia = screen.getByLabelText('Dia da semana')
+    const hora = screen.getByLabelText('Horário de início')
+    expect(dia).toBeEnabled()
+    expect(hora).toBeEnabled()
+    await userEvent.selectOptions(dia, '3')
+    await userEvent.clear(hora)
+    await userEvent.type(hora, '07:15')
+    await userEvent.clear(screen.getByLabelText('Vagas'))
+    await userEvent.type(screen.getByLabelText('Vagas'), '14')
+    await userEvent.click(screen.getByRole('button', { name: 'Salvar alterações' }))
+
+    expect(await screen.findByText(/4 aulas sem check-in foram para o novo dia e horário/)).toBeInTheDocument()
+    expect(h.estado.rpc).toHaveBeenCalledWith('treinador_atualizar_turma', {
+      p_turma_id: 't1', p_nome: 'Funcional Manhã', p_dia_semana: 3, p_hora_inicio: '07:15:00',
+      p_duracao_min: 60, p_vagas: 14,
+    })
+    expect(h.estado.chamadas.some((c) => c.tabela === 'turmas' && c.args('update'))).toBe(false)
+    expect(screen.queryByRole('list', { name: /ficaram como estavam/ })).not.toBeInTheDocument()
+  })
+
+  it('depois de salvar, lista as aulas com alunos que ficaram como estavam (data e hora de SP) e as canceladas', async () => {
+    h.estado.rpc.mockResolvedValueOnce({
+      data: {
+        movidas: 2, atualizadas: 2, removidas: 0, criadas: 2,
+        preservadas: [
+          { id: 's1', inicia_em: '2026-10-05T09:00:00+00:00', vagas: 12, confirmados: 2, na_espera: 1 },
+          { id: 's2', inicia_em: '2026-10-12T09:00:00+00:00', vagas: 12, confirmados: 0, na_espera: 1 },
+        ],
+        canceladas: [{ id: 's3', inicia_em: '2026-10-19T09:00:00+00:00' }],
+      },
+      error: null,
+    })
+    render(<Turmas />)
+    await userEvent.click(await screen.findByRole('button', { name: /Editar Funcional Manhã/ }))
+    await userEvent.clear(screen.getByLabelText('Horário de início'))
+    await userEvent.type(screen.getByLabelText('Horário de início'), '07:00')
+    await userEvent.click(screen.getByRole('button', { name: 'Salvar alterações' }))
+
+    expect(await screen.findByText(/Atenção: 2 aulas com alunos ficaram como estavam/)).toBeInTheDocument()
+    expect(screen.getByText('2 aulas com alunos ficaram como estavam')).toBeInTheDocument()
+    const lista = screen.getByRole('list', { name: 'Aulas com alunos que ficaram como estavam' })
+    const itens = within(lista).getAllByRole('listitem').map((li) => li.textContent)
+    // 09:00 UTC = 06:00 em São Paulo.
+    expect(itens).toEqual([
+      'SEG 05/10 · 06:00 · 12 vagas · 2 confirmados, 1 na espera',
+      'SEG 12/10 · 06:00 · 12 vagas · 1 na espera',
+    ])
+    const canceladas = screen.getByRole('list', { name: 'Aulas canceladas' })
+    expect(within(canceladas).getByText('SEG 19/10 · 06:00')).toBeInTheDocument()
+
+    await userEvent.click(screen.getByRole('button', { name: 'Entendi' }))
+    expect(screen.queryByRole('list', { name: 'Aulas com alunos que ficaram como estavam' })).not.toBeInTheDocument()
+  })
+
+  it('com a RPC ainda não aplicada no banco, mostra erro amigável, mantém o formulário e não grava nada', async () => {
+    h.estado.rpc.mockResolvedValueOnce({
+      data: null,
+      error: {
+        code: 'PGRST202',
+        message: 'Could not find the function public.treinador_atualizar_turma(p_dia_semana, p_duracao_min, p_hora_inicio, p_nome, p_turma_id, p_vagas) in the schema cache',
+      },
+    })
+    render(<Turmas />)
+    await userEvent.click(await screen.findByRole('button', { name: /Editar Funcional Manhã/ }))
+    await userEvent.click(screen.getByRole('button', { name: 'Salvar alterações' }))
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(/ainda não está disponível no servidor/)
+    expect(screen.queryByText(/schema cache/)).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Salvar alterações' })).toBeInTheDocument()
+    expect(h.estado.chamadas.some((c) => c.tabela === 'turmas' && c.args('update'))).toBe(false)
   })
 
   it('desativar confirma, conta as aulas já geradas e só faz UPDATE (nunca DELETE)', async () => {

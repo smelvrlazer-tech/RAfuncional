@@ -4,14 +4,16 @@ import { CampoSelecao } from '../../../components/Campos'
 import { mensagemErro } from '../../../lib/erros'
 import type { Turma } from '../../../lib/tipos'
 import {
-  DIAS_SEMANA, ORDEM_DIAS, formatarHoraTurma, validarTurma, type EntradaTurma, type ErrosTurma,
+  DIAS_SEMANA, ORDEM_DIAS, formatarHoraTurma, resumoEdicaoTurma, validarTurma,
+  type EntradaTurma, type ErrosTurma, type RelatorioTurma,
 } from '../../../lib/turmas'
 import { atualizarTurma, criarTurma } from './api'
 
 interface Props {
   /** null = nova turma. */
   turma: Turma | null
-  onSalvo: (mensagem: string) => void
+  /** `relatorio` só vem na edição (retorno da RPC). */
+  onSalvo: (mensagem: string, relatorio?: RelatorioTurma) => void
   onCancelar: () => void
 }
 
@@ -44,11 +46,8 @@ export function FormTurma({ turma, onSalvo, onCancelar }: Props) {
     setEnviando(true)
     try {
       if (turma) {
-        await atualizarTurma(turma.id, { nome: r.dados.nome, duracao_min: r.dados.duracao_min, vagas: r.dados.vagas })
-        onSalvo(r.dados.vagas !== turma.vagas
-          ? 'Turma atualizada. Nome e duração já valem em todas as aulas; o novo número de vagas vale para as aulas ' +
-            'geradas daqui em diante (as já geradas mantêm o número anterior).'
-          : 'Turma atualizada. Nome e duração já valem em todas as aulas.')
+        const relatorio = await atualizarTurma(turma.id, r.dados)
+        onSalvo(resumoEdicaoTurma(relatorio, r.dados.vagas), relatorio)
       } else {
         await criarTurma(r.dados)
         onSalvo('Turma criada. As aulas aparecem na agenda a partir da próxima geração automática (diária).')
@@ -69,19 +68,20 @@ export function FormTurma({ turma, onSalvo, onCancelar }: Props) {
         <Campo rotulo="Nome da turma" value={e.nome} onChange={mudar('nome')} erro={erros.nome}
           placeholder="Ex.: Funcional Manhã" maxLength={60} required />
         <CampoSelecao rotulo="Dia da semana" value={e.dia_semana} onChange={mudar('dia_semana')}
-          erro={erros.dia_semana} disabled={editando}>
+          erro={erros.dia_semana}>
           {ORDEM_DIAS.map((d) => <option key={d} value={d}>{DIAS_SEMANA[d]}</option>)}
         </CampoSelecao>
         <Campo rotulo="Horário de início" type="time" value={e.hora_inicio} onChange={mudar('hora_inicio')}
-          erro={erros.hora_inicio} disabled={editando} dica="Horário de Brasília (São Paulo)." required />
+          erro={erros.hora_inicio} dica="Horário de Brasília (São Paulo)." required />
         <Campo rotulo="Duração (minutos)" type="number" inputMode="numeric" min={1} max={600}
           value={e.duracao_min} onChange={mudar('duracao_min')} erro={erros.duracao_min} required />
         <Campo rotulo="Vagas" type="number" inputMode="numeric" min={1} max={500}
           value={e.vagas} onChange={mudar('vagas')} erro={erros.vagas} required />
         {editando && (
-          <Aviso titulo="Dia e horário não mudam na edição">
-            As aulas das próximas semanas já foram geradas nesse horário. Para mudar dia ou horário, desative esta
-            turma e crie outra; as aulas já geradas continuam na agenda até você cancelá-las no painel do dia.
+          <Aviso titulo="Como a mudança chega às aulas">
+            Dia, horário e vagas novos valem na hora para as aulas futuras sem check-in. Aulas que já têm alunos
+            confirmados ou na espera ficam como estão; ao salvar, mostramos quais são para você decidir no painel do
+            dia. Aulas passadas e canceladas não mudam.
           </Aviso>
         )}
         {erroGeral && <p className="formulario__retorno formulario__retorno--erro" role="alert">{erroGeral}</p>}
