@@ -38,6 +38,23 @@ export async function criarUsuario(
   return { id: data.user!.id, email, cliente }
 }
 
+/** Cliente sem login: é o papel `anon` do PostgREST. */
+export function clienteAnonimo(): SupabaseClient {
+  return createClient(URL, ANON, { auth: { persistSession: false } })
+}
+
+/** Usuário do Auth logado mas sem linha em perfis (ex.: ainda não aceitou convite). */
+export async function criarAuthSemPerfil(): Promise<Usuario> {
+  const email = `n${Date.now()}${Math.random().toString(36).slice(2, 8)}@teste.local`
+  const password = 'senha-de-teste-123'
+  const { data, error } = await admin.auth.admin.createUser({ email, password, email_confirm: true })
+  if (error) throw error
+  const cliente = createClient(URL, ANON, { auth: { persistSession: false } })
+  const { error: erroLogin } = await cliente.auth.signInWithPassword({ email, password })
+  if (erroLogin) throw erroLogin
+  return { id: data.user!.id, email, cliente }
+}
+
 /** Apaga dados transacionais entre testes. Configurações e perfis permanecem. */
 export async function limparDados(): Promise<void> {
   const tabelas = ['checkins', 'notificacoes', 'inscricoes_push', 'sessoes', 'turmas', 'treinos', 'convites']
