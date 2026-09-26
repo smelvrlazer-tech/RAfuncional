@@ -1,0 +1,721 @@
+/* Telas do aluno. Cores, fontes, raios e sombras só via tokens.css. */
+
+/* ------------------------------------------------------------ acesso (login, convite) */
+.acesso {
+  display: grid;
+  place-items: center;
+  min-height: calc(100dvh - 48px);
+  padding-block: 16px;
+}
+.acesso__cartao {
+  --pad: 24px;
+  width: 100%;
+  max-width: 420px;
+  display: grid;
+  gap: 16px;
+  padding: 28px var(--pad) 24px;
+  border-radius: var(--raio-g);
+  background: var(--cor-superficie);
+  box-shadow: var(--sombra-elevada);
+  animation: subir 420ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.acesso__marca {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  text-align: center;
+}
+.acesso__marca .selo {
+  margin-bottom: 10px;
+}
+.acesso__nome {
+  font-family: var(--fonte-display);
+  font-weight: 400;
+  font-size: 2.9rem;
+  line-height: 0.95;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.acesso__subtitulo {
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--cor-texto-suave);
+}
+.acesso__texto {
+  text-align: center;
+  color: var(--cor-texto-suave);
+}
+.acesso__conta {
+  font-size: 0.95rem;
+  color: var(--cor-texto-suave);
+  text-align: center;
+}
+.acesso__rodape {
+  text-align: center;
+  font-size: 0.975rem;
+  color: var(--cor-texto-suave);
+}
+.acesso__rodape a {
+  display: inline-block;
+  min-height: 32px;
+  line-height: 32px;
+}
+.confirme {
+  display: grid;
+  gap: 10px;
+}
+.confirme__titulo {
+  font-family: var(--fonte-display);
+  font-size: 1.8rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.confirme__dica {
+  font-style: italic;
+  color: var(--cor-texto-suave);
+}
+
+/* ------------------------------------------------------------ cabeçalho escuro da agenda */
+.cabecalho {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 20px 18px 22px 20px;
+  border-radius: var(--raio-g);
+  background:
+    radial-gradient(90% 120% at 110% -20%, var(--brilho-acento), transparent 60%),
+    var(--cor-tinta);
+  color: var(--cor-texto-invertido);
+  box-shadow: var(--sombra-elevada);
+  animation: subir 380ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.cabecalho::after {
+  /* marca d'água do selo */
+  content: 'RA';
+  position: absolute;
+  right: -6px;
+  bottom: -34px;
+  font-family: var(--fonte-display);
+  font-size: 8.5rem;
+  line-height: 1;
+  color: var(--cor-texto-invertido);
+  opacity: 0.05;
+  pointer-events: none;
+}
+.cabecalho__sobre {
+  font-family: var(--fonte-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cor-acento-claro);
+}
+.cabecalho__titulo {
+  font-family: var(--fonte-display);
+  font-weight: 400;
+  font-size: 3.4rem;
+  line-height: 0.92;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+.cabecalho__subtitulo {
+  margin-top: 8px;
+  font-style: italic;
+  color: var(--cor-texto-invertido-suave);
+  max-width: 26ch;
+}
+.cabecalho__acoes {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.cabecalho__perfil {
+  border-radius: 50%;
+}
+.cabecalho__perfil .avatar {
+  box-shadow: 0 0 0 2px var(--cor-tinta), 0 0 0 3.5px var(--cor-acento);
+}
+
+/* ------------------------------------------------------------ banner da semana */
+.banner-semana {
+  position: relative;
+  animation: subir 420ms 80ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.banner-semana .aviso {
+  padding-right: 48px;
+}
+.banner-semana__fechar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: var(--alvo-toque);
+  height: var(--alvo-toque);
+  border: 0;
+  background: none;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--cor-tinta);
+  cursor: pointer;
+}
+
+/* ------------------------------------------------------------ seletor de dias */
+.seletor-dias {
+  margin-inline: calc(var(--espaco-4) * -1);
+}
+.seletor-dias__lista {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding: 6px var(--espaco-4) 10px;
+  scrollbar-width: none;
+}
+.seletor-dias__lista::-webkit-scrollbar {
+  display: none;
+}
+.seletor-dias__lista li {
+  scroll-snap-align: center;
+}
+.dia {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 1px;
+  width: 58px;
+  height: 78px;
+  border: 0;
+  border-radius: 16px;
+  background: var(--cor-superficie);
+  color: var(--cor-tinta);
+  box-shadow: var(--sombra-cartao);
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+.dia:hover {
+  transform: translateY(-1px);
+}
+.dia__semana {
+  font-family: var(--fonte-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  color: var(--cor-texto-suave);
+}
+.dia__numero {
+  font-family: var(--fonte-display);
+  font-size: 1.95rem;
+  line-height: 1;
+}
+.dia__ponto {
+  width: 6px;
+  height: 6px;
+  margin-top: 4px;
+  border-radius: 50%;
+  background: transparent;
+}
+.dia__ponto--on {
+  background: var(--cor-acento);
+}
+.dia--hoje::before {
+  content: '';
+  position: absolute;
+  top: 7px;
+  width: 16px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--cor-acento);
+}
+.dia--vazio {
+  background: var(--cor-superficie-2);
+  box-shadow: none;
+  outline: 1px dashed var(--cor-linha);
+  outline-offset: -1px;
+}
+.dia--vazio .dia__numero {
+  color: var(--cor-texto-suave);
+}
+.dia--ativo {
+  background: var(--cor-tinta);
+  color: var(--cor-texto-invertido);
+  outline: none;
+  box-shadow: var(--sombra-elevada);
+}
+.dia--ativo .dia__semana,
+.dia--ativo .dia__numero {
+  color: var(--cor-texto-invertido);
+}
+.dia--ativo .dia__ponto--on {
+  background: var(--cor-acento-claro);
+}
+
+/* ------------------------------------------------------------ dia da agenda */
+.dia-agenda {
+  display: grid;
+  gap: 12px;
+}
+.dia-agenda__cabeca {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+.dia-agenda__titulo {
+  font-size: 1.3rem;
+  font-weight: 500;
+  font-style: italic;
+}
+.dia-agenda__contagem {
+  font-family: var(--fonte-display);
+  font-size: 1.05rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cor-texto-suave);
+  white-space: nowrap;
+}
+.lista-sessoes {
+  display: grid;
+  gap: 14px;
+}
+
+/* ------------------------------------------------------------ cartão de sessão */
+.cartao-sessao {
+  --pad: 16px;
+  position: relative;
+  padding: 4px var(--pad) 12px;
+  border-radius: 18px;
+  background: var(--cor-superficie);
+  box-shadow: var(--sombra-cartao);
+  animation: subir 380ms calc(var(--i, 0) * 60ms) cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.cartao-sessao--confirmado::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 18px;
+  bottom: 18px;
+  width: 4px;
+  border-radius: 0 4px 4px 0;
+  background: var(--cor-sucesso);
+}
+.cartao-sessao--espera::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 18px;
+  bottom: 18px;
+  width: 4px;
+  border-radius: 0 4px 4px 0;
+  background: var(--cor-aviso);
+}
+.cartao-sessao__link {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+  margin-inline: calc(var(--pad) * -1);
+  padding: 12px var(--pad) 8px;
+  border-radius: 18px 18px 0 0;
+  color: inherit;
+  text-decoration: none;
+}
+.cartao-sessao__link:hover .cartao-sessao__nome {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.cartao-sessao__hora {
+  font-family: var(--fonte-display);
+  font-size: 2.9rem;
+  line-height: 0.9;
+  letter-spacing: 0.01em;
+}
+.cartao-sessao__info {
+  display: grid;
+  min-width: 0;
+}
+.cartao-sessao__nome {
+  font-weight: 600;
+  font-size: 1.125rem;
+  line-height: 1.25;
+}
+.cartao-sessao__meta {
+  font-size: 0.9rem;
+  color: var(--cor-texto-suave);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cartao-sessao__vagas {
+  display: grid;
+  justify-items: end;
+  gap: 6px;
+  text-align: right;
+}
+.cartao-sessao__vagas-texto {
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.2;
+  max-width: 11ch;
+}
+.cartao-sessao__vagas-texto--cheia {
+  color: var(--cor-bloqueio-texto);
+}
+.barra-vagas {
+  display: block;
+  width: 76px;
+  height: 4px;
+  border-radius: 4px;
+  background: var(--cor-papel-escuro);
+  overflow: hidden;
+}
+.barra-vagas--larga {
+  width: 100%;
+  height: 5px;
+  margin-top: 12px;
+}
+.barra-vagas__preenchido {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--cor-acento);
+  transition: width 400ms ease;
+}
+.cartao-sessao--cancelada .cartao-sessao__hora {
+  text-decoration: line-through;
+  text-decoration-thickness: 3px;
+  color: var(--cor-texto-suave);
+}
+.cartao-sessao--cancelada,
+.cartao-sessao--encerrada {
+  background: var(--cor-superficie-2);
+}
+.cartao-sessao--encerrada .cartao-sessao__link {
+  opacity: 0.7;
+}
+
+/* ------------------------------------------------------------ ações de check-in */
+.acoes {
+  display: grid;
+  gap: 8px;
+}
+.acoes__linha {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.acoes__principal {
+  flex: 1 1 auto;
+}
+.acoes__secundaria {
+  margin-left: auto;
+}
+.acoes__motivo {
+  font-size: 0.925rem;
+  font-style: italic;
+  color: var(--cor-texto-suave);
+}
+.acoes__motivo--bloqueada,
+.acoes__motivo--confirmado {
+  color: var(--cor-bloqueio-texto);
+}
+.acoes__retorno {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+.acoes__retorno:empty {
+  display: contents;
+}
+.acoes__retorno--sucesso { color: var(--cor-sucesso-texto); }
+.acoes__retorno--erro { color: var(--cor-bloqueio-texto); }
+.acoes__confirmar {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--cor-papel);
+}
+.acoes__confirmar-botoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.acoes--grande .chip {
+  min-height: 40px;
+  font-size: 1.05rem;
+  padding-inline: 14px 16px;
+}
+.acoes--grande .acoes__principal {
+  width: 100%;
+}
+
+/* ------------------------------------------------------------ detalhe (ticket) */
+.ticket {
+  --pad: 20px;
+  position: relative;
+  padding: 22px var(--pad) 0;
+  border-radius: var(--raio-g);
+  background: var(--cor-superficie);
+  box-shadow: var(--sombra-elevada);
+  animation: subir 400ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.ticket__titulo {
+  font-family: var(--fonte-display);
+  font-weight: 400;
+  font-size: 3.1rem;
+  line-height: 0.92;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.ticket--cancelada .ticket__titulo {
+  text-decoration: line-through;
+  text-decoration-thickness: 3px;
+  color: var(--cor-texto-suave);
+}
+.ticket__meta {
+  margin-top: 8px;
+  color: var(--cor-texto-suave);
+  font-variant-numeric: tabular-nums;
+}
+.ticket__acoes {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  padding: 4px 0 max(18px, env(safe-area-inset-bottom));
+  background: var(--cor-superficie);
+  border-radius: 0 0 var(--raio-g) var(--raio-g);
+}
+.treino {
+  display: grid;
+  gap: 10px;
+  padding-bottom: 6px;
+}
+.treino__sobre {
+  font-family: var(--fonte-display);
+  font-size: 1rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cor-acento-texto);
+}
+.treino__titulo {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.treino__texto {
+  display: grid;
+  gap: 10px;
+  white-space: pre-line;
+}
+.em-breve {
+  display: grid;
+  gap: 4px;
+  padding: 18px;
+  border: 2px dashed var(--cor-linha);
+  border-radius: var(--raio-m);
+  text-align: center;
+}
+.em-breve__titulo {
+  font-family: var(--fonte-display);
+  font-size: 2rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.em-breve__texto {
+  font-style: italic;
+  color: var(--cor-texto-suave);
+}
+
+/* bloco de vídeo: cartão escuro estilo miniatura, abre o link em nova aba */
+.video {
+  position: relative;
+  display: grid;
+  align-content: end;
+  min-height: 190px;
+  margin-top: 6px;
+  padding: 16px;
+  overflow: hidden;
+  border-radius: var(--raio-m);
+  background:
+    radial-gradient(80% 90% at 80% 10%, var(--brilho-acento), transparent 60%),
+    repeating-linear-gradient(135deg, var(--cor-tinta) 0 14px, var(--cor-tinta-2) 14px 15px),
+    var(--cor-tinta);
+  color: var(--cor-texto-invertido);
+  text-decoration: none;
+  box-shadow: var(--sombra-cartao);
+}
+.video__selo {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 2px 10px;
+  border-radius: var(--raio-pilula);
+  background: var(--cor-acento);
+  color: var(--cor-sobre-acento);
+  font-family: var(--fonte-display);
+  font-size: 1rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.video__play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 66px;
+  height: 66px;
+  margin: -46px 0 0 -33px;
+  padding-left: 4px;
+  border-radius: 50%;
+  background: var(--cor-texto-invertido);
+  color: var(--cor-tinta);
+  box-shadow: 0 0 0 8px var(--anel-play);
+  transition: transform 180ms ease;
+}
+.video:hover .video__play {
+  transform: scale(1.06);
+}
+.video__texto {
+  position: relative;
+  display: grid;
+}
+.video__titulo {
+  font-family: var(--fonte-display);
+  font-size: 1.6rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+.video__link {
+  font-size: 0.95rem;
+  color: var(--cor-texto-invertido-suave);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ------------------------------------------------------------ notificações */
+.notificacoes__topo {
+  display: flex;
+  justify-content: flex-end;
+  margin-block: -8px -8px;
+}
+.notificacoes {
+  display: grid;
+  gap: 10px;
+}
+.notificacao {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  min-height: 64px;
+  padding: 14px 16px;
+  border: 0;
+  border-radius: var(--raio-m);
+  background: var(--cor-superficie);
+  box-shadow: var(--sombra-cartao);
+  text-align: left;
+  cursor: pointer;
+}
+.notificacao__marca {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  margin-top: 8px;
+  border-radius: 50%;
+  background: var(--cor-acento);
+}
+.notificacao__corpo {
+  display: grid;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+.notificacao__titulo {
+  font-weight: 600;
+}
+.notificacao__texto {
+  font-size: 0.975rem;
+}
+.notificacao__data {
+  font-size: 0.85rem;
+  color: var(--cor-texto-suave);
+  font-variant-numeric: tabular-nums;
+}
+.notificacao__nova {
+  flex: none;
+  font-family: var(--fonte-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cor-acento-texto);
+}
+.notificacao--lida {
+  background: var(--cor-superficie-2);
+  box-shadow: none;
+  outline: 1px solid var(--cor-linha);
+  outline-offset: -1px;
+}
+.notificacao--lida .notificacao__marca {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--cor-linha);
+}
+.notificacao--lida .notificacao__titulo {
+  font-weight: 500;
+}
+
+/* ------------------------------------------------------------ perfil */
+.perfil-cartao {
+  display: grid;
+  gap: 12px;
+}
+.perfil-cartao__topo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.perfil-cartao__nome {
+  font-family: var(--fonte-display);
+  font-size: 1.9rem;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.perfil-cartao__email {
+  color: var(--cor-texto-suave);
+  font-size: 0.95rem;
+  word-break: break-all;
+}
+.instalar {
+  display: grid;
+  gap: 10px;
+}
+.instalar__ok {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--cor-sucesso-texto);
+  font-weight: 600;
+}
+.instalar svg,
+.instalar p svg {
+  display: inline-block;
+  vertical-align: -3px;
+}
+
+/* ------------------------------------------------------------ desktop */
+@media (min-width: 720px) {
+  .coluna {
+    padding-top: 40px;
+  }
+  .cabecalho__titulo {
+    font-size: 4rem;
+  }
+}

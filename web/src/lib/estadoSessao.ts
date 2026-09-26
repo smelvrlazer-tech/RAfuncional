@@ -37,6 +37,9 @@ export function estadoSessao(s: LinhaAgenda, opcoes: OpcoesEstado): EstadoSessao
   const inicio = new Date(s.inicia_em).getTime()
   const fim = inicio + s.duracao_min * 60_000
   const t = agora.getTime()
+  // O servidor decide (bloqueada veio da view no momento da consulta), mas se a
+  // tela ficou aberta o prazo pode ter passado desde então: reflete localmente.
+  const bloqueada = s.bloqueada || inicio - limiteMin * 60_000 <= t
 
   const base = ((): EstadoSessao => {
     if (s.cancelada) {
@@ -49,7 +52,7 @@ export function estadoSessao(s: LinhaAgenda, opcoes: OpcoesEstado): EstadoSessao
       return { tom: 'encerrada', acao: null, rotulo, rotuloAcao: null, motivo: null }
     }
     if (s.meu_status === 'confirmado') {
-      return s.bloqueada
+      return bloqueada
         ? { tom: 'confirmado', acao: null, rotulo: 'Confirmado', rotuloAcao: null, motivo: `Cancelamento bloqueado — faltam menos de ${prazo}` }
         : { tom: 'confirmado', acao: 'cancelar', rotulo: 'Confirmado', rotuloAcao: 'Cancelar', motivo: null }
     }
@@ -57,10 +60,10 @@ export function estadoSessao(s: LinhaAgenda, opcoes: OpcoesEstado): EstadoSessao
       const rotulo = s.minha_posicao ? `Fila de espera · Nº${s.minha_posicao}` : 'Fila de espera'
       return {
         tom: 'espera', acao: 'sair_fila', rotulo, rotuloAcao: 'Sair da fila',
-        motivo: s.bloqueada ? `A fila congelou — faltam menos de ${prazo} para a aula` : null,
+        motivo: bloqueada ? `A fila congelou — faltam menos de ${prazo} para a aula` : null,
       }
     }
-    if (s.bloqueada) {
+    if (bloqueada) {
       return {
         tom: 'bloqueada', acao: null, rotulo: `Bloqueado — faltam menos de ${prazo}`, rotuloAcao: null,
         motivo: `Check-in e cancelamento fecham ${prazo} antes da aula.`,

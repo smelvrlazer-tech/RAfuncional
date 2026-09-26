@@ -79,8 +79,16 @@
   --largura-coluna: 480px;
   --alvo-toque: 44px;
 
-  /* Grão do papel (ruído SVG) */
+  /* Efeitos de papel e luz */
+  --papel-luz: rgba(255, 255, 255, 0.55);
+  --papel-sombra: rgba(233, 225, 211, 0.9);
+  --sombra-furo: rgba(34, 30, 26, 0.12);
+  --brilho-acento: rgba(192, 86, 43, 0.28);
+  --anel-play: rgba(244, 239, 230, 0.16);
+
+  /* Grão do papel (ruído SVG; a cor do grão está na matriz: tinta quente) */
   --grao-opacidade: 0.07;
+  --grao-imagem: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.13 0 0 0 0 0.11 0 0 0 0 0.1 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
 
   /* PWA (manter em sincronia com o manifest em vite.config.ts) */
   --cor-tema: #221e1a;

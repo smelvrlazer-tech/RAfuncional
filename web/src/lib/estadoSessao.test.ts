@@ -107,6 +107,15 @@ describe('estadoSessao', () => {
     expect(est({ meu_status: 'espera', minha_posicao: 1 }, { ativo: false }).acao).toBeNull()
   })
 
+  it('tela aberta há muito tempo: prazo passou desde a consulta, reflete bloqueio localmente', () => {
+    // começa em 59 min; o servidor ainda dizia bloqueada=false quando consultou
+    const e = estadoSessao(linha({ inicia_em: '2026-08-04T08:59:00Z', bloqueada: false }), { agora: AGORA })
+    expect(e.tom).toBe('bloqueada')
+    // 61 min antes ainda está liberada
+    const l = estadoSessao(linha({ inicia_em: '2026-08-04T09:01:00Z', bloqueada: false }), { agora: AGORA })
+    expect(l.tom).toBe('disponivel')
+  })
+
   it('usa o prazo configurado no banco no texto do bloqueio', () => {
     expect(est({ bloqueada: true }, { limiteMin: 90 }).rotulo).toBe('Bloqueado — faltam menos de 1h30')
     expect(est({ bloqueada: true }, { limiteMin: 30 }).motivo).toBe('Check-in e cancelamento fecham 30 min antes da aula.')
