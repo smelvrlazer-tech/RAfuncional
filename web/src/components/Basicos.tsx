@@ -9,7 +9,7 @@ export function Perfuracao({ className = '' }: { className?: string }) {
   return <div className={`perfuracao ${className}`} role="presentation" />
 }
 
-type Variante = 'primario' | 'contorno' | 'texto' | 'escuro'
+type Variante = 'primario' | 'contorno' | 'texto' | 'escuro' | 'perigo'
 
 export function Botao({
   variante = 'primario', carregando = false, children, className = '', disabled, ...resto

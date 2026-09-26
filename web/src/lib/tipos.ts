@@ -40,3 +40,39 @@ export interface Notificacao {
   lida_em: string | null
   criado_em: string
 }
+
+/* ------------------------------------------------------------ painel do treinador */
+
+/** Linha de `turmas` (0002_turmas_sessoes.sql). hora_inicio vem como "HH:MM:SS". */
+export interface Turma {
+  id: string
+  nome: string
+  dia_semana: number
+  hora_inicio: string
+  duracao_min: number
+  vagas: number
+  ativa: boolean
+}
+
+/** Linha de `treinos` (0005_treinos.sql). publicado_em nulo = rascunho. */
+export interface Treino {
+  id: string
+  data: string
+  titulo: string
+  descricao: string
+  video_url: string | null
+  publicado_em: string | null
+}
+
+export type StatusConvite = 'pendente' | 'usado' | 'revogado'
+
+/** Linha de `convites` (0006_convites.sql) com o nome de quem usou. */
+export interface Convite {
+  id: string
+  codigo: string
+  nome_previsto: string | null
+  status: StatusConvite
+  expira_em: string
+  criado_em: string
+  usado_por_nome: string | null
+}

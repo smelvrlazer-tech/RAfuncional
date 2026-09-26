@@ -85,6 +85,12 @@
   --sombra-furo: rgba(34, 30, 26, 0.12);
   --brilho-acento: rgba(192, 86, 43, 0.28);
   --anel-play: rgba(244, 239, 230, 0.16);
+  --cor-veu: rgba(34, 30, 26, 0.58);           /* fundo do modal */
+  --linha-controle: rgba(244, 239, 230, 0.06); /* grade da "sala de controle" */
+
+  /* Painel do treinador (desktop-first) */
+  --largura-painel: 1360px;
+  --largura-lateral: 236px;
 
   /* Grão do papel (ruído SVG; a cor do grão está na matriz: tinta quente) */
   --grao-opacidade: 0.07;

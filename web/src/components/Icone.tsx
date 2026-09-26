@@ -15,6 +15,14 @@ const CAMINHOS = {
   semRede: 'M3 3l18 18M8.5 16.5a5 5 0 017 0M5 13a10 10 0 015.2-2.8M14.5 10.4A10 10 0 0119 13M2 9.5a14 14 0 014.3-2.7M11 5.1A14 14 0 0122 9.5M12 20h.01',
   relogio: 'M12 3a9 9 0 100 18 9 9 0 000-18zM12 7v5l3.5 2',
   compartilhar: 'M12 3v12M7.5 7.5L12 3l4.5 4.5M6 11H5v10h14V11h-1',
+  grade: 'M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z',
+  calendario: 'M4 6h16v14H4zM4 10h16M8 3v5M16 3v5',
+  prancheta: 'M9 3.5h6v3H9zM7 5H5v15.5h14V5h-2M8.5 11.5h7M8.5 15.5h5',
+  pessoas: 'M9 11a3.5 3.5 0 100-7 3.5 3.5 0 000 7zM2.5 20a6.5 6.5 0 0113 0M16 4.3a3.5 3.5 0 010 6.4M18 14.2a6.5 6.5 0 013.5 5.8',
+  mais: 'M12 5v14M5 12h14',
+  lapis: 'M4 20l4.5-1 10-10a2.1 2.1 0 00-3-3l-10 10zM13.5 7.5l3 3',
+  copiar: 'M9 9h11v11H9zM5 15H4V4h11v1',
+  mensagem: 'M4 5h16v11H9l-5 4z',
 } as const
 
 export type NomeIcone = keyof typeof CAMINHOS

@@ -3,6 +3,7 @@ import { Icone, type NomeIcone } from './Icone'
 
 const ICONE: Partial<Record<Tom, NomeIcone>> = {
   confirmado: 'check',
+  disponivel: 'check',
   espera: 'fila',
   bloqueada: 'cadeado',
   cancelada: 'x',
@@ -11,8 +12,8 @@ const ICONE: Partial<Record<Tom, NomeIcone>> = {
 }
 
 /** Status sempre com ícone + texto (cor nunca é o único sinal). */
-export function Chip({ tom, children }: { tom: Tom; children: string }) {
-  const icone = ICONE[tom]
+export function Chip({ tom, children, icone: forcado }: { tom: Tom; children: string; icone?: NomeIcone }) {
+  const icone = forcado ?? ICONE[tom]
   return (
     <span className={`chip chip--${tom}`}>
       {icone && <Icone nome={icone} tamanho={15} />}
