@@ -18,6 +18,14 @@
   font-size: 1rem;
 }
 .chip--disponivel { background: var(--cor-sucesso-fundo); color: var(--cor-sucesso-texto); }
+/* Ícone e texto na mesma linha dentro dos botões do painel (svg é display:block na base). */
+.painel .botao > span:not(.botao__girando),
+.veu .botao > span:not(.botao__girando),
+.painel a.botao {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
 .botao--perigo {
   background: var(--cor-bloqueio);
   color: var(--cor-sobre-acento);
@@ -172,7 +180,8 @@
 .controle--compacto .controle__titulo { font-size: 2.8rem; }
 .controle .botao--primario { justify-self: start; }
 
-.navegar-dia { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.navegar-dia { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.navegar-dia__seta { flex: none; }
 .navegar-dia__seta {
   display: inline-grid;
   place-items: center;
@@ -187,13 +196,17 @@
 .navegar-dia__seta:hover { box-shadow: inset 0 0 0 1.5px var(--cor-texto-invertido-suave); }
 .navegar-dia__atalhos {
   display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
   padding: 3px;
   border-radius: var(--raio-pilula);
   background: var(--cor-tinta-2);
 }
 .navegar-dia__atalho {
+  flex: 1 1 auto;
   min-height: var(--alvo-toque);
-  padding: 0 16px;
+  padding: 0 clamp(8px, 2.5vw, 16px);
+  white-space: nowrap;
   border: 0;
   border-radius: var(--raio-pilula);
   background: transparent;
@@ -236,7 +249,7 @@
 .grade-aulas {
   display: grid;
   gap: 16px;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr));
   align-items: start;
 }
 .aula {
@@ -252,7 +265,16 @@
   animation: subir 380ms calc(var(--i, 0) * 50ms) cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 .aula:hover { transform: translateY(-2px); box-shadow: var(--sombra-elevada); }
-.aula__cabeca { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px; }
+.aula__cabeca {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: 'hora placar' 'info info';
+  align-items: end;
+  gap: 6px 12px;
+}
+.aula__hora { grid-area: hora; }
+.aula__placar { grid-area: placar; }
+.aula__info { grid-area: info; min-width: 0; }
 .aula__hora {
   font-family: var(--fonte-display);
   font-size: 2.9rem;
@@ -458,7 +480,8 @@
 .editor-treino__topo .cartao__titulo { margin-bottom: 0; }
 
 /* ------------------------------------------------------------ alunos e convites */
-.alunos-grade { display: grid; gap: 20px; align-items: start; }
+.alunos-grade { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; align-items: start; }
+.alunos-grade > * { min-width: 0; }
 .alunos-grade__lado { display: grid; gap: 20px; }
 .tabela-rolagem { overflow-x: auto; margin-inline: -4px; padding-inline: 4px; }
 .tabela { width: 100%; border-collapse: collapse; }
@@ -479,6 +502,7 @@
 .tabela tbody tr:last-child > * { border-bottom: 0; }
 .tabela th[scope='row'] { font-weight: 600; }
 .tabela__nome { display: inline-flex; align-items: center; gap: 10px; }
+@media (min-width: 960px) { .tabela__nome { white-space: nowrap; } }
 .tabela__vazio { color: var(--cor-texto-suave); }
 .tabela__acao { text-align: right; }
 .tabela__linha--inativa th[scope='row'] { color: var(--cor-texto-suave); }
@@ -553,8 +577,26 @@
   .alunos-grade { grid-template-columns: minmax(0, 1.35fr) minmax(340px, 1fr); }
 }
 
-@media (min-width: 1180px) {
+@media (min-width: 1440px) {
   .grade-dias { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 1180px) {
   .semana-treinos { grid-template-columns: repeat(7, minmax(0, 1fr)); }
   .dia-treino { min-height: 170px; }
+}
+
+/* Celular: telefone vai para baixo do nome e a coluna some (a ação fica visível sem rolar). */
+.tabela__tel-movel { display: none; }
+@media (max-width: 639px) {
+  .tabela .tabela__tel { display: none; }
+  .tabela .avatar--mini { display: none; }
+  .tabela a.tabela__tel-movel {
+    display: block;
+    min-height: 32px;
+    line-height: 32px;
+    white-space: nowrap;
+    font-weight: 400;
+    font-size: 0.95rem;
+  }
 }

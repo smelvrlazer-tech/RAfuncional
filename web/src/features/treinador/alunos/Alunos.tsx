@@ -57,13 +57,16 @@ export function Alunos() {
               <table className="tabela">
                 <caption className="sr-only">Alunos cadastrados, com telefone e situação</caption>
                 <thead>
-                  <tr><th scope="col">Nome</th><th scope="col">Telefone</th><th scope="col">Situação</th><th scope="col"><span className="sr-only">Ação</span></th></tr>
+                  <tr><th scope="col">Nome</th><th scope="col" className="tabela__tel">Telefone</th><th scope="col">Situação</th><th scope="col"><span className="sr-only">Ação</span></th></tr>
                 </thead>
                 <tbody>
                   {lista.map((a) => (
                     <tr key={a.id} className={a.ativo ? '' : 'tabela__linha--inativa'}>
-                      <th scope="row"><span className="tabela__nome"><Avatar nome={a.nome} className="avatar--mini" />{a.nome}</span></th>
-                      <td>{a.telefone ? <a href={`tel:${a.telefone.replace(/[^\d+]/g, '')}`}>{a.telefone}</a> : <span className="tabela__vazio">—</span>}</td>
+                      <th scope="row">
+                        <span className="tabela__nome"><Avatar nome={a.nome} className="avatar--mini" />{a.nome}</span>
+                        {a.telefone && <a className="tabela__tel-movel" href={`tel:${a.telefone.replace(/[^\d+]/g, '')}`}>{a.telefone}</a>}
+                      </th>
+                      <td className="tabela__tel">{a.telefone ? <a href={`tel:${a.telefone.replace(/[^\d+]/g, '')}`}>{a.telefone}</a> : <span className="tabela__vazio">—</span>}</td>
                       <td><Chip tom={a.ativo ? 'confirmado' : 'cancelada'}>{a.ativo ? 'Ativo' : 'Inativo'}</Chip></td>
                       <td className="tabela__acao">
                         <Botao variante="texto" onClick={() => { setErroDialogo(null); setAlvo(a) }}

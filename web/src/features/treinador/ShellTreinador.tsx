@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../../auth/AuthContext'
 import { Botao } from '../../components/Basicos'
 import { Icone, type NomeIcone } from '../../components/Icone'
@@ -17,6 +17,7 @@ export function ShellTreinador() {
   const { perfil, sair } = useAuth()
   const [saindo, setSaindo] = useState(false)
   const primeiroNome = perfil?.nome.split(/\s+/)[0] ?? ''
+  const sessaoAberta = useLocation().pathname.startsWith('/treinador/sessao/')
 
   return (
     <div className="painel">
@@ -32,7 +33,13 @@ export function ShellTreinador() {
           <ul>
             {ITENS.map((i) => (
               <li key={i.para}>
-                <NavLink to={i.para} end={i.fim} className="lateral__item">
+                <NavLink
+                  to={i.para}
+                  end={i.fim}
+                  // A visão da sessão é um detalhe do painel do dia: mantém "Painel" marcado.
+                  className={({ isActive }) =>
+                    `lateral__item ${isActive || (i.fim && sessaoAberta) ? 'active' : ''}`}
+                >
                   <Icone nome={i.icone} tamanho={20} />
                   <span>{i.rotulo}</span>
                 </NavLink>
