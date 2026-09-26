@@ -10,6 +10,7 @@ import './styles/tokens.css'
 import './styles/base.css'
 import './styles/componentes.css'
 import './styles/telas.css'
+import './styles/treinador.css'
 import { App } from './App'
 import { registrarPwa } from './pwa'
 

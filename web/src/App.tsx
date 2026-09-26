@@ -1,4 +1,4 @@
-import { Link, Route, Routes } from 'react-router-dom'
+import { Link, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { AuthProvider } from './auth/AuthContext'
 import { ExigeAluno, ExigeTreinador, SomenteDeslogado } from './auth/guards'
 import { AvisoOffline } from './components/AvisoOffline'
@@ -8,7 +8,12 @@ import { Agenda } from './features/agenda/Agenda'
 import { Notificacoes } from './features/notificacoes/Notificacoes'
 import { Perfil } from './features/perfil/Perfil'
 import { DetalheSessao } from './features/sessao/DetalheSessao'
-import { PainelTreinador } from './features/treinador/PainelTreinador'
+import { Alunos } from './features/treinador/alunos/Alunos'
+import { PainelDia } from './features/treinador/painel/PainelDia'
+import { SessaoTreinador } from './features/treinador/sessao/SessaoTreinador'
+import { ShellTreinador } from './features/treinador/ShellTreinador'
+import { Treinos } from './features/treinador/treinos/Treinos'
+import { Turmas } from './features/treinador/turmas/Turmas'
 import { configuracaoAusente } from './lib/supabase'
 
 function NaoEncontrada() {
@@ -28,7 +33,14 @@ export function Rotas() {
       <Route path="/entrar" element={<SomenteDeslogado><Entrar /></SomenteDeslogado>} />
       <Route path="/convite" element={<Convite />} />
       <Route path="/convite/:codigo" element={<Convite />} />
-      <Route path="/treinador" element={<ExigeTreinador><PainelTreinador /></ExigeTreinador>} />
+      <Route path="/treinador" element={<ExigeTreinador><ShellTreinador /></ExigeTreinador>}>
+        <Route index element={<PainelDia />} />
+        <Route path="sessao/:id" element={<SessaoTreinador />} />
+        <Route path="turmas" element={<Turmas />} />
+        <Route path="treinos" element={<Treinos />} />
+        <Route path="alunos" element={<Alunos />} />
+        <Route path="*" element={<Navigate to="/treinador" replace />} />
+      </Route>
       <Route element={<ExigeAluno />}>
         <Route index element={<Agenda />} />
         <Route path="/sessao/:id" element={<DetalheSessao />} />
@@ -37,6 +49,17 @@ export function Rotas() {
       </Route>
       <Route path="*" element={<NaoEncontrada />} />
     </Routes>
+  )
+}
+
+/** O painel do treinador usa a largura toda (desktop-first); o app do aluno, a coluna estreita. */
+function Conteudo() {
+  const { pathname } = useLocation()
+  const treinador = pathname === '/treinador' || pathname.startsWith('/treinador/')
+  return (
+    <div id="conteudo" className={treinador ? 'coluna coluna--larga' : 'coluna'}>
+      <Rotas />
+    </div>
   )
 }
 
@@ -53,9 +76,7 @@ export function App() {
     <AuthProvider>
       <a href="#conteudo" className="pular">Pular para o conteúdo</a>
       <AvisoOffline />
-      <div id="conteudo" className="coluna">
-        <Rotas />
-      </div>
+      <Conteudo />
     </AuthProvider>
   )
 }

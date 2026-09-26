@@ -43,6 +43,7 @@ export function ExigeAluno() {
   )
 }
 
+/** Área do treinador: só `perfis.papel = 'treinador'`; aluno volta para a agenda. */
 export function ExigeTreinador({ children }: { children: ReactNode }) {
   const { carregando, sessao, perfil, erroPerfil } = useAuth()
   if (carregando) return <Carregando />
