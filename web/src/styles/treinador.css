@@ -62,6 +62,11 @@
   gap: 20px;
   min-width: 0;
 }
+/* Mesma proteção de .tela (ver base.css): sem isso, um filho flex com
+   justify-content: space-between pode vazar além da largura do grid. */
+.tela-treinador > * {
+  min-width: 0;
+}
 
 .lateral {
   --pad: 14px;
