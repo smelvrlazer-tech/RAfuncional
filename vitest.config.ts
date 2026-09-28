@@ -9,5 +9,9 @@ export default defineConfig({
     fileParallelism: false,
     testTimeout: 20000,
     hookTimeout: 20000,
+    // web/ tem sua própria suíte (ambiente jsdom, config própria) e roda com
+    // `npm test` dentro de web/. Sem isso o vitest da raiz também coleta os
+    // testes do front e falha com "document is not defined".
+    include: ['tests/**/*.test.ts'],
   },
 })
