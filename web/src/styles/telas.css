@@ -291,6 +291,11 @@
   background: var(--cor-superficie);
   box-shadow: var(--sombra-cartao);
   animation: subir 380ms calc(var(--i, 0) * 60ms) cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  transition: transform var(--medio) var(--curva-saida), box-shadow var(--medio) var(--curva-saida);
+}
+.cartao-sessao:has(.cartao-sessao__link:hover) {
+  transform: translateY(-2px);
+  box-shadow: var(--sombra-elevada);
 }
 .cartao-sessao--confirmado::before {
   content: '';

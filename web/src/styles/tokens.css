@@ -98,4 +98,17 @@
 
   /* PWA (manter em sincronia com o manifest em vite.config.ts) */
   --cor-tema: #221e1a;
+
+  /* Movimento (a mesma curva em todo o app: sai rápido, assenta suave) */
+  --curva-saida: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --curva-entrada: cubic-bezier(0.4, 0, 1, 1);
+  --rapido: 140ms;
+  --medio: 220ms;
+
+  /* Brilho de foco (halo suave em vez de contorno duro) */
+  --brilho-foco: 0 0 0 4px rgba(192, 86, 43, 0.16), 0 0 0 1.5px var(--cor-acento);
+
+  /* Base do esqueleto de carregamento */
+  --cor-esqueleto: #ebe4d6;
+  --cor-esqueleto-brilho: #f7f2e8;
 }

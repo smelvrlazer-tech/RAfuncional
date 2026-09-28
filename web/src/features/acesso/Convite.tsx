@@ -148,15 +148,15 @@ export function Convite({ semPerfil = false }: { semPerfil?: boolean }) {
     <TelaAcesso subtitulo={subtitulo} faixa={faixa}>
       {logado && <p className="acesso__conta">Conectado como <strong>{sessao.user.email}</strong></p>}
       <form className="formulario" onSubmit={enviar} noValidate>
-        <Campo rotulo="Seu nome" autoComplete="name" value={nome} onChange={(e) => setNome(e.target.value)}
+        <Campo rotulo="Seu nome" icone="pessoa" autoComplete="name" value={nome} onChange={(e) => setNome(e.target.value)}
           erro={erros.nome} required />
-        <Campo rotulo="Telefone (opcional)" type="tel" inputMode="tel" autoComplete="tel" value={telefone}
+        <Campo rotulo="Telefone (opcional)" icone="telefone" type="tel" inputMode="tel" autoComplete="tel" value={telefone}
           onChange={(e) => setTelefone(e.target.value)} />
         {!logado && (
           <>
-            <Campo rotulo="E-mail" type="email" inputMode="email" autoComplete="email" value={email}
+            <Campo rotulo="E-mail" icone="email" type="email" inputMode="email" autoComplete="email" value={email}
               onChange={(e) => setEmail(e.target.value)} erro={erros.email} required />
-            <Campo rotulo="Crie uma senha" type="password" autoComplete="new-password" value={senha}
+            <Campo rotulo="Crie uma senha" icone="cadeado" type="password" autoComplete="new-password" value={senha}
               onChange={(e) => setSenha(e.target.value)} erro={erros.senha} dica={`Mínimo de ${SENHA_MINIMA} caracteres.`}
               minLength={SENHA_MINIMA} required />
           </>

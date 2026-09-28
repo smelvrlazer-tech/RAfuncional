@@ -111,6 +111,13 @@ ul, ol {
   display: grid;
   gap: var(--espaco-4);
 }
+/* Sem isso, um item de grid que por dentro é flex (como .cabecalho, com
+   justify-content: space-between) pode "explodir" além da largura da coluna,
+   porque o tamanho mínimo automático de um item de grid é o do seu conteúdo,
+   não o do contêiner. É a causa de conteúdo cortado nas bordas em telas estreitas. */
+.tela > * {
+  min-width: 0;
+}
 
 .tela--centro {
   min-height: 70dvh;
@@ -137,6 +144,11 @@ ul, ol {
 @keyframes pulsar {
   0%, 100% { transform: scale(1) rotate(-4deg); opacity: 0.9; }
   50% { transform: scale(1.06) rotate(-4deg); opacity: 1; }
+}
+
+@keyframes brilhar {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {

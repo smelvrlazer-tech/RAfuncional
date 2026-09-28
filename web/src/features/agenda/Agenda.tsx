@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../../auth/AuthContext'
-import { Aviso, Avatar, Botao, Carregando } from '../../components/Basicos'
+import { Aviso, Avatar, Botao, EsqueletoLista } from '../../components/Basicos'
 import { Sino } from '../../components/Sino'
 import { chaveDiaSP, rotuloDiaLongo, semanaSeguinte } from '../../lib/datetime'
 import { mensagemErro } from '../../lib/erros'
@@ -114,7 +114,7 @@ export function Agenda() {
         )}
 
         {linhas === null && !erro ? (
-          <Carregando texto="Carregando a agenda…" />
+          <EsqueletoLista texto="Carregando a agenda…" />
         ) : doDia.length === 0 && !erro ? (
           <div className="vazio">
             <p className="vazio__titulo">Sem aulas neste dia</p>

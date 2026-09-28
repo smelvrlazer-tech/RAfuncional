@@ -1,7 +1,7 @@
 import type { ButtonHTMLAttributes, InputHTMLAttributes, ReactNode } from 'react'
 import { useId } from 'react'
 import { Link } from 'react-router-dom'
-import { Icone } from './Icone'
+import { Icone, type NomeIcone } from './Icone'
 import { iniciais } from '../lib/texto'
 
 /** Divisor tracejado com "picotes" laterais, como o canhoto de um ticket. */
@@ -44,8 +44,8 @@ export function Aviso({
 }
 
 export function Campo({
-  rotulo, dica, erro, ...input
-}: InputHTMLAttributes<HTMLInputElement> & { rotulo: string; dica?: string; erro?: string | null }) {
+  rotulo, dica, erro, icone, ...input
+}: InputHTMLAttributes<HTMLInputElement> & { rotulo: string; dica?: string; erro?: string | null; icone?: NomeIcone }) {
   const id = useId()
   const idDica = `${id}-dica`
   const idErro = `${id}-erro`
@@ -53,7 +53,10 @@ export function Campo({
   return (
     <div className="campo">
       <label className="campo__rotulo" htmlFor={id}>{rotulo}</label>
-      <input id={id} className="campo__entrada" aria-invalid={erro ? true : undefined} aria-describedby={descr} {...input} />
+      <div className={icone ? 'campo--com-icone' : undefined}>
+        <input id={id} className="campo__entrada" aria-invalid={erro ? true : undefined} aria-describedby={descr} {...input} />
+        {icone && <Icone nome={icone} tamanho={18} className="campo__icone" />}
+      </div>
       {dica && <p className="campo__dica" id={idDica}>{dica}</p>}
       {erro && <p className="campo__erro" id={idErro}>{erro}</p>}
     </div>
@@ -82,6 +85,23 @@ export function Carregando({ texto = 'Carregando…' }: { texto?: string }) {
     <div className="carregando" role="status">
       <span className="carregando__marca" aria-hidden="true" />
       <span>{texto}</span>
+    </div>
+  )
+}
+
+/** Placeholder animado no formato de um cartão de sessão, usado enquanto a lista carrega. */
+export function EsqueletoLista({ itens = 3, texto }: { itens?: number; texto: string }) {
+  return (
+    <div className="esqueleto-lista" role="status" aria-label={texto}>
+      {Array.from({ length: itens }, (_, i) => (
+        <div className="esqueleto-cartao" key={i} aria-hidden="true">
+          <span className="esqueleto-linha esqueleto-linha--hora" />
+          <span className="esqueleto-cartao__texto">
+            <span className="esqueleto-linha esqueleto-linha--titulo" />
+            <span className="esqueleto-linha esqueleto-linha--meta" />
+          </span>
+        </div>
+      ))}
     </div>
   )
 }

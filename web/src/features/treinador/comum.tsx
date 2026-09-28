@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { Aviso, Botao, Carregando } from '../../components/Basicos'
+import { Aviso, Botao, EsqueletoLista } from '../../components/Basicos'
 import { mensagemErro } from '../../lib/erros'
 
 /** Cartão escuro de "sala de controle" no topo de cada tela do treinador. */
@@ -43,7 +43,7 @@ export function EstadoLista({
       </Aviso>
     )
   }
-  if (carregando && vazio) return <Carregando texto={textoCarregando} />
+  if (carregando && vazio) return <EsqueletoLista itens={4} texto={textoCarregando} />
   if (vazio) {
     return (
       <div className="vazio">

@@ -33,9 +33,9 @@ export function Entrar() {
       faixa={<Aviso>Entre com o e-mail e a senha que você cadastrou pelo convite.</Aviso>}
     >
       <form className="formulario" onSubmit={entrar} noValidate>
-        <Campo rotulo="E-mail" type="email" inputMode="email" autoComplete="email" value={email}
+        <Campo rotulo="E-mail" icone="email" type="email" inputMode="email" autoComplete="email" value={email}
           onChange={(e) => setEmail(e.target.value)} required />
-        <Campo rotulo="Senha" type="password" autoComplete="current-password" value={senha}
+        <Campo rotulo="Senha" icone="cadeado" type="password" autoComplete="current-password" value={senha}
           onChange={(e) => setSenha(e.target.value)} required />
         <p className="formulario__retorno formulario__retorno--erro" role="alert" aria-live="assertive">{erro ?? ''}</p>
         <Botao type="submit" variante="primario" className="botao--largo" carregando={enviando}>

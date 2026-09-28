@@ -35,7 +35,7 @@ describe('PainelDia', () => {
       error: null,
     })
     montar()
-    expect(screen.getByText('Carregando as aulas do dia…')).toBeInTheDocument()
+    expect(screen.getByRole('status', { name: 'Carregando as aulas do dia…' })).toBeInTheDocument()
     const cartao = await screen.findByRole('article', { name: 'Funcional Manhã' })
     const c = within(cartao)
     expect(c.getByText('06:00')).toBeInTheDocument()

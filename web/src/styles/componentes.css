@@ -112,6 +112,12 @@
 }
 .botao--primario:hover:not(:disabled) {
   background: var(--cor-acento-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 0 var(--cor-acento-hover), var(--sombra-elevada);
+}
+.botao--primario:active:not(:disabled) {
+  transform: translateY(1px) scale(0.99);
+  box-shadow: 0 1px 0 var(--cor-acento-hover), var(--sombra-cartao);
 }
 .botao--contorno {
   background: transparent;
@@ -228,19 +234,39 @@
   border-radius: 12px;
   background: var(--cor-superficie-2);
   font-size: 1.0625rem;
-  transition: border-color 140ms ease, background-color 140ms ease;
+  box-shadow: inset 0 1px 2px rgba(34, 30, 26, 0.05);
+  transition: border-color var(--rapido) ease, background-color var(--rapido) ease,
+    box-shadow var(--rapido) ease, transform var(--rapido) ease;
 }
 .campo__entrada:hover {
   border-color: var(--cor-texto-suave);
 }
 .campo__entrada:focus-visible {
-  outline: 3px solid var(--cor-foco);
-  outline-offset: 1px;
-  border-color: var(--cor-tinta);
+  outline: none;
+  border-color: var(--cor-acento);
   background: var(--cor-superficie);
+  box-shadow: var(--brilho-foco);
 }
 .campo__entrada[aria-invalid='true'] {
   border-color: var(--cor-bloqueio);
+}
+/* Campo com ícone à esquerda (ver .campo--com-icone em Basicos.tsx) */
+.campo--com-icone {
+  position: relative;
+}
+.campo--com-icone .campo__entrada {
+  padding-left: 44px;
+}
+.campo__icone {
+  position: absolute;
+  left: 14px;
+  bottom: 13px;
+  color: var(--cor-texto-suave);
+  pointer-events: none;
+  transition: color var(--rapido) ease;
+}
+.campo__entrada:focus-visible ~ .campo__icone {
+  color: var(--cor-acento-texto);
 }
 .campo__entrada--codigo {
   font-family: var(--fonte-display);
@@ -398,6 +424,31 @@
 .offline[hidden] {
   display: none;
 }
+
+/* ------------------------------------------------------------ esqueleto (carregando, no formato do conteúdo final) */
+.esqueleto-lista {
+  display: grid;
+  gap: var(--espaco-3);
+}
+.esqueleto-cartao {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-4);
+  padding: var(--espaco-4);
+  border-radius: var(--raio-g);
+  background: var(--cor-superficie);
+  box-shadow: var(--sombra-cartao);
+}
+.esqueleto-linha {
+  border-radius: var(--raio-p);
+  background: linear-gradient(100deg, var(--cor-esqueleto) 30%, var(--cor-esqueleto-brilho) 50%, var(--cor-esqueleto) 70%);
+  background-size: 200% 100%;
+  animation: brilhar 1.6s ease-in-out infinite;
+}
+.esqueleto-linha--hora { width: 58px; height: 34px; flex: none; }
+.esqueleto-linha--titulo { width: 60%; height: 18px; margin-bottom: 8px; }
+.esqueleto-linha--meta { width: 40%; height: 13px; }
+.esqueleto-cartao__texto { flex: 1; min-width: 0; }
 
 .cartao {
   --pad: 18px;
