@@ -367,9 +367,12 @@
   --bloco-fundo: var(--cor-acento);
   --bloco-texto: var(--cor-sobre-acento);
   position: relative;
-  display: grid;
+  /* Nome e vagas à esquerda, ação à direita; se não couber, a ação desce para a linha de baixo. */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   align-content: center;
-  gap: 8px;
+  gap: 8px 10px;
   min-height: 92px;
   padding: 14px 14px 14px calc(var(--bloco) + 14px);
   overflow: hidden;
@@ -409,8 +412,19 @@
 .cartao-sessao__link {
   display: grid;
   gap: 2px;
+  /* 170px = nome e vagas sem quebrar; sem essa folga, a ação desce para a linha de baixo. */
+  flex: 1 1 170px;
+  min-width: 0;
   color: inherit;
   text-decoration: none;
+}
+.cartao-sessao > .acoes {
+  flex: 0 1 auto;
+  max-width: 100%;
+}
+/* O painel de confirmação ("Cancelar esta presença?") precisa da largura toda. */
+.cartao-sessao:has(.acoes__confirmar) > .acoes {
+  flex-basis: 100%;
 }
 .cartao-sessao__link::after {
   content: '';
