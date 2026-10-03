@@ -25,7 +25,8 @@ const CAMINHOS = {
   mensagem: 'M4 5h16v11H9l-5 4z',
   email: 'M4 6h16v12H4zM4.6 6.8l7.4 6 7.4-6',
   telefone: 'M8 3h8v18H8zM11 18h2',
-  pessoa: 'M12 12a3.5 3.5 0 100-7 3.5 3.5 0 000 7zM5 20a7 7 0 0114 0',
+  monitor: 'M3 5h18v11H3zM8 20h8M12 16v4',
+  pessoa:'M12 12a3.5 3.5 0 100-7 3.5 3.5 0 000 7zM5 20a7 7 0 0114 0',
 } as const
 
 export type NomeIcone = keyof typeof CAMINHOS

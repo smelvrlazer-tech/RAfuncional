@@ -2,6 +2,7 @@ import { Link, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { AuthProvider } from './auth/AuthContext'
 import { ExigeAluno, ExigeTreinador, SomenteDeslogado } from './auth/guards'
 import { AvisoOffline } from './components/AvisoOffline'
+import { VisaoDispositivo } from './components/VisaoDispositivo'
 import { Convite } from './features/acesso/Convite'
 import { Entrar } from './features/acesso/Entrar'
 import { Agenda } from './features/agenda/Agenda'
@@ -79,10 +80,12 @@ export function App() {
     )
   }
   return (
-    <AuthProvider>
-      <a href="#conteudo" className="pular">Pular para o conteúdo</a>
-      <AvisoOffline />
-      <Conteudo />
-    </AuthProvider>
+    <VisaoDispositivo>
+      <AuthProvider>
+        <a href="#conteudo" className="pular">Pular para o conteúdo</a>
+        <AvisoOffline />
+        <Conteudo />
+      </AuthProvider>
+    </VisaoDispositivo>
   )
 }
