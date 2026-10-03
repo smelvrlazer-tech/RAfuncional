@@ -29,7 +29,6 @@ export function Entrar() {
 
   return (
     <TelaAcesso
-      subtitulo="Seu lugar na aula, garantido"
       faixa={<Aviso>Entre com o e-mail e a senha que você cadastrou pelo convite.</Aviso>}
     >
       <form className="formulario" onSubmit={entrar} noValidate>

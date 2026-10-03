@@ -129,3 +129,13 @@ export function formatarPrazo(minutos: number): string {
   const m = minutos % 60
   return m === 0 ? `${h}h` : `${h}h${dois(m)}`
 }
+
+/** Por extenso, para frases: 60 -> "1 hora", 90 -> "1 hora e 30 minutos", 45 -> "45 minutos". */
+export function formatarPrazoExtenso(minutos: number): string {
+  const unidade = (n: number, um: string, varios: string) => `${n} ${n === 1 ? um : varios}`
+  const h = Math.floor(minutos / 60)
+  const m = minutos % 60
+  if (h === 0) return unidade(m, 'minuto', 'minutos')
+  if (m === 0) return unidade(h, 'hora', 'horas')
+  return `${unidade(h, 'hora', 'horas')} e ${unidade(m, 'minuto', 'minutos')}`
+}

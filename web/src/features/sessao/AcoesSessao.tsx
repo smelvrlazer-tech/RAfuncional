@@ -13,7 +13,10 @@ interface Props {
   limiteMin: number
   /** Recarrega os dados do servidor (sempre chamado depois de uma RPC, com ou sem erro). */
   onAtualizar: () => Promise<unknown> | void
+  /** Versão do detalhe: botão largo + texto de apoio com o prazo. */
   grande?: boolean
+  /** Versão da lista: botão pequeno ("Reservar") e chip também para aula lotada. */
+  compacto?: boolean
 }
 
 type Retorno = { tom: 'sucesso' | 'erro'; texto: string } | null
@@ -27,7 +30,21 @@ function textoSucesso(acao: Acao, r: ResultadoAcao, hora: string): string {
   return `Check-in confirmado! Te esperamos às ${hora}.`
 }
 
-export function AcoesSessao({ sessao, estado, limiteMin, onAtualizar, grande = false }: Props) {
+/** Texto de apoio sob o botão principal, derivado do início da aula e do prazo de bloqueio. */
+function textoApoio(sessao: LinhaAgenda, acao: Acao | null, limiteMin: number): string | null {
+  if (acao !== 'checkin' && acao !== 'cancelar') return null
+  const limite = formatarHora(new Date(new Date(sessao.inicia_em).getTime() - limiteMin * 60_000))
+  return acao === 'cancelar' ? `Pode cancelar até ${limite}` : `Check-in aberto até ${limite}`
+}
+
+/** Rótulos curtos da lista (o detalhe e os testes usam os rótulos completos de estadoSessao). */
+function rotuloChipCompacto(estado: EstadoSessao, sessao: LinhaAgenda): string {
+  if (estado.tom === 'bloqueada') return 'Encerrado'
+  if (estado.tom === 'espera') return sessao.minha_posicao ? `Na fila · Nº${sessao.minha_posicao}` : 'Na fila'
+  return estado.rotulo
+}
+
+export function AcoesSessao({ sessao, estado, limiteMin, onAtualizar, grande = false, compacto = false }: Props) {
   const [enviando, setEnviando] = useState(false)
   const [confirmando, setConfirmando] = useState(false)
   const [retorno, setRetorno] = useState<Retorno>(null)
@@ -58,24 +75,35 @@ export function AcoesSessao({ sessao, estado, limiteMin, onAtualizar, grande = f
   }
 
   const { acao, tom } = estado
-  const mostrarChip = tom !== 'disponivel' && tom !== 'lotada'
+  const mostrarChip = tom !== 'disponivel' && (tom !== 'lotada' || compacto)
   const pedeConfirmacao = acao === 'cancelar'
+  const principal = acao === 'checkin' || acao === 'entrar_fila'
+  const apoio = grande ? textoApoio(sessao, acao, limiteMin) : null
+  const rotuloBotao = compacto && acao === 'checkin' ? 'Reservar'
+    : compacto && acao === 'entrar_fila' ? 'Entrar na fila'
+    : estado.rotuloAcao
+  // Na lista o texto é curto; o nome acessível continua dizendo a ação completa e de qual aula.
+  const nomeBotao = compacto && principal && !enviando
+    ? `${rotuloBotao} (${estado.rotuloAcao?.toLowerCase()}) — ${sessao.turma_nome}, ${formatarHora(sessao.inicia_em)}`
+    : undefined
 
   return (
-    <div className={`acoes ${grande ? 'acoes--grande' : ''}`}>
+    <div className={`acoes ${grande ? 'acoes--grande' : ''} ${compacto ? 'acoes--compacto' : ''}`}>
       <div className="acoes__linha">
-        {mostrarChip && <Chip tom={tom}>{estado.rotulo}</Chip>}
+        {mostrarChip && <Chip tom={tom}>{compacto ? rotuloChipCompacto(estado, sessao) : estado.rotulo}</Chip>}
         {acao && !confirmando && (
           <Botao
-            variante={acao === 'checkin' || acao === 'entrar_fila' ? (grande ? 'primario' : 'contorno') : 'texto'}
-            className={acao === 'checkin' || acao === 'entrar_fila' ? 'acoes__principal' : 'acoes__secundaria'}
+            variante={principal ? (grande || compacto ? 'primario' : 'contorno') : 'texto'}
+            className={`${principal ? 'acoes__principal' : 'acoes__secundaria'} ${compacto && principal ? 'botao--compacto' : ''}`}
             carregando={enviando}
+            aria-label={nomeBotao}
             onClick={() => (pedeConfirmacao ? setConfirmando(true) : void executar(acao))}
           >
-            {enviando ? 'Enviando…' : estado.rotuloAcao}
+            {enviando ? 'Enviando…' : rotuloBotao}
           </Botao>
         )}
       </div>
+      {apoio && !confirmando && <p className="acoes__apoio">{apoio}</p>}
 
       {confirmando && (
         <div className="acoes__confirmar" role="group" aria-label="Confirmar cancelamento">

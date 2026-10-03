@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import { useAuth } from '../../auth/AuthContext'
 import { Aviso, BarraTopo, Botao, Carregando, Perfuracao } from '../../components/Basicos'
 import { Icone } from '../../components/Icone'
-import { chaveDiaSP, formatarIntervalo, rotuloDiaLongo } from '../../lib/datetime'
+import { chaveDiaSP, formatarIntervalo, formatarPrazoExtenso, rotuloDiaLongo } from '../../lib/datetime'
 import { mensagemErro } from '../../lib/erros'
 import { estadoSessao, fracaoOcupada, textoVagas } from '../../lib/estadoSessao'
 import { descreverVideo, paragrafos } from '../../lib/texto'
@@ -71,8 +71,11 @@ export function DetalheSessao() {
     )
   }
 
-  const estado = estadoSessao(sessao, { agora, ativo: perfil?.ativo ?? true, limiteMin })
+  const estadoBase = estadoSessao(sessao, { agora, ativo: perfil?.ativo ?? true, limiteMin })
   const textos = paragrafos(sessao.treino_descricao)
+  // Check-in fechado: o cartão "Check-in encerrado" explica a regra; o motivo curto não se repete.
+  const encerrado = estadoBase.tom === 'bloqueada'
+  const estado = encerrado ? { ...estadoBase, motivo: null } : estadoBase
 
   return (
     <div className="tela tela--detalhe">
@@ -122,12 +125,26 @@ export function DetalheSessao() {
           )}
         </section>
 
-        <Perfuracao />
-
-        <section className="ticket__acoes" aria-label="Sua presença">
-          <AcoesSessao sessao={sessao} estado={estado} limiteMin={limiteMin} onAtualizar={recarregar} grande />
-        </section>
       </article>
+
+      {encerrado && (
+        <section className="encerrado" aria-labelledby="encerrado-titulo">
+          <span className="encerrado__icone" aria-hidden="true"><Icone nome="cadeado" tamanho={22} /></span>
+          <div>
+            <h3 className="encerrado__titulo" id="encerrado-titulo">Check-in encerrado</h3>
+            <p className="encerrado__texto">
+              O check-in fecha {formatarPrazoExtenso(limiteMin)} antes da aula, e esse prazo já passou para esta aula.
+            </p>
+          </div>
+        </section>
+      )}
+
+      <section className="barra-acao" aria-label="Sua presença">
+        {encerrado && (
+          <Botao variante="primario" className="botao--largo" disabled>Check-in indisponível</Botao>
+        )}
+        <AcoesSessao sessao={sessao} estado={estado} limiteMin={limiteMin} onAtualizar={recarregar} grande />
+      </section>
     </div>
   )
 }

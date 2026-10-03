@@ -17,9 +17,9 @@ function linha(p: Partial<LinhaAgenda> = {}): LinhaAgenda {
     treino_titulo: null, treino_descricao: null, treino_video_url: null, ...p,
   }
 }
-function montar(p: Partial<LinhaAgenda> = {}, onAtualizar = vi.fn()) {
+function montar(p: Partial<LinhaAgenda> = {}, onAtualizar = vi.fn(), extra: { grande?: boolean; compacto?: boolean } = {}) {
   const s = linha(p)
-  render(<AcoesSessao sessao={s} estado={estadoSessao(s, { agora: AGORA })} limiteMin={60} onAtualizar={onAtualizar} />)
+  render(<AcoesSessao sessao={s} estado={estadoSessao(s, { agora: AGORA })} limiteMin={60} onAtualizar={onAtualizar} {...extra} />)
   return onAtualizar
 }
 
@@ -90,5 +90,29 @@ describe('AcoesSessao', () => {
     expect(screen.getByText('Aula cancelada')).toBeInTheDocument()
     expect(screen.getByText('Chuva forte')).toBeInTheDocument()
     expect(screen.queryByRole('button')).toBeNull()
+  })
+
+  it('lista (compacto): botão curto "Reservar" com nome acessível completo', async () => {
+    rpc.mockResolvedValue({ data: { status: 'confirmado', posicao_fila: null }, error: null })
+    montar({}, vi.fn(), { compacto: true })
+    const botao = screen.getByRole('button', { name: 'Reservar (fazer check-in) — Funcional Manhã, 09:00' })
+    expect(botao).toHaveTextContent('Reservar')
+    await userEvent.click(botao)
+    expect(rpc).toHaveBeenCalledWith('fazer_checkin', { p_sessao_id: 's1' })
+  })
+
+  it('lista (compacto): bloqueada mostra o chip "Encerrado"', () => {
+    montar({ bloqueada: true }, vi.fn(), { compacto: true })
+    expect(screen.getByText('Encerrado')).toBeInTheDocument()
+  })
+
+  it('detalhe (grande): mostra até que horas dá para fazer check-in e para cancelar', () => {
+    montar({}, vi.fn(), { grande: true })
+    expect(screen.getByText('Check-in aberto até 08:00')).toBeInTheDocument()
+  })
+
+  it('detalhe (grande): confirmado mostra o prazo para cancelar', () => {
+    montar({ meu_status: 'confirmado' }, vi.fn(), { grande: true })
+    expect(screen.getByText('Pode cancelar até 08:00')).toBeInTheDocument()
   })
 })

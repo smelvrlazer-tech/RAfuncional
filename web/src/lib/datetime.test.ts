@@ -10,6 +10,7 @@ import {
   somarDias,
   formatarDataHoraCurta,
   formatarPrazo,
+  formatarPrazoExtenso,
 } from './datetime'
 
 describe('datetime (America/Sao_Paulo, independente do fuso do aparelho)', () => {
@@ -70,6 +71,11 @@ describe('datetime (America/Sao_Paulo, independente do fuso do aparelho)', () =>
   })
 
   it('formata o prazo de bloqueio', () => {
+    expect(formatarPrazoExtenso(60)).toBe('1 hora')
+    expect(formatarPrazoExtenso(120)).toBe('2 horas')
+    expect(formatarPrazoExtenso(90)).toBe('1 hora e 30 minutos')
+    expect(formatarPrazoExtenso(45)).toBe('45 minutos')
+    expect(formatarPrazoExtenso(1)).toBe('1 minuto')
     expect(formatarPrazo(60)).toBe('1h')
     expect(formatarPrazo(120)).toBe('2h')
     expect(formatarPrazo(90)).toBe('1h30')

@@ -166,7 +166,7 @@ export function Convite({ semPerfil = false }: { semPerfil?: boolean }) {
           onChange={(e) => setCodigo(normalizarCodigo(e.target.value))} erro={erros.codigo} required />
         <p className="formulario__retorno formulario__retorno--erro" role="alert" aria-live="assertive">{erroGeral ?? ''}</p>
         <Botao type="submit" variante="primario" className="botao--largo" carregando={enviando}>
-          {enviando ? 'Enviando…' : logado ? 'Concluir cadastro' : 'Criar minha conta'}
+          {enviando ? 'Enviando…' : logado ? 'Concluir cadastro' : 'Aceitar convite'}
         </Botao>
       </form>
       <p className="acesso__rodape">
