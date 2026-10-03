@@ -5,6 +5,8 @@ import { AvisoOffline } from './components/AvisoOffline'
 import { Convite } from './features/acesso/Convite'
 import { Entrar } from './features/acesso/Entrar'
 import { Agenda } from './features/agenda/Agenda'
+import { LayoutAluno } from './features/LayoutAluno'
+import { MinhasAulas } from './features/minhas-aulas/MinhasAulas'
 import { Notificacoes } from './features/notificacoes/Notificacoes'
 import { Perfil } from './features/perfil/Perfil'
 import { DetalheSessao } from './features/sessao/DetalheSessao'
@@ -42,10 +44,14 @@ export function Rotas() {
         <Route path="*" element={<Navigate to="/treinador" replace />} />
       </Route>
       <Route element={<ExigeAluno />}>
-        <Route index element={<Agenda />} />
+        <Route element={<LayoutAluno />}>
+          <Route index element={<Agenda />} />
+          <Route path="/minhas-aulas" element={<MinhasAulas />} />
+          <Route path="/notificacoes" element={<Notificacoes />} />
+          <Route path="/perfil" element={<Perfil />} />
+        </Route>
+        {/* O detalhe tem a própria barra de ação fixa; sem a barra de abas. */}
         <Route path="/sessao/:id" element={<DetalheSessao />} />
-        <Route path="/notificacoes" element={<Notificacoes />} />
-        <Route path="/perfil" element={<Perfil />} />
       </Route>
       <Route path="*" element={<NaoEncontrada />} />
     </Routes>

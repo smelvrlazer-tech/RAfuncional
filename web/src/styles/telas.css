@@ -884,3 +884,72 @@
     font-size: 2.75rem;
   }
 }
+
+/* ------------------------------------------------------------ barra de abas do aluno */
+.nav-inferior {
+  position: fixed;
+  z-index: 20;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: min(100%, var(--largura-coluna));
+  padding: 8px 12px max(8px, env(safe-area-inset-bottom));
+  background: var(--cor-superficie);
+  border-top: 1px solid var(--cor-linha);
+  border-radius: var(--raio-g) var(--raio-g) 0 0;
+  box-shadow: 0 -8px 20px -12px var(--sombra-furo);
+}
+.nav-inferior ul {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.nav-inferior__item {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  min-height: 56px;
+  padding: 8px 4px 6px;
+  border-radius: var(--raio-m);
+  color: var(--cor-texto-suave);
+  font-size: var(--tamanho-mini);
+  font-weight: 700;
+  text-decoration: none;
+  transition: color var(--rapido) ease, background-color var(--rapido) ease;
+}
+.nav-inferior__item:hover { background: var(--cor-papel); }
+.nav-inferior__item[aria-current='page'] { color: var(--cor-marca); }
+.nav-inferior__item[aria-current='page'] svg { color: var(--cor-acento); }
+.nav-inferior__item[aria-current='page']::before {
+  content: '';
+  position: absolute;
+  top: -9px;
+  width: 28px;
+  height: 3px;
+  border-radius: 0 0 3px 3px;
+  background: var(--cor-acento);
+}
+.nav-inferior__espaco {
+  height: calc(76px + env(safe-area-inset-bottom));
+}
+
+/* ------------------------------------------------------------ títulos das telas de aba */
+.titulo-aba {
+  display: grid;
+  gap: 4px;
+  padding-top: 8px;
+}
+.titulo-aba__titulo {
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+}
+.titulo-aba__resumo {
+  color: var(--cor-texto-suave);
+  font-weight: 600;
+}
