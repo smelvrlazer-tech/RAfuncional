@@ -1,4 +1,4 @@
-/* Base: reset leve, papel, tipografia, foco e utilitários. Cores só via tokens.css. */
+/* Base: reset leve, fundo creme, tipografia, foco e utilitários. Cores só via tokens.css. */
 *,
 *::before,
 *::after {
@@ -14,33 +14,23 @@ body {
   margin: 0;
   min-height: 100dvh;
   background-color: var(--cor-papel);
-  background-image:
-    radial-gradient(120% 60% at 100% 0%, var(--papel-luz), transparent 60%),
-    radial-gradient(90% 50% at 0% 100%, var(--papel-sombra), transparent 70%);
-  background-attachment: fixed;
   color: var(--cor-tinta);
   font-family: var(--fonte-texto);
   font-size: var(--tamanho-texto);
   line-height: var(--entrelinha);
-  font-optical-sizing: auto;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Grão de papel: ruído SVG sobre tudo (inclusive cartões), bem sutil. */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  pointer-events: none;
-  opacity: var(--grao-opacidade);
-  mix-blend-mode: multiply;
-  background-image: var(--grao-imagem);
-}
-
 h1, h2, h3, p {
   margin: 0;
+}
+
+h1, h2, h3 {
+  font-family: var(--fonte-display);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
 }
 
 img, svg {
@@ -88,7 +78,7 @@ ul, ol {
   top: -60px;
   z-index: 1001;
   padding: 10px 14px;
-  background: var(--cor-tinta);
+  background: var(--cor-marca);
   color: var(--cor-texto-invertido);
   border-radius: var(--raio-p);
 }
@@ -142,8 +132,8 @@ ul, ol {
 }
 
 @keyframes pulsar {
-  0%, 100% { transform: scale(1) rotate(-4deg); opacity: 0.9; }
-  50% { transform: scale(1.06) rotate(-4deg); opacity: 1; }
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.06); opacity: 1; }
 }
 
 @keyframes brilhar {

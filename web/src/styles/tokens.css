@@ -1,54 +1,80 @@
 /*
- * RA Funcional — design tokens (identidade PROVISÓRIA).
- * Toda cor, fonte, raio e sombra do app mora aqui. Para aplicar a marca
- * definitiva do cliente, altere só este arquivo.
+ * RA Funcional — design tokens (identidade v3: verde-petróleo, coral e amarelo sobre creme).
+ * Toda cor, fonte, raio e sombra do app mora aqui. Nenhum outro arquivo de estilo
+ * tem cor literal: para ajustar a marca, altere só este arquivo.
  *
- * Contrastes verificados (WCAG AA, texto normal >= 4.5:1):
- *   --cor-tinta sobre --cor-papel ........ 14.4
- *   --cor-texto-suave sobre --cor-papel ... 5.1
- *   branco sobre --cor-acento ............. 4.6
- *   --cor-acento-texto sobre superfície ... 5.6
- *   --cor-sucesso-texto / fundo ........... 5.7
- *   --cor-aviso-texto / fundo ............. 5.0
- *   --cor-bloqueio-texto / fundo .......... 4.8
+ * Contrastes calculados (WCAG 2.x, fórmula de luminância relativa). Texto abaixo de
+ * 24px precisa de 4,5:1; texto grande (>= 24px, ou >= 18,66px em negrito) precisa de 3:1.
+ *
+ *   texto / fundo                                          razão
+ *   --cor-tinta sobre --cor-papel ....................... 12,45
+ *   --cor-tinta sobre --cor-superficie .................. 13,57
+ *   --cor-texto-suave sobre papel / superfície / papel-escuro  5,71 / 6,22 / 5,04
+ *   --cor-texto-invertido sobre --cor-marca ............. 8,61
+ *   --cor-texto-invertido-suave sobre marca / marca-2 ... 5,86 / 4,45 (só sobre marca; no hover usa-se o invertido: 6,54)
+ *   --cor-acento-claro sobre --cor-marca ................ 4,66
+ *   --cor-sobre-acento (branco) sobre --cor-acento-forte  4,55  (botões pequenos)
+ *   --cor-sobre-acento (branco) sobre --cor-acento ...... 3,20  (SÓ texto grande/negrito >= 19px)
+ *   --cor-acento-texto sobre superfície / papel / info .. 5,52 / 5,06 / 4,63
+ *   --cor-sucesso-texto sobre --cor-sucesso-fundo ....... 5,45
+ *   branco sobre --cor-sucesso .......................... 4,04  (SÓ hora grande em negrito)
+ *   --cor-aviso-texto sobre --cor-aviso-fundo ........... 7,02
+ *   --cor-tinta sobre --cor-aviso ....................... 8,09
+ *   --cor-bloqueio-texto sobre --cor-bloqueio-fundo ..... 5,84
+ *   --cor-perigo-texto sobre --cor-perigo-fundo ......... 5,58
+ *   branco sobre --cor-perigo ........................... 6,06
+ *   --cor-tinta sobre --cor-info-fundo .................. 11,40
+ *
+ * O coral puro (--cor-acento) contra branco ou creme dá só 3,2:1: nunca é cor de texto
+ * pequeno. Texto coral usa --cor-acento-texto (sobre claro) ou --cor-acento-claro (sobre petróleo).
  */
 :root {
-  /* Papel e tinta */
-  --cor-papel: #f4efe6;
-  --cor-papel-escuro: #e9e1d3;
-  --cor-superficie: #fffdf9;
-  --cor-superficie-2: #fbf8f2;
-  --cor-tinta: #221e1a;
-  --cor-tinta-2: #3a332c;
-  --cor-texto-suave: #6e6358;
-  --cor-texto-invertido: #f4efe6;
-  --cor-texto-invertido-suave: #c9bfb2;
-  --cor-linha: #ddd3c4;
+  /* Marca e superfícies */
+  --cor-marca: #1f4e46;
+  --cor-marca-2: #2a6157;
+  --cor-papel: #f8f5ec;
+  --cor-papel-escuro: #ede7d8;
+  --cor-superficie: #ffffff;
+  --cor-superficie-2: #fbf9f3;
+  --cor-linha: #e3ddcf;
 
-  /* Acento único */
-  --cor-acento: #c0562b;
-  --cor-acento-hover: #a94a23;
-  --cor-acento-texto: #a94a23;
-  --cor-acento-claro: #e07a4f;
+  /* Texto (a tinta só é cor de texto e de filetes finos) */
+  --cor-tinta: #16332e;
+  --cor-texto-suave: #55645f;
+  --cor-texto-invertido: #f8f5ec;
+  --cor-texto-invertido-suave: #bfd0cb;
+
+  /* Ação (coral) */
+  --cor-acento: #e86a3a;
+  --cor-acento-hover: #d05a2a;
+  --cor-acento-forte: #c94f1c;
+  --cor-acento-texto: #b5441a;
+  --cor-acento-claro: #f7a27f;
   --cor-sobre-acento: #ffffff;
+  --cor-foco: #e86a3a;
 
-  /* Estados */
-  --cor-sucesso: #5b7050;
-  --cor-sucesso-texto: #4a5e40;
-  --cor-sucesso-fundo: #e3ead9;
-  --cor-aviso: #b7791f;
-  --cor-aviso-texto: #83560f;
-  --cor-aviso-fundo: #f3e3c0;
-  --cor-bloqueio: #9c3d26;
-  --cor-bloqueio-texto: #9c3d26;
-  --cor-bloqueio-fundo: #ebd5cc;
-  --cor-info-fundo: #f1dccb;
-  --cor-foco: #c0562b;
+  /* Estados: sólido / texto / fundo */
+  --cor-sucesso: #2f8f5b;
+  --cor-sucesso-texto: #1f6b42;
+  --cor-sucesso-fundo: #ddf0e4;
+  --cor-aviso: #f2c14e;
+  --cor-aviso-texto: #6b4a00;
+  --cor-aviso-fundo: #fbefc9;
+  --cor-bloqueio: #7c8783;
+  --cor-bloqueio-texto: #4f5b57;
+  --cor-bloqueio-fundo: #e7eae8;
+  --cor-perigo: #b3361f;
+  --cor-perigo-texto: #a12e1a;
+  --cor-perigo-fundo: #f8ddd6;
+  --cor-info-fundo: #fde7dc;
 
   /* Tipografia */
-  --fonte-display: 'League Gothic', 'Oswald', 'Arial Narrow', sans-serif;
-  --fonte-texto: 'Newsreader', 'Iowan Old Style', Georgia, serif;
-  --tamanho-texto: 1.0625rem;
+  --fonte-display: 'Bricolage Grotesque Variable', 'Archivo Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --fonte-texto: 'Archivo Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  /* Números (horas, vagas, contagens): Archivo em negrito e condensado */
+  --fonte-numeros: 'Archivo Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --largura-numeros: 76%;
+  --tamanho-texto: 1rem;
   --tamanho-pequeno: 0.875rem;
   --tamanho-mini: 0.75rem;
   --entrelinha: 1.5;
@@ -56,18 +82,18 @@
   /* Raios */
   --raio-p: 8px;
   --raio-m: 14px;
-  --raio-g: 22px;
+  --raio-g: 20px;
   --raio-pilula: 999px;
 
-  /* Sombras de papel (camadas suaves e quentes) */
+  /* Sombras (suaves, com a tinta petróleo) */
   --sombra-cartao:
-    0 1px 0 rgba(34, 30, 26, 0.04),
-    0 1px 2px rgba(34, 30, 26, 0.06),
-    0 6px 16px -6px rgba(34, 30, 26, 0.12);
+    0 1px 2px rgba(22, 51, 46, 0.06),
+    0 6px 18px -8px rgba(22, 51, 46, 0.16);
   --sombra-elevada:
-    0 1px 0 rgba(34, 30, 26, 0.05),
-    0 4px 10px -2px rgba(34, 30, 26, 0.1),
-    0 18px 36px -12px rgba(34, 30, 26, 0.22);
+    0 2px 4px rgba(22, 51, 46, 0.06),
+    0 18px 36px -14px rgba(22, 51, 46, 0.28);
+  --sombra-botao: 0 6px 14px -6px rgba(201, 79, 28, 0.55);
+  --sombra-campo: inset 0 1px 2px rgba(22, 51, 46, 0.05);
 
   /* Espaço e layout */
   --espaco-1: 4px;
@@ -79,25 +105,20 @@
   --largura-coluna: 480px;
   --alvo-toque: 44px;
 
-  /* Efeitos de papel e luz */
-  --papel-luz: rgba(255, 255, 255, 0.55);
-  --papel-sombra: rgba(233, 225, 211, 0.9);
-  --sombra-furo: rgba(34, 30, 26, 0.12);
-  --brilho-acento: rgba(192, 86, 43, 0.28);
-  --anel-play: rgba(244, 239, 230, 0.16);
-  --cor-veu: rgba(34, 30, 26, 0.58);           /* fundo do modal */
-  --linha-controle: rgba(244, 239, 230, 0.06); /* grade da "sala de controle" */
+  /* Efeitos (círculos decorativos, anel do play, véu do modal) */
+  --sombra-furo: rgba(22, 51, 46, 0.14);
+  --circulo-acento: rgba(232, 106, 58, 0.2);
+  --circulo-aviso: rgba(242, 193, 78, 0.16);
+  --anel-play: rgba(232, 106, 58, 0.32);
+  --listra-video: rgba(248, 245, 236, 0.05);
+  --cor-veu: rgba(22, 51, 46, 0.6);
 
   /* Painel do treinador (desktop-first) */
   --largura-painel: 1360px;
   --largura-lateral: 236px;
 
-  /* Grão do papel (ruído SVG; a cor do grão está na matriz: tinta quente) */
-  --grao-opacidade: 0.07;
-  --grao-imagem: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.13 0 0 0 0 0.11 0 0 0 0 0.1 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
-
   /* PWA (manter em sincronia com o manifest em vite.config.ts) */
-  --cor-tema: #221e1a;
+  --cor-tema: #1f4e46;
 
   /* Movimento (a mesma curva em todo o app: sai rápido, assenta suave) */
   --curva-saida: cubic-bezier(0.2, 0.7, 0.2, 1);
@@ -105,10 +126,10 @@
   --rapido: 140ms;
   --medio: 220ms;
 
-  /* Brilho de foco (halo suave em vez de contorno duro) */
-  --brilho-foco: 0 0 0 4px rgba(192, 86, 43, 0.16), 0 0 0 1.5px var(--cor-acento);
+  /* Brilho de foco (halo coral em vez de contorno duro) */
+  --brilho-foco: 0 0 0 4px rgba(232, 106, 58, 0.18), 0 0 0 1.5px var(--cor-acento);
 
   /* Base do esqueleto de carregamento */
-  --cor-esqueleto: #ebe4d6;
-  --cor-esqueleto-brilho: #f7f2e8;
+  --cor-esqueleto: #eae5d8;
+  --cor-esqueleto-brilho: #f6f2e8;
 }

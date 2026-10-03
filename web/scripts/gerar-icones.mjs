@@ -7,22 +7,22 @@ import { mkdirSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-const TINTA = '#221e1a'
-const PAPEL = '#f4efe6'
-const ACENTO = '#c0562b'
+const MARCA = '#1f4e46'
+const PAPEL = '#f8f5ec'
+const ACENTO = '#e86a3a'
 
 const raiz = join(dirname(fileURLToPath(import.meta.url)), '..', 'public')
 mkdirSync(join(raiz, 'icons'), { recursive: true })
 
-/** Letras "RA" condensadas + ponto terracota, centralizadas num quadro 512x512. */
+/** Letras "RA" condensadas + barra coral embaixo, centralizadas num quadro 512x512. */
 function letras(escala = 1) {
   const alt = 220
   const larR = 95
   const larA = 90
   const vao = 14
-  const total = larR + vao + larA + 18 + 12
+  const total = larR + vao + larA
   const x1 = (512 - total) / 2
-  const yt = (512 - alt) / 2
+  const yt = (512 - alt) / 2 - 24
   const yb = yt + alt
   const x0 = x1 + larR + vao
   const r = [
@@ -31,16 +31,21 @@ function letras(escala = 1) {
     `<polygon points="${x1 + 38},${yt + 112} ${x1 + 68},${yt + 112} ${x1 + 95},${yb} ${x1 + 64},${yb}"/>`,
   ]
   const a = `<path fill-rule="evenodd" d="M${x0} ${yb} L${x0 + 28} ${yt} H${x0 + 62} L${x0 + 90} ${yb} H${x0 + 61} L${x0 + 56} ${yb - 50} H${x0 + 34} L${x0 + 29} ${yb} Z M${x0 + 38} ${yb - 76} L${x0 + 45} ${yt + 46} L${x0 + 52} ${yb - 76} Z"/>`
-  const ponto = `<circle cx="${x0 + larA + 18}" cy="${yb - 12}" r="12" fill="${ACENTO}"/>`
+  const barra = `<rect x="${256 - 60}" y="${yb + 30}" width="120" height="20" rx="10" fill="${ACENTO}"/>`
   const t = escala === 1 ? '' : ` transform="translate(256 256) scale(${escala}) translate(-256 -256)"`
-  return `<g${t}><g fill="${PAPEL}">${r.join('')}${a}</g>${ponto}</g>`
+  return `<g${t}><g fill="${PAPEL}">${r.join('')}${a}</g>${barra}</g>`
+}
+
+/** Duas meias-luas nas laterais (o "picote" do ingresso), só no ícone com bordas arredondadas. */
+function furos() {
+  return `<circle cx="0" cy="256" r="30" fill="${PAPEL}"/><circle cx="512" cy="256" r="30" fill="${PAPEL}"/>`
 }
 
 function svg({ arredondado, escala }) {
   const fundo = arredondado
-    ? `<rect width="512" height="512" rx="112" fill="${TINTA}"/>`
-    : `<rect width="512" height="512" fill="${TINTA}"/>`
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">${fundo}${letras(escala)}</svg>`
+    ? `<rect width="512" height="512" rx="112" fill="${MARCA}"/>`
+    : `<rect width="512" height="512" fill="${MARCA}"/>`
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">${fundo}${arredondado ? furos() : ''}${letras(escala)}</svg>`
 }
 
 const normal = svg({ arredondado: true, escala: 1 })
