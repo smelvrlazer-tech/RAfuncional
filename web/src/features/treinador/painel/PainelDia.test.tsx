@@ -42,7 +42,7 @@ describe('PainelDia', () => {
     expect(c.getByLabelText('2 confirmados de 12 vagas')).toBeInTheDocument()
     expect(c.getByText('Fila: 1')).toBeInTheDocument()
     const [confirmados, fila] = c.getAllByRole('list')
-    expect(within(confirmados!).getAllByRole('listitem').map((li) => li.textContent)).toEqual(['ASAna SouzaRA', 'BLBruno LimaRA'])
+    expect(within(confirmados!).getAllByRole('listitem').map((li) => li.textContent)).toEqual(['ASAna Souza', 'BLBruno Lima'])
     expect(within(fila!).getByRole('listitem')).toHaveTextContent('1ºCarla Dias')
     expect(within(fila!).getByLabelText('1º da fila')).toBeInTheDocument()
     expect(c.getByRole('link', { name: 'Funcional Manhã' })).toHaveAttribute('href', '/treinador/sessao/s1')
