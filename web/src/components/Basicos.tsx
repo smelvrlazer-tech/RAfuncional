@@ -30,14 +30,14 @@ export function Botao({
 
 export function Aviso({
   tom = 'info', children, titulo, role,
-}: { tom?: 'info' | 'erro' | 'sucesso' | 'alerta'; children: ReactNode; titulo?: string; role?: 'alert' | 'status' }) {
+}: { tom?: 'info' | 'erro' | 'sucesso' | 'alerta'; children?: ReactNode; titulo?: string; role?: 'alert' | 'status' }) {
   const icone = tom === 'sucesso' ? 'check' : tom === 'erro' ? 'info' : tom === 'alerta' ? 'cadeado' : 'info'
   return (
     <div className={`aviso aviso--${tom}`} role={role}>
       <Icone nome={icone} tamanho={18} className="aviso__icone" />
       <div>
         {titulo && <strong className="aviso__titulo">{titulo}</strong>}
-        <div className="aviso__texto">{children}</div>
+        {children != null && <div className="aviso__texto">{children}</div>}
       </div>
     </div>
   )

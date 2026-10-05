@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { useAuth } from '../../auth/AuthContext'
-import { Aviso, Avatar, BarraTopo, Botao, Campo, Perfuracao } from '../../components/Basicos'
+import { Aviso, Avatar, Botao, Campo, Perfuracao } from '../../components/Basicos'
 import { Icone } from '../../components/Icone'
 import { mensagemErro } from '../../lib/erros'
 import { supabase } from '../../lib/supabase'
@@ -44,7 +44,9 @@ export function Perfil() {
 
   return (
     <div className="tela">
-      <BarraTopo titulo="Seu perfil" />
+      <header className="titulo-aba">
+        <h1 className="titulo-aba__titulo">Perfil</h1>
+      </header>
 
       <section className="cartao perfil-cartao">
         <div className="perfil-cartao__topo">
@@ -103,7 +105,7 @@ export function Perfil() {
         )}
       </section>
 
-      <Botao variante="escuro" className="botao--largo" carregando={saindo} onClick={() => void sairDaConta()}>
+      <Botao variante="contorno" className="botao--largo" carregando={saindo} onClick={() => void sairDaConta()}>
         <Icone nome="sair" /> Sair da conta
       </Botao>
     </div>

@@ -67,7 +67,7 @@ export function Alunos() {
                         {a.telefone && <a className="tabela__tel-movel" href={`tel:${a.telefone.replace(/[^\d+]/g, '')}`}>{a.telefone}</a>}
                       </th>
                       <td className="tabela__tel">{a.telefone ? <a href={`tel:${a.telefone.replace(/[^\d+]/g, '')}`}>{a.telefone}</a> : <span className="tabela__vazio">—</span>}</td>
-                      <td><Chip tom={a.ativo ? 'confirmado' : 'cancelada'}>{a.ativo ? 'Ativo' : 'Inativo'}</Chip></td>
+                      <td>{a.ativo ? <span className="situacao-ativo">Ativo</span> : <Chip tom="cancelada">Inativo</Chip>}</td>
                       <td className="tabela__acao">
                         <Botao variante="texto" onClick={() => { setErroDialogo(null); setAlvo(a) }}
                           aria-label={`${a.ativo ? 'Desativar' : 'Reativar'} ${a.nome}`}>

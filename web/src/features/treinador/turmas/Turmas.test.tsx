@@ -20,13 +20,22 @@ describe('Turmas', () => {
     h.estado.responder = (c) => ({ data: c.tabela === 'turmas' ? [TURMA] : [], error: null, count: 8 })
   })
 
-  it('lista por dia da semana com status em texto', async () => {
+  it('lista por dia da semana; turma ativa (o normal) não ganha etiqueta', async () => {
     render(<Turmas />)
     const segunda = await screen.findByRole('region', { name: 'Segunda-feira' })
     expect(within(segunda).getByText('Funcional Manhã')).toBeInTheDocument()
-    expect(within(segunda).getByText('60 min · 12 vagas')).toBeInTheDocument()
-    expect(within(segunda).getByText('Ativa')).toBeInTheDocument()
+    expect(within(segunda).getByText(/60 min · 12 vagas/)).toBeInTheDocument()
+    expect(within(segunda).queryByText('Ativa')).not.toBeInTheDocument()
+    expect(within(segunda).queryByText('Inativa')).not.toBeInTheDocument()
     expect(screen.getByText(/Sem turmas: Terça-feira/)).toBeInTheDocument()
+  })
+
+  it('turma inativa (a exceção) é marcada em texto e oferece Reativar', async () => {
+    h.estado.responder = (c) => ({ data: c.tabela === 'turmas' ? [{ ...TURMA, ativa: false }] : [], error: null, count: 0 })
+    render(<Turmas />)
+    const segunda = await screen.findByRole('region', { name: 'Segunda-feira' })
+    expect(within(segunda).getByText('Inativa')).toBeInTheDocument()
+    expect(within(segunda).getByRole('button', { name: /^Reativar/ })).toBeInTheDocument()
   })
 
   it('valida antes de gravar: vagas 0 e horário inválido não chegam ao banco', async () => {

@@ -279,11 +279,8 @@
 }
 .aula--disponivel .aula__faixa { background: var(--cor-marca); }
 .aula__prazo {
-  padding: 3px 10px;
-  border-radius: var(--raio-pilula);
-  background: var(--cor-acento-forte);
-  color: var(--cor-sobre-acento);
-  font-weight: 700;
+  color: var(--cor-texto-invertido-suave);
+  font-weight: 600;
   font-size: 0.8125rem;
   font-variant-numeric: tabular-nums;
 }
@@ -472,8 +469,8 @@
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
-  gap: 8px 14px;
-  padding: 12px 16px;
+  gap: 4px 12px;
+  padding: 12px 14px;
   border-radius: var(--raio-m);
   background: var(--cor-superficie);
   box-shadow: var(--sombra-cartao);
@@ -483,14 +480,28 @@
   font-family: var(--fonte-numeros);
   font-stretch: var(--largura-numeros);
   font-weight: 800;
-  font-size: 2rem;
+  font-size: 1.625rem;
   line-height: 1;
   font-variant-numeric: tabular-nums;
 }
 .turma__nome { font-weight: 700; }
-.turma__meta { font-size: 0.875rem; color: var(--cor-texto-suave); }
-.turma__acoes { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
-.turma__acoes .botao--contorno { min-height: var(--alvo-toque); padding-inline: 14px; }
+.turma__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 8px; font-size: 0.875rem; color: var(--cor-texto-suave); }
+.turma__acoes { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 2px; margin-left: -8px; }
+/* Editar é o gesto normal (fantasma, sem borda); Desativar é raro e fica discreto. */
+.turma__acoes .botao--contorno {
+  min-height: var(--alvo-toque);
+  padding-inline: 10px;
+  border-color: transparent;
+  color: var(--cor-marca);
+  font-weight: 700;
+}
+.turma__acoes .botao--contorno:hover:not(:disabled) { background: var(--cor-papel); color: var(--cor-marca); }
+.turma__acoes .botao--texto {
+  color: var(--cor-texto-suave);
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+.turma__acoes .botao--texto:hover:not(:disabled) { color: var(--cor-perigo-texto); text-decoration: underline; }
 .turma--inativa { background: var(--cor-superficie-2); box-shadow: none; outline: 1px dashed var(--cor-linha); outline-offset: -1px; }
 .turma--inativa .turma__hora, .turma--inativa .turma__nome { color: var(--cor-texto-suave); }
 
@@ -600,8 +611,8 @@
 
 /* ------------------------------------------------------------ telas médias */
 @media (min-width: 640px) {
-  .turma { grid-template-columns: auto minmax(0, 1fr) auto auto; }
-  .turma__acoes { grid-column: auto; }
+  .turma { grid-template-columns: auto minmax(0, 1fr) auto; }
+  .turma__acoes { grid-column: auto; margin-left: 0; }
   .semana-treinos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .controle { padding: 26px 28px; }
 }
@@ -664,4 +675,32 @@
     font-weight: 400;
     font-size: 0.875rem;
   }
+}
+
+/* ------------------------------------------------------------ situação discreta */
+.situacao-ativo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--cor-texto-suave);
+  font-size: 0.9375rem;
+}
+.situacao-ativo::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cor-sucesso);
+}
+
+/* Dia com treino publicado: só um ponto verde ao lado da data (o normal não ganha etiqueta). */
+.dia-treino--publicado .dia-treino__dia::after {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-left: 8px;
+  border-radius: 50%;
+  background: var(--cor-sucesso);
+  vertical-align: middle;
 }

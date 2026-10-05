@@ -21,7 +21,8 @@ interface Props {
 export function CartaoSessao({ sessao, agora, ativo, limiteMin, onAtualizar, indice = 0 }: Props) {
   const estado = estadoSessao(sessao, { agora, ativo, limiteMin })
   const partes = [
-    sessao.cancelada ? null : textoVagas(sessao),
+    // Vagas só importam enquanto dá para agir; aula cancelada ou encerrada mostra só a duração.
+    sessao.cancelada || estado.tom === 'encerrada' ? null : textoVagas(sessao),
     `${sessao.duracao_min} min`,
   ].filter(Boolean)
   return (

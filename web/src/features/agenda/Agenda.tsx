@@ -58,11 +58,8 @@ export function Agenda() {
     <div className="tela tela--agenda">
       <header className="cabecalho">
         <div className="cabecalho__texto">
-          <p className="cabecalho__sobre">RA Funcional</p>
+          <p className="cabecalho__sobre">{primeiroNome ? `Olá, ${primeiroNome}` : 'RA Funcional'}</p>
           <h1 className="cabecalho__titulo">Sua semana</h1>
-          <p className="cabecalho__subtitulo">
-            {primeiroNome ? `Olá, ${primeiroNome}. ` : ''}Garanta seu lugar nas próximas aulas.
-          </p>
         </div>
         <div className="cabecalho__acoes">
           <Sino />
@@ -80,9 +77,7 @@ export function Agenda() {
 
       {mostrarBanner && (
         <div className="banner-semana">
-          <Aviso titulo="Os treinos da próxima semana já estão no ar">
-            Dá uma espiada e garanta sua vaga antes que lote.
-          </Aviso>
+          <Aviso titulo="Os treinos da próxima semana já estão no ar" />
           <button type="button" className="banner-semana__fechar" onClick={fecharBanner}>
             <span aria-hidden="true">×</span>
             <span className="sr-only">Fechar aviso</span>

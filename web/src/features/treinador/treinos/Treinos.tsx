@@ -78,9 +78,7 @@ export function Treinos() {
                   <span className="dia-treino__dia">{d.semanaCurta} <strong>{d.numero}</strong></span>
                   <span className="dia-treino__titulo">{t?.titulo ?? 'Sem treino'}</span>
                   {t ? (
-                    <Chip tom={t.publicado_em ? 'confirmado' : 'espera'} icone={t.publicado_em ? 'check' : 'lapis'}>
-                      {t.publicado_em ? 'Publicado' : 'Rascunho'}
-                    </Chip>
+                    t.publicado_em ? null : <Chip tom="espera" icone="lapis">Rascunho</Chip>
                   ) : (
                     <span className="dia-treino__cadastrar"><Icone nome="mais" /> Cadastrar</span>
                   )}

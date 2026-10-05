@@ -30,7 +30,7 @@ export function CartaoAula({ aula, lista, agora, limiteMin, indice = 0 }: Props)
     <article className={`aula aula--${estado.tom}`} style={{ ['--i' as string]: indice }} aria-labelledby={idTitulo}>
       <div className="aula__faixa">
         <Chip tom={estado.tom}>{estado.rotulo}</Chip>
-        {aberta && <span className="aula__prazo">Aberto até {fechaAs}</span>}
+        {aberta && <span className="aula__prazo">Fecha às {fechaAs}</span>}
       </div>
 
       <div className="aula__corpo">

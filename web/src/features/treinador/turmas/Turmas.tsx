@@ -160,9 +160,11 @@ export function Turmas() {
                     <span className="turma__hora">{formatarHoraTurma(t.hora_inicio)}</span>
                     <div className="turma__info">
                       <p className="turma__nome">{t.nome}</p>
-                      <p className="turma__meta">{t.duracao_min} min · {t.vagas} vagas</p>
+                      <p className="turma__meta">
+                        {t.duracao_min} min · {t.vagas} vagas
+                        {!t.ativa && <Chip tom="cancelada">Inativa</Chip>}
+                      </p>
                     </div>
-                    <Chip tom={t.ativa ? 'disponivel' : 'cancelada'}>{t.ativa ? 'Ativa' : 'Inativa'}</Chip>
                     <div className="turma__acoes">
                       <Botao variante="contorno" aria-label={`Editar ${descreverTurma(t)}`}
                         onClick={() => abrirForm(t)}>
