@@ -138,7 +138,7 @@ export function SessaoTreinador() {
             {!aula.cancelada && !estado.comecou && (
               <section className="cartao zona-perigo" aria-labelledby="titulo-cancelar">
                 <h2 className="cartao__titulo" id="titulo-cancelar">Cancelar a aula</h2>
-                <p>Todos os confirmados e a fila recebem uma notificação com o motivo. Use para chuva, imprevisto ou feriado.</p>
+                <p>Confirmados e fila são avisados com o motivo.</p>
                 <Botao variante="perigo" onClick={() => setCancelando(true)}>Cancelar esta aula</Botao>
               </section>
             )}

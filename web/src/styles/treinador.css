@@ -393,12 +393,37 @@
 }
 .lista-sessao__item:last-child { border-bottom: 0; }
 .lista-sessao__nome { flex: 1; min-width: 0; font-weight: 600; overflow-wrap: anywhere; }
+/* Remover é raro: fica discreto e só ganha cor quando o treinador mira nele. */
+.lista-sessao__item .botao--texto {
+  color: var(--cor-texto-suave);
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+.lista-sessao__item .botao--texto:hover:not(:disabled) { color: var(--cor-perigo-texto); text-decoration: underline; }
+
+/* Cancelar a aula: uma faixa calma, texto curto e botão de contorno. O vermelho cheio só aparece na confirmação. */
 .zona-perigo {
   display: grid;
-  gap: 10px;
-  justify-items: start;
-  outline: 1.5px dashed var(--cor-perigo);
-  outline-offset: -8px;
+  gap: 12px;
+  align-items: center;
+  background: transparent;
+  box-shadow: none;
+  border: 1px solid var(--cor-linha);
+}
+.zona-perigo .cartao__titulo { font-size: 1rem; }
+.zona-perigo p { margin: 0; color: var(--cor-texto-suave); font-size: 0.9375rem; }
+.zona-perigo .botao--perigo {
+  justify-self: start;
+  background: transparent;
+  color: var(--cor-perigo-texto);
+  border: 1.5px solid var(--cor-perigo);
+}
+.zona-perigo .botao--perigo:hover:not(:disabled) { background: var(--cor-perigo); color: var(--cor-sobre-acento); }
+@media (min-width: 640px) {
+  .zona-perigo { grid-template-columns: 1fr auto; column-gap: 24px; }
+  .zona-perigo .cartao__titulo { grid-column: 1; }
+  .zona-perigo p { grid-column: 1; }
+  .zona-perigo .botao--perigo { grid-column: 2; grid-row: 1 / span 2; justify-self: end; }
 }
 
 /* ------------------------------------------------------------ modal de confirmação */
