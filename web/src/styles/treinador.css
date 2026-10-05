@@ -704,3 +704,13 @@
   background: var(--cor-sucesso);
   vertical-align: middle;
 }
+
+/* Nota curta de apoio (ícone + uma frase), no lugar de caixas com parágrafo. */
+.nota--icone {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-style: normal;
+  font-size: 0.875rem;
+}
+.nota--icone svg { flex: none; margin-top: 2px; color: var(--cor-texto-suave); }

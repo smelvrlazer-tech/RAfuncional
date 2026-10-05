@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react'
-import { Aviso, Botao, Campo } from '../../../components/Basicos'
+import { Botao, Campo } from '../../../components/Basicos'
+import { Icone } from '../../../components/Icone'
 import { CampoSelecao } from '../../../components/Campos'
 import { mensagemErro } from '../../../lib/erros'
 import type { Turma } from '../../../lib/tipos'
@@ -78,15 +79,14 @@ export function FormTurma({ turma, onSalvo, onCancelar }: Props) {
         <Campo rotulo="Vagas" type="number" inputMode="numeric" min={1} max={500}
           value={e.vagas} onChange={mudar('vagas')} erro={erros.vagas} required />
         {editando && (
-          <Aviso titulo="Como a mudança chega às aulas">
-            Dia, horário e vagas novos valem na hora para as aulas futuras sem check-in. Aulas que já têm alunos
-            confirmados ou na espera ficam como estão; ao salvar, mostramos quais são para você decidir no painel do
-            dia. Aulas passadas e canceladas não mudam.
-          </Aviso>
+          <p className="nota nota--icone">
+            <Icone nome="info" tamanho={16} />
+            <span>Vale na hora para as próximas aulas sem alunos. Aulas com alunos ficam como estão, e avisamos quais são.</span>
+          </p>
         )}
         {erroGeral && <p className="formulario__retorno formulario__retorno--erro" role="alert">{erroGeral}</p>}
         <div className="form-painel__botoes">
-          <Botao type="submit" variante="escuro" carregando={enviando}>
+          <Botao type="submit" variante="primario" carregando={enviando}>
             {editando ? 'Salvar alterações' : 'Criar turma'}
           </Botao>
           <Botao variante="texto" onClick={onCancelar} disabled={enviando}>Cancelar</Botao>

@@ -67,7 +67,7 @@ export function NovoConvite({ onCriado }: { onCriado: () => void }) {
       <form className="formulario" onSubmit={gerar} noValidate>
         <Campo rotulo="Nome do aluno (opcional)" value={nome} onChange={(e) => setNome(e.target.value)}
           maxLength={80} dica="Ajuda você a identificar o convite na lista e personaliza a mensagem." />
-        <Botao type="submit" variante="escuro" carregando={enviando}><Icone nome="mais" /> Gerar link de convite</Botao>
+        <Botao type="submit" variante="primario" carregando={enviando}><Icone nome="mais" /> Gerar link de convite</Botao>
       </form>
 
       {gerado && (

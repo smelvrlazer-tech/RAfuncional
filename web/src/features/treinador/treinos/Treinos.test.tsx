@@ -52,7 +52,7 @@ describe('Treinos', () => {
   it('rascunho: explica a publicação automática de sábado e "Publicar agora" grava publicado_em', async () => {
     montar()
     await userEvent.click(await screen.findByRole('button', { name: /Quarta-feira, 25 de setembro/ }))
-    expect(screen.getByText(/publicados automaticamente em sábado, 21 de setembro, às 08:00/)).toBeInTheDocument()
+    expect(screen.getByText(/Publica sozinho em sábado, 21 de setembro, às 08:00/)).toBeInTheDocument()
     expect(screen.getByText(/Publicar agora” \(sem notificação\)/)).toBeInTheDocument()
     await userEvent.click(screen.getByRole('button', { name: 'Publicar agora' }))
     expect(await screen.findByText(/Treino publicado\. .*não envia notificação/)).toBeInTheDocument()

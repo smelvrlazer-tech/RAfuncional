@@ -81,18 +81,14 @@ export function FormTreino({ data, treino, agora, config, onSalvo, onFechar }: P
       </div>
 
       {publicado ? (
-        <Aviso tom="sucesso" titulo="Publicado">
-          Os alunos já veem este treino desde {quando(new Date(treino!.publicado_em!))}.
-        </Aviso>
+        <Aviso tom="sucesso" titulo={`Publicado desde ${quando(new Date(treino!.publicado_em!))}`} />
       ) : auto ? (
         <Aviso titulo={treino ? 'Rascunho' : 'Sem treino cadastrado'}>
-          Os alunos veem “Em breve”. Os rascunhos desta semana são publicados automaticamente em {quando(auto)},
-          com notificação para todos os alunos. Se preferir, use “Publicar agora” (sem notificação).
+          Os alunos veem “Em breve”. Publica sozinho em {quando(auto)}, com aviso a todos, ou use “Publicar agora” (sem notificação).
         </Aviso>
       ) : (
         <Aviso tom="alerta" titulo={treino ? 'Rascunho' : 'Sem treino cadastrado'}>
-          Os alunos veem “Em breve”. A publicação automática desta semana já passou: este treino só aparece para os
-          alunos se você usar “Publicar agora” (sem notificação).
+          Os alunos veem “Em breve”. A publicação automática desta semana já passou: use “Publicar agora” (sem notificação).
         </Aviso>
       )}
 
@@ -106,7 +102,7 @@ export function FormTreino({ data, treino, agora, config, onSalvo, onFechar }: P
           dica="YouTube, Instagram ou Google Drive. Precisa começar com https://." />
         {erroGeral && <p className="formulario__retorno formulario__retorno--erro" role="alert">{erroGeral}</p>}
         <div className="form-painel__botoes">
-          <Botao type="submit" variante="escuro" carregando={envio === 'salvar'} disabled={envio !== null}>
+          <Botao type="submit" variante={publicado ? 'primario' : 'contorno'} carregando={envio === 'salvar'} disabled={envio !== null}>
             {publicado ? 'Salvar alterações' : 'Salvar rascunho'}
           </Botao>
           {!publicado && (
