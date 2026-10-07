@@ -2,9 +2,9 @@
 
 ## Resposta curta
 
-**Situação (atualizada em 07/10/2026):** o banco roda num projeto Supabase DEV na nuvem (conta do Pedro) e o código está num repositório privado no GitHub (conta do Pedro). Ainda não há hospedagem (Netlify), e nada foi transferido para o e-mail do Rafael. Esta seção da página abaixo descreve o estado de 25/09 e está desatualizada onde disser "sem GitHub" ou "git local". Senhas e chaves não ficam neste arquivo.
+**Situação (atualizada em 07/10/2026):** o banco roda num projeto Supabase DEV na nuvem (conta do Pedro) e o código está no repositório privado https://github.com/smelvrlazer-tech/RAfuncional (conta do Pedro). Ainda não há hospedagem (Netlify), e nada foi transferido para o e-mail do Rafael. Esta seção da página abaixo descreve o estado de 25/09 e está desatualizada onde disser "sem GitHub" ou "git local". Senhas e chaves não ficam neste arquivo.
 
-**Em outra máquina:** `git clone` do repositório, `npm install` em `web/`, e copiar por meio seguro `.env.test`, `web/.env.local` e `web/.dev-credenciais.txt` (ficam fora do git).
+**Em outra máquina:** `git clone https://github.com/smelvrlazer-tech/RAfuncional.git`, `npm install` em `web/`, e copiar por meio seguro `.env.test`, `web/.env.local` e `web/.dev-credenciais.txt` (ficam fora do git).
 
 ## O que EXISTE
 
