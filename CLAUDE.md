@@ -22,7 +22,7 @@ npx tsc --noEmit && npx vitest run   # 22 arquivos / 180 testes (em 07/10/2026)
 npm run build
 ```
 - Testes de banco (raiz, `npm test`) rodam contra o projeto Supabase DEV na nuvem e precisam de `.env.test`. Acumulam usuários `@teste.local`: limpe com `node scripts/limpar-usuarios-teste.mjs`.
-- Segredos **não estão no git**: `.env.test`, `web/.env.local`, `web/.dev-credenciais.txt`. Peça ao Pedro, ou recrie a partir de `.env.test.example` / `web/.env.example` com as chaves do painel do Supabase.
+- Segredos: estão em `segredos.7z` (criptografado com senha, que só o Pedro tem). Restaure com `powershell -ExecutionPolicy Bypass -File scripts/restaurar-segredos.ps1` (precisa do 7-Zip). Em texto puro **nunca** vão para o git: `.env.test`, `web/.env.local`, `web/.dev-credenciais.txt`. Ao mudar uma chave, refaça o `.7z`.
 - Supabase: `npx supabase login` e `npx supabase link` na máquina nova. Docker não é necessário (usamos o projeto DEV na nuvem).
 
 ## Como verificar telas (aprendido no caminho)
