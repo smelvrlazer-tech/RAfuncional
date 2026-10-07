@@ -1,0 +1,4 @@
+- [Contas do cliente](ra-funcional-contas-cliente.md) — GitHub/Supabase/Netlify no e-mail do Rafael, custo zero, Vercel descartada
+- [Repositório GitHub](ra-funcional-repositorio-github.md) — repo privado smelvrlazer-tech/RAfuncional; segredos e memória não viajam no clone
+- [Limpeza da máquina](ra-funcional-limpeza-maquina.md) — apagar Docker/node_modules após a entrega, só com checklist de segurança
+- [Fonte do design](ra-funcional-fonte-do-design.md) — visual vive no Claude Design; app já usa a v3 (aplicada em 03/10/2026), conferir o projeto antes de mexer em cores
