@@ -2,7 +2,7 @@
 
 App PWA de check-in em aulas para o treinador **Rafael Alvarenga**. Desenvolvedor: Pedro. Este arquivo é lido automaticamente ao abrir o projeto; o contexto completo está em `docs/`.
 
-**Comece por aqui:** `docs/PROJETO.md` (o que já foi feito, o que falta, decisões e lições) e `docs/ACESSOS-E-STATUS.md` (contas, links, como rodar). As notas de memória do projeto estão copiadas em `docs/memoria/` — leia antes de mexer em contas, visual ou limpeza da máquina.
+**Comece por aqui:** `docs/OUTRA-MAQUINA.md` (se está numa máquina nova), ``docs/PROJETO.md` (o que já foi feito, o que falta, decisões e lições) e `docs/ACESSOS-E-STATUS.md` (contas, links, como rodar). As notas de memória do projeto estão copiadas em `docs/memoria/` — leia antes de mexer em contas, visual ou limpeza da máquina.
 
 ## Regras do projeto
 - **Custo zero** para o cliente: criação, hospedagem e operação (Supabase free, Netlify free; Vercel descartada).
