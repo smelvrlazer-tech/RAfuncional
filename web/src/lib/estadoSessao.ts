@@ -86,6 +86,50 @@ export function textoVagas(s: LinhaAgenda): string {
   return s.vagas_restantes === 1 ? '1 vaga livre' : `${s.vagas_restantes} vagas livres`
 }
 
+/** Só nas últimas horas antes de o prazo fechar o tempo restante vira informação útil. */
+export const JANELA_PRAZO_MIN = 180
+
+export interface TempoParaFechar {
+  /** Minutos até o check-in/cancelamento fechar (arredondado para cima). */
+  restanteMin: number
+  /** 1 no início da janela, 0 quando fecha: largura da barra. */
+  fracao: number
+}
+
+/**
+ * Tempo até o prazo fechar, ou null fora da janela final (sinaliza a exceção, não o padrão).
+ * Depois que fecha, quem avisa é o estado "bloqueada" / o cartão "Check-in encerrado".
+ */
+export function tempoParaFechar(s: LinhaAgenda, opcoes: { agora: Date; limiteMin?: number }): TempoParaFechar | null {
+  const { agora, limiteMin = 60 } = opcoes
+  if (s.cancelada || s.bloqueada) return null
+  const restanteMs = new Date(s.inicia_em).getTime() - limiteMin * 60_000 - agora.getTime()
+  if (restanteMs <= 0 || restanteMs > JANELA_PRAZO_MIN * 60_000) return null
+  return { restanteMin: Math.ceil(restanteMs / 60_000), fracao: restanteMs / (JANELA_PRAZO_MIN * 60_000) }
+}
+
+/** Primeira aula depois de `atual` com vaga, ainda dentro do prazo e sem o aluno já nela. */
+export function proximaComVaga(
+  candidatas: LinhaAgenda[],
+  atual: LinhaAgenda,
+  opcoes: { agora: Date; limiteMin?: number },
+): LinhaAgenda | null {
+  const { agora, limiteMin = 60 } = opcoes
+  const t = agora.getTime()
+  const inicioAtual = new Date(atual.inicia_em).getTime()
+  return (
+    [...candidatas]
+      .sort((a, b) => new Date(a.inicia_em).getTime() - new Date(b.inicia_em).getTime())
+      .find((c) => {
+        const inicio = new Date(c.inicia_em).getTime()
+        return (
+          c.id !== atual.id && inicio > inicioAtual && !c.cancelada && !c.bloqueada &&
+          c.vagas_restantes > 0 && c.meu_status === null && inicio - limiteMin * 60_000 > t
+        )
+      }) ?? null
+  )
+}
+
 /** Ocupação 0..1 para a barra de progresso. */
 export function fracaoOcupada(s: LinhaAgenda): number {
   if (s.vagas <= 0) return 1

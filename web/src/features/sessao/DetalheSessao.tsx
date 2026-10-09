@@ -3,14 +3,16 @@ import { Link, useParams } from 'react-router-dom'
 import { useAuth } from '../../auth/AuthContext'
 import { Aviso, BarraTopo, Botao, Carregando, Perfuracao } from '../../components/Basicos'
 import { Icone } from '../../components/Icone'
-import { chaveDiaSP, formatarIntervalo, formatarPrazoExtenso, rotuloDiaLongo } from '../../lib/datetime'
+import {
+  chaveDiaSP, formatarHora, formatarIntervalo, formatarPrazo, formatarPrazoExtenso, rotuloDiaLongo,
+} from '../../lib/datetime'
 import { mensagemErro } from '../../lib/erros'
-import { estadoSessao, fracaoOcupada, textoVagas } from '../../lib/estadoSessao'
+import { estadoSessao, fracaoOcupada, proximaComVaga, tempoParaFechar, textoVagas } from '../../lib/estadoSessao'
 import { descreverVideo, paragrafos } from '../../lib/texto'
 import type { LinhaAgenda } from '../../lib/tipos'
 import { useAoFocar } from '../../lib/useFoco'
-import { buscarSessao } from '../agenda/api'
-import { useAgora, useLimiteBloqueio } from '../agenda/useAgenda'
+import { buscarAgenda, buscarSessao } from '../agenda/api'
+import { DIAS_AGENDA, useAgora, useLimiteBloqueio } from '../agenda/useAgenda'
 import { AcoesSessao } from './AcoesSessao'
 
 function BlocoVideo({ url }: { url: string }) {
@@ -48,6 +50,20 @@ export function DetalheSessao() {
   useEffect(() => { void recarregar() }, [recarregar])
   useAoFocar(() => void recarregar())
 
+  // Aula lotada e o aluno fora dela: busca as próximas para sugerir uma com vaga.
+  const [seguintes, setSeguintes] = useState<LinhaAgenda[]>([])
+  const lotadaSemMim = !!sessao && !sessao.cancelada && sessao.vagas_restantes <= 0 && sessao.meu_status === null
+  const inicioAula = sessao?.inicia_em
+  useEffect(() => {
+    if (!lotadaSemMim || !inicioAula) { setSeguintes([]); return }
+    let vivo = true
+    const de = new Date(inicioAula)
+    buscarAgenda(de, new Date(de.getTime() + DIAS_AGENDA * 86_400_000))
+      .then((l) => vivo && setSeguintes(l))
+      .catch(() => vivo && setSeguintes([])) // é só uma sugestão: se falhar, some sem barulho
+    return () => { vivo = false }
+  }, [lotadaSemMim, inicioAula])
+
   const voltar = sessao ? `/?dia=${chaveDiaSP(sessao.inicia_em)}` : '/'
 
   if (sessao === undefined && !erro) {
@@ -76,6 +92,9 @@ export function DetalheSessao() {
   // Check-in fechado: o cartão "Check-in encerrado" explica a regra; o motivo curto não se repete.
   const encerrado = estadoBase.tom === 'bloqueada'
   const estado = encerrado ? { ...estadoBase, motivo: null } : estadoBase
+  // Só mostra o relógio quando ainda há algo a fazer e o prazo está perto.
+  const tempo = estado.acao ? tempoParaFechar(sessao, { agora, limiteMin }) : null
+  const sugestao = estado.tom === 'lotada' ? proximaComVaga(seguintes, sessao, { agora, limiteMin }) : null
 
   return (
     <div className="tela tela--detalhe">
@@ -127,6 +146,17 @@ export function DetalheSessao() {
 
       </article>
 
+      {sugestao && (
+        <Link className="sugestao" to={`/sessao/${sugestao.id}`}>
+          <span className="sugestao__texto">
+            <span className="sugestao__sobre">Próxima aula com vaga</span>
+            <span className="sugestao__titulo">{sugestao.turma_nome} · {formatarHora(sugestao.inicia_em)}</span>
+            <span className="sugestao__meta">{rotuloDiaLongo(chaveDiaSP(sugestao.inicia_em))} · {textoVagas(sugestao)}</span>
+          </span>
+          <Icone nome="seta" tamanho={20} />
+        </Link>
+      )}
+
       {encerrado && (
         <section className="encerrado" aria-labelledby="encerrado-titulo">
           <span className="encerrado__icone" aria-hidden="true"><Icone nome="cadeado" tamanho={22} /></span>
@@ -140,6 +170,18 @@ export function DetalheSessao() {
       )}
 
       <section className="barra-acao" aria-label="Sua presença">
+        {tempo && (
+          <div className="prazo">
+            <p className="prazo__texto">
+              <Icone nome="relogio" tamanho={16} />
+              {estado.acao === 'cancelar' || estado.acao === 'sair_fila' ? 'Cancelamento' : 'Check-in'} fecha em{' '}
+              <strong>{formatarPrazo(tempo.restanteMin)}</strong>
+            </p>
+            <span className="prazo__barra" aria-hidden="true">
+              <span className="prazo__restante" style={{ width: `${Math.round(tempo.fracao * 100)}%` }} />
+            </span>
+          </div>
+        )}
         {encerrado && (
           <Botao variante="primario" className="botao--largo" disabled>Check-in indisponível</Botao>
         )}

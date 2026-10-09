@@ -655,6 +655,68 @@
   margin-top: 4px;
   color: var(--cor-texto-suave);
 }
+/* Relógio do prazo: só nas últimas horas, dentro da barra de ação. */
+.prazo {
+  display: grid;
+  gap: 6px;
+}
+.prazo__texto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--cor-aviso-texto);
+  font-variant-numeric: tabular-nums;
+}
+.prazo__barra {
+  display: block;
+  height: 4px;
+  border-radius: 4px;
+  background: var(--cor-aviso-fundo);
+  overflow: hidden;
+}
+.prazo__restante {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--cor-aviso);
+  transition: width 400ms ease;
+}
+/* Atalho quando a aula está lotada. */
+.sugestao {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 16px;
+  border-radius: var(--raio-g);
+  background: var(--cor-superficie);
+  box-shadow: var(--sombra-cartao);
+  color: var(--cor-tinta);
+  text-decoration: none;
+}
+.sugestao:hover { background: var(--cor-superficie-2); }
+.sugestao__texto {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.sugestao__sobre {
+  color: var(--cor-acento-texto);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.sugestao__titulo {
+  font-weight: 700;
+  font-size: 1.1875rem;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+.sugestao__meta {
+  color: var(--cor-texto-suave);
+}
 .treino {
   display: grid;
   gap: 10px;

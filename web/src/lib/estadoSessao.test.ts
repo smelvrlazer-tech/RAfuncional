@@ -1,5 +1,7 @@
 import { describe, it, expect } from 'vitest'
-import { estadoSessao, textoVagas, fracaoOcupada } from './estadoSessao'
+import {
+  estadoSessao, textoVagas, fracaoOcupada, tempoParaFechar, proximaComVaga, JANELA_PRAZO_MIN,
+} from './estadoSessao'
 import type { LinhaAgenda } from './tipos'
 
 const AGORA = new Date('2026-08-04T08:00:00Z') // 05:00 em SP
@@ -119,6 +121,62 @@ describe('estadoSessao', () => {
   it('usa o prazo configurado no banco no texto do bloqueio', () => {
     expect(est({ bloqueada: true }, { limiteMin: 90 }).rotulo).toBe('Bloqueado — faltam menos de 1h30')
     expect(est({ bloqueada: true }, { limiteMin: 30 }).motivo).toBe('Check-in e cancelamento fecham 30 min antes da aula.')
+  })
+})
+
+describe('tempoParaFechar', () => {
+  const tempo = (p: Partial<LinhaAgenda>, limiteMin?: number) => tempoParaFechar(linha(p), { agora: AGORA, limiteMin })
+
+  it('dentro da janela final: minutos restantes e fração da barra', () => {
+    // aula às 08:00Z+3h, prazo 1h: fecha em 2h
+    const t = tempo({})
+    expect(t?.restanteMin).toBe(120)
+    expect(t?.fracao).toBeCloseTo(120 / JANELA_PRAZO_MIN)
+  })
+
+  it('arredonda minutos para cima e respeita o prazo configurado', () => {
+    expect(tempo({ inicia_em: '2026-08-04T09:30:30Z' }, 30)?.restanteMin).toBe(61)
+    expect(tempo({ inicia_em: '2026-08-04T10:30:00Z' }, 90)?.restanteMin).toBe(60)
+  })
+
+  it('longe do prazo, depois dele, bloqueada ou cancelada: nada a mostrar', () => {
+    expect(tempo({ inicia_em: '2026-08-04T13:00:00Z' })).toBeNull() // fecha em 4h
+    expect(tempo({ inicia_em: '2026-08-04T08:59:00Z' })).toBeNull() // já passou
+    expect(tempo({ bloqueada: true })).toBeNull()
+    expect(tempo({ cancelada: true })).toBeNull()
+  })
+})
+
+describe('proximaComVaga', () => {
+  const atual = linha({ id: 'atual', inicia_em: '2026-08-04T11:00:00Z', vagas_restantes: 0 })
+  const outra = (id: string, inicia_em: string, p: Partial<LinhaAgenda> = {}) => linha({ id, inicia_em, ...p })
+  const prox = (c: LinhaAgenda[]) => proximaComVaga(c, atual, { agora: AGORA })?.id ?? null
+
+  it('devolve a primeira aula depois da atual com vaga, mesmo desordenada', () => {
+    expect(prox([outra('c', '2026-08-05T11:00:00Z'), outra('b', '2026-08-04T21:00:00Z')])).toBe('b')
+  })
+
+  it('ignora a própria aula, anteriores, lotadas, canceladas, bloqueadas e as que o aluno já tem', () => {
+    expect(prox([
+      atual,
+      outra('antes', '2026-08-04T09:30:00Z'),
+      outra('lotada', '2026-08-04T12:00:00Z', { vagas_restantes: 0 }),
+      outra('cancelada', '2026-08-04T13:00:00Z', { cancelada: true }),
+      outra('bloqueada', '2026-08-04T14:00:00Z', { bloqueada: true }),
+      outra('minha', '2026-08-04T15:00:00Z', { meu_status: 'confirmado' }),
+      outra('fila', '2026-08-04T16:00:00Z', { meu_status: 'espera' }),
+      outra('ok', '2026-08-04T17:00:00Z'),
+    ])).toBe('ok')
+  })
+
+  it('sem nenhuma opção: null', () => {
+    expect(prox([])).toBeNull()
+    expect(prox([outra('lotada', '2026-08-05T11:00:00Z', { vagas_restantes: 0 })])).toBeNull()
+  })
+
+  it('ignora aula cujo prazo já passou localmente, mesmo que o servidor ainda diga liberada', () => {
+    // começa 08:59Z (agora 08:00Z, prazo 1h): já fechou
+    expect(prox([outra('fechando', '2026-08-04T12:00:00Z', { inicia_em: '2026-08-04T08:59:00Z' })])).toBeNull()
   })
 })
 
