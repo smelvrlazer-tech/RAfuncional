@@ -385,6 +385,11 @@ deno_version = 2
 # [edge_runtime.secrets]
 # secret_key = "env(SECRET_VALUE)"
 
+# Chamada pelo pg_cron (pg_net) com o segredo compartilhado no header x-push-segredo,
+# em vez de um JWT: nenhuma chave do Supabase fica guardada dentro do banco.
+[functions.enviar-push]
+verify_jwt = false
+
 [analytics]
 enabled = true
 port = 54327

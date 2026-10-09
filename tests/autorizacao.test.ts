@@ -8,9 +8,10 @@ const PERMISSAO = /permission denied|row-level security/i
 
 const TABELAS = [
   'perfis', 'configuracoes', 'turmas', 'sessoes', 'checkins', 'treinos', 'convites', 'notificacoes',
+  'inscricoes_push',
 ]
 
-// Todas as funções do schema public até a 0008. Nenhuma pode ser chamada por anon.
+// Funções do schema public (inclui as de push, da 0012). Nenhuma pode ser chamada por anon.
 const RPCS: Array<[string, Record<string, unknown>]> = [
   ['eh_treinador', {}],
   ['tem_perfil', {}],
@@ -28,6 +29,10 @@ const RPCS: Array<[string, Record<string, unknown>]> = [
   ['treinador_remover_aluno', { p_sessao_id: ZERO, p_aluno_id: ZERO }],
   ['treinador_cancelar_sessao', { p_sessao_id: ZERO, p_observacao: 'X' }],
   ['treinador_definir_ativo', { p_perfil_id: ZERO, p_ativo: false }],
+  ['registrar_push', { p_endpoint: 'https://push.exemplo/x', p_chaves: { p256dh: 'x', auth: 'y' } }],
+  ['remover_push', { p_endpoint: 'https://push.exemplo/x' }],
+  ['marcar_push_enviado', { p_ids: [] }],
+  ['disparar_envio_push', {}],
 ]
 
 async function perfilDe(id: string) {
