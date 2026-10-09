@@ -22,15 +22,16 @@ PWA para o treinador Rafael Alvarenga: alunos fazem check-in/cancelam em aulas, 
   - Corrigido o cabeçalho do Painel que deslizava ao clicar em Ontem/Amanhã (`overflow: clip` nos cartões com círculos decorativos).
   - Perfil: o cartão de instalar o app só aparece quando o app ainda não está instalado; título "Instalar o app".
   - Página da aula: relógio do prazo ("Check-in fecha em 1h20" + barra) nas 3 h finais, e atalho "Próxima aula com vaga" quando a aula está lotada (`tempoParaFechar` e `proximaComVaga` em `web/src/lib/estadoSessao.ts`).
-- **Notificações push implementadas no código (09/10/2026), ainda não ativadas na nuvem** (ver `docs/PUSH.md`):
+- **Notificações push implementadas e ativadas no Supabase DEV (09/10/2026); falta o teste de entrega em aparelho real** (ver `docs/PUSH.md`):
   - Banco: `inscricoes_push` (RLS: o cliente só lê as próprias), RPCs `registrar_push` / `remover_push`, `marcar_push_enviado` e `disparar_envio_push` (só service_role), job `enviar-push` a cada minuto via `pg_net`; URL e segredo no Vault.
   - Edge Function `enviar-push` (Web Push/VAPID): decide em `logica.ts` (reenvio só em falha passageira, apaga inscrição expirada, ignora notificação com mais de 6 h).
   - App: `src/sw.ts` próprio (injectManifest) com `push` e `notificationclick`; hook `useAvisos`; cartão no Perfil que só aparece quando há o que fazer (some se o navegador não suporta, e no iPhone orienta a instalar o app primeiro).
-  - Verificado: build gera o `sw.js` com push e pré-cache; no Chrome real o service worker registra e o cartão aparece. **Não verificado de ponta a ponta**: envio real de um push (depende de aplicar na nuvem) e a Edge Function em Deno (sem Deno nesta máquina; a lógica é testada à parte).
+  - Verificado: build gera o `sw.js` com push e pré-cache; no Chrome real o service worker registra e o cartão aparece; `tests/push.test.ts`, `autorizacao` e `agendamentos` passam contra o DEV (90 testes). **Não verificado de ponta a ponta**: a chegada de um push de verdade num aparelho e a Edge Function executando o envio (sem Deno nesta máquina; a lógica é testada à parte).
+  - Lição: nesta rede as portas de banco (5432/6543) são bloqueadas, então `supabase db push` não funciona aqui; ver o plano B no `docs/PUSH.md`.
 - Máquina nova configurada em 09/10/2026: repositório clonado, chaves restauradas, dependências instaladas, `tsc` limpo e testes passando (front: 27 arquivos / 248 testes; mais 25 testes puros em `tests/enviar-push.test.ts`).
 
 ## Falta fazer
-1. **Ativar as notificações push no Supabase DEV** e testar num aparelho. O código está pronto e testado (migration `0012_push.sql`, Edge Function `enviar-push`, service worker, cartão "Avisos no celular" no Perfil), mas **nada foi aplicado na nuvem**: faltam `db push`, `secrets set`, `functions deploy` e os dois segredos no Vault. Passo a passo em `docs/PUSH.md`. Depois, repetir em produção com chaves novas.
+1. **Testar o push de ponta a ponta num aparelho.** Já está **ativado no Supabase DEV (09/10/2026)**: migration `0012` aplicada e registrada, job `enviar-push` a cada minuto, 4 secrets e a função `enviar-push` publicada (responde 401 sem o segredo), 2 segredos no Vault; 90 testes de banco passaram. Falta só ativar os avisos no Perfil de um aparelho real, inserir uma notificação de teste e ver chegar (`docs/PUSH.md`, passo 6). Depois, repetir em produção com chaves novas.
 2. **Publicar online** (Netlify, plano grátis) e criar o Supabase de **produção**; aplicar as migrations lá.
 3. **Contas no e-mail do Rafael** e transferência de GitHub / Supabase / Netlify.
 4. `scripts/limpar-maquina.ps1`: limpeza de Docker/`node_modules` com checklist que aborta se algo falhar. **Não existe ainda.** Só roda por confirmação explícita.

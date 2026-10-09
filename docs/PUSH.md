@@ -59,6 +59,14 @@ Pré-requisito: `npx supabase login` e `npx supabase link --project-ref mixrbjsk
    - `select * from inscricoes_push;` (o aparelho foi registrado?).
 7. **Testes de banco:** `npm test` na raiz (`tests/push.test.ts` e a lista de autorização já incluem as peças novas).
 
+### Se a rede bloquear as portas do banco (5432 e 6543)
+
+Aconteceu em 09/10/2026: `supabase link` e `secrets set` / `functions deploy --use-api` funcionam (só usam HTTPS), mas `db push` falha com `Connection timed out`. Alternativa: aplicar a migration no **SQL Editor** do painel (também HTTPS). Cole o conteúdo de `supabase/migrations/0012_push.sql` seguido de
+```sql
+insert into supabase_migrations.schema_migrations (version, name, statements) values ('0012', 'push', '{}') on conflict (version) do nothing;
+```
+(o `db push` seguinte, numa rede liberada, não reaplica). Os dois `vault.create_secret` do passo 4 entram no mesmo colar. Depois **apague a consulta salva** no SQL Editor (ela guarda o segredo). Os testes de banco (`npm test`) usam HTTPS e funcionam mesmo com as portas bloqueadas.
+
 ## Cuidados
 
 - **Backup das chaves:** os *secrets* do Supabase são só de escrita (não dá para ler de volta). Guarde `supabase/functions/.env` no `segredos.7z` (o `scripts/restaurar-segredos.ps1` restaura o arquivo `env.funcoes.txt` para `supabase/functions/.env`, se ele existir no pacote). Para refazer o pacote: junte `env.test.txt`, `env.local.txt`, `dev-credenciais.txt` e `env.funcoes.txt` e compacte com senha nova.
