@@ -18,7 +18,7 @@ App PWA de check-in em aulas para o treinador **Rafael Alvarenga**. Desenvolvedo
 # app (a partir de web/)
 npm install
 npm run dev -- --host 127.0.0.1 --port 5173
-npx tsc --noEmit && npx vitest run   # 22 arquivos / 180 testes (em 07/10/2026)
+npx tsc --noEmit && npx vitest run   # 23 arquivos / 195 testes (em 09/10/2026)
 npm run build
 ```
 - Testes de banco (raiz, `npm test`) rodam contra o projeto Supabase DEV na nuvem e precisam de `.env.test`. Acumulam usuários `@teste.local`: limpe com `node scripts/limpar-usuarios-teste.mjs`.

@@ -65,7 +65,7 @@ Docker **não** é necessário: o banco DEV está na nuvem. O ref do projeto est
 Depois, para conferir que está tudo certo:
 > Rode o app e os testes.
 
-(Manualmente: `cd web`, `npm run dev -- --host 127.0.0.1 --port 5173`, e `npx vitest run`. Esperado: 22 arquivos / 180 testes passando, em 07/10/2026.)
+(Manualmente: `cd web`, `npm run dev -- --host 127.0.0.1 --port 5173`, e `npx vitest run`. Esperado: 23 arquivos / 195 testes passando, em 09/10/2026.)
 
 ## 7. Opcional: restaurar a memória do Claude Code
 As notas do Claude estão em `docs/memoria/`. Para o Claude lembrar delas como memória, copie `docs/memoria/*.md` para a pasta de memória do projeto: `~/.claude/projects/<pasta-do-projeto>/memory/`. Se não fizer, não tem problema: o essencial está no `CLAUDE.md` e em `docs/PROJETO.md`.
