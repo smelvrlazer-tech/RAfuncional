@@ -69,7 +69,7 @@ insert into supabase_migrations.schema_migrations (version, name, statements) va
 
 ## Cuidados
 
-- **Backup das chaves:** os *secrets* do Supabase são só de escrita (não dá para ler de volta). Guarde `supabase/functions/.env` no `segredos.7z` (o `scripts/restaurar-segredos.ps1` restaura o arquivo `env.funcoes.txt` para `supabase/functions/.env`, se ele existir no pacote). Para refazer o pacote: junte `env.test.txt`, `env.local.txt`, `dev-credenciais.txt` e `env.funcoes.txt` e compacte com senha nova.
+- **Backup das chaves:** os *secrets* do Supabase são só de escrita (não dá para ler de volta). Desde 09/10/2026 o `segredos.7z` já inclui `supabase/functions/.env` (como `env.funcoes.txt`) e o `scripts/restaurar-segredos.ps1` o restaura. Se uma chave mudar, refaça o pacote: junte `env.test.txt`, `env.local.txt`, `dev-credenciais.txt` e `env.funcoes.txt` e compacte com `7z a -mhe=on segredos.7z -p` (a senha é a mesma de sempre, só do Pedro).
 - **Trocar a chave VAPID invalida todas as inscrições existentes** (cada aluno precisa tocar em "Ativar avisos" de novo). Só faça se a privada vazar.
 - **`VAPID_SUBJECT`** hoje é `mailto:contato@rafuncional.app` (de exemplo). Troque pelo e-mail do Rafael ou pela URL do app quando existirem, e rode o passo 2 de novo.
 - **Produção:** repita os passos 1 a 5 no projeto de produção, com **novas** chaves VAPID e um novo `PUSH_SEGREDO` (e a URL do passo 4 apontando para o projeto de produção).
