@@ -5,6 +5,7 @@ import { Icone } from '../../components/Icone'
 import { mensagemErro } from '../../lib/erros'
 import { supabase } from '../../lib/supabase'
 import { useInstalacao } from '../../pwa'
+import { CartaoAvisos } from './CartaoAvisos'
 
 export function Perfil() {
   const { perfil, sessao, recarregarPerfil, sair } = useAuth()
@@ -79,6 +80,8 @@ export function Perfil() {
           </p>
         </form>
       </section>
+
+      <CartaoAvisos />
 
       {/* Já instalado é o padrão: não ocupa espaço. O cartão só aparece quando há o que fazer. */}
       {!instalacao.instalado && (

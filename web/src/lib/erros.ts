@@ -10,7 +10,7 @@ const BACKEND = [
   'convite_invalido', 'perfil_ja_existe', 'nome_obrigatorio', 'nao_autenticado', 'sessao_inexistente',
   'acesso_negado', 'apenas_alunos', 'perfil_inexistente', 'ativo_obrigatorio',
   'turma_inexistente', 'turma_nome_obrigatorio', 'turma_dia_invalido', 'turma_hora_obrigatoria',
-  'turma_duracao_invalida', 'turma_vagas_invalidas',
+  'turma_duracao_invalida', 'turma_vagas_invalidas', 'push_invalido',
 ] as const
 
 /** Códigos SQLSTATE de escrita direta nas tabelas (painel do treinador). */
@@ -116,6 +116,8 @@ export function mensagemErro(erro: unknown, opcoes: { limiteMin?: number; treina
       return 'A duração precisa ser maior que zero.'
     case 'turma_vagas_invalidas':
       return 'As vagas precisam ser maiores que zero.'
+    case 'push_invalido':
+      return 'Não foi possível ativar os avisos neste aparelho. Tente de novo.'
   }
   if (codigo && AUTH[codigo]) return AUTH[codigo]
   const sqlstate = campo(erro, 'code')

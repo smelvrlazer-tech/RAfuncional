@@ -929,6 +929,8 @@
   display: inline-block;
   vertical-align: -3px;
 }
+/* Ação secundária e discreta ("Desativar"): não esticada como o botão principal do cartão. */
+.avisos .botao--texto { justify-self: start; }
 
 /* ------------------------------------------------------------ desktop */
 @media (min-width: 720px) {

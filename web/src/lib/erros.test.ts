@@ -19,6 +19,7 @@ describe('mensagemErro', () => {
     ['nao_autenticado', /Entre novamente/],
     ['sessao_inexistente', /não existe mais/],
     ['acesso_negado', /permissão/],
+    ['push_invalido', /ativar os avisos/],
   ])('código do backend %s', (codigo, esperado) => {
     expect(mensagemErro(rpc(codigo))).toMatch(esperado)
   })

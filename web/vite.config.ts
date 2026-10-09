@@ -13,6 +13,10 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       injectRegister: false, // registrado em src/pwa.ts
+      // Service worker próprio (src/sw.ts): além do app shell, trata os eventos de Web Push.
+      strategies: 'injectManifest',
+      srcDir: 'src',
+      filename: 'sw.ts',
       includeAssets: ['favicon.svg', 'icons/apple-touch-icon.png'],
       manifest: {
         name: 'RA Funcional',
@@ -31,13 +35,10 @@ export default defineConfig({
           { src: '/icons/icon-maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
         ],
       },
-      workbox: {
+      injectManifest: {
         // Só o "app shell" (HTML/JS/CSS/fontes/ícones) é pré-cacheado.
-        // NÃO há runtimeCaching: respostas da API do Supabase nunca são cacheadas.
+        // NÃO há cache em tempo de execução: respostas da API do Supabase nunca são cacheadas.
         globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
-        navigateFallback: '/index.html',
-        cleanupOutdatedCaches: true,
-        runtimeCaching: [],
       },
     }),
   ],
