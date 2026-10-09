@@ -9,6 +9,7 @@ App PWA de check-in em aulas para o treinador **Rafael Alvarenga**. Desenvolvedo
 - Contas de serviço (GitHub, Supabase, Netlify) devem acabar no **e-mail do Rafael**. Hoje estão na conta do Pedro (ver `docs/memoria/ra-funcional-contas-cliente.md`). Confirmar o e-mail antes de criar qualquer conta.
 - **Regras de negócio vivem no Postgres** (RPCs `SECURITY DEFINER` + RLS), não no front. Mudou regra? Mexa em `supabase/migrations/`, não no React.
 - **Migrations remotas:** o Pedro roda `npx supabase db push`. Não aplique migrations no banco remoto sem ele pedir.
+- **Push:** `docs/PUSH.md` (como funciona e como ativar). Chave VAPID privada e `PUSH_SEGREDO` ficam em `supabase/functions/.env` (fora do Git) e nunca no app nem em tabela; a URL/segredo que o cron usa ficam no Vault. Secrets do Supabase são só de escrita: guarde o `.env` no `segredos.7z`.
 - **Visual:** a fonte da verdade é o projeto no Claude Design (ver `docs/memoria/ra-funcional-fonte-do-design.md`). Cores e fontes só em `web/src/styles/tokens.css`. Princípio: "sinalize a exceção, não o padrão"; uma ação principal (coral) por tela/form; ações secundárias e destrutivas ficam quietas.
 - **Limpeza da máquina** só no fim e só com checklist de segurança, nunca automática (`docs/memoria/ra-funcional-limpeza-maquina.md`).
 - Commits em português, com o rodapé `Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>`.
@@ -18,7 +19,7 @@ App PWA de check-in em aulas para o treinador **Rafael Alvarenga**. Desenvolvedo
 # app (a partir de web/)
 npm install
 npm run dev -- --host 127.0.0.1 --port 5173
-npx tsc --noEmit && npx vitest run   # 23 arquivos / 195 testes (em 09/10/2026)
+npx tsc --noEmit && npx vitest run   # 27 arquivos / 248 testes (em 09/10/2026)
 npm run build
 ```
 - Testes de banco (raiz, `npm test`) rodam contra o projeto Supabase DEV na nuvem e precisam de `.env.test`. Acumulam usuários `@teste.local`: limpe com `node scripts/limpar-usuarios-teste.mjs`.

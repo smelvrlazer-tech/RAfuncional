@@ -22,10 +22,15 @@ PWA para o treinador Rafael Alvarenga: alunos fazem check-in/cancelam em aulas, 
   - Corrigido o cabeçalho do Painel que deslizava ao clicar em Ontem/Amanhã (`overflow: clip` nos cartões com círculos decorativos).
   - Perfil: o cartão de instalar o app só aparece quando o app ainda não está instalado; título "Instalar o app".
   - Página da aula: relógio do prazo ("Check-in fecha em 1h20" + barra) nas 3 h finais, e atalho "Próxima aula com vaga" quando a aula está lotada (`tempoParaFechar` e `proximaComVaga` em `web/src/lib/estadoSessao.ts`).
-- Máquina nova configurada em 09/10/2026: repositório clonado, chaves restauradas, dependências instaladas, `tsc` limpo e 195 testes passando.
+- **Notificações push implementadas no código (09/10/2026), ainda não ativadas na nuvem** (ver `docs/PUSH.md`):
+  - Banco: `inscricoes_push` (RLS: o cliente só lê as próprias), RPCs `registrar_push` / `remover_push`, `marcar_push_enviado` e `disparar_envio_push` (só service_role), job `enviar-push` a cada minuto via `pg_net`; URL e segredo no Vault.
+  - Edge Function `enviar-push` (Web Push/VAPID): decide em `logica.ts` (reenvio só em falha passageira, apaga inscrição expirada, ignora notificação com mais de 6 h).
+  - App: `src/sw.ts` próprio (injectManifest) com `push` e `notificationclick`; hook `useAvisos`; cartão no Perfil que só aparece quando há o que fazer (some se o navegador não suporta, e no iPhone orienta a instalar o app primeiro).
+  - Verificado: build gera o `sw.js` com push e pré-cache; no Chrome real o service worker registra e o cartão aparece. **Não verificado de ponta a ponta**: envio real de um push (depende de aplicar na nuvem) e a Edge Function em Deno (sem Deno nesta máquina; a lógica é testada à parte).
+- Máquina nova configurada em 09/10/2026: repositório clonado, chaves restauradas, dependências instaladas, `tsc` limpo e testes passando (front: 27 arquivos / 248 testes; mais 25 testes puros em `tests/enviar-push.test.ts`).
 
 ## Falta fazer
-1. **Notificações push** (PWA): Edge Function + chaves VAPID + tabela `inscricoes_push`. Hoje o app só tem o "sino" interno.
+1. **Ativar as notificações push no Supabase DEV** e testar num aparelho. O código está pronto e testado (migration `0012_push.sql`, Edge Function `enviar-push`, service worker, cartão "Avisos no celular" no Perfil), mas **nada foi aplicado na nuvem**: faltam `db push`, `secrets set`, `functions deploy` e os dois segredos no Vault. Passo a passo em `docs/PUSH.md`. Depois, repetir em produção com chaves novas.
 2. **Publicar online** (Netlify, plano grátis) e criar o Supabase de **produção**; aplicar as migrations lá.
 3. **Contas no e-mail do Rafael** e transferência de GitHub / Supabase / Netlify.
 4. `scripts/limpar-maquina.ps1`: limpeza de Docker/`node_modules` com checklist que aborta se algo falhar. **Não existe ainda.** Só roda por confirmação explícita.

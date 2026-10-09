@@ -14,7 +14,10 @@ $destinos = @{
   'env.test.txt'        = Join-Path $raiz '.env.test'
   'env.local.txt'       = Join-Path $raiz 'web\.env.local'
   'dev-credenciais.txt' = Join-Path $raiz 'web\.dev-credenciais.txt'
+  # Chaves VAPID e segredo do push (docs/PUSH.md). Opcional: pacotes antigos não têm este arquivo.
+  'env.funcoes.txt'     = Join-Path $raiz 'supabase\functions\.env'
 }
+$opcionais = @('env.funcoes.txt')
 
 foreach ($d in $destinos.Values) {
   if (Test-Path $d) { throw "Já existe $d. Apague ou mova antes, para não sobrescrever." }
@@ -27,7 +30,12 @@ try {
   & $sete x $zip "-o$tmp" -y
   if ($LASTEXITCODE -ne 0) { throw 'Senha errada ou arquivo corrompido.' }
   foreach ($nome in $destinos.Keys) {
-    Copy-Item (Join-Path $tmp $nome) $destinos[$nome]
+    $origem = Join-Path $tmp $nome
+    if (-not (Test-Path $origem)) {
+      if ($opcionais -contains $nome) { Write-Host "--  $nome não está no pacote (ok, é opcional)"; continue }
+      throw "O pacote não tem $nome."
+    }
+    Copy-Item $origem $destinos[$nome]
     Write-Host "OK  $($destinos[$nome])"
   }
 } finally {
