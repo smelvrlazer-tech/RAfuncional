@@ -23,6 +23,7 @@
   gap: 4px;
   padding: 26px 24px 34px;
   overflow: hidden;
+  overflow: clip;
   background: var(--cor-marca);
   color: var(--cor-texto-invertido);
 }
@@ -135,6 +136,7 @@
 .cabecalho {
   position: relative;
   overflow: hidden;
+  overflow: clip;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;

@@ -124,6 +124,7 @@
 .controle {
   position: relative;
   overflow: hidden;
+  overflow: clip; /* clip não rola por foco: os círculos decorativos não deslocam o conteúdo */
   display: grid;
   gap: 18px;
   padding: 22px 20px;
