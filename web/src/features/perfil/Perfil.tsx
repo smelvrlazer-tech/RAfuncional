@@ -80,30 +80,31 @@ export function Perfil() {
         </form>
       </section>
 
-      <section className="cartao instalar">
-        <h2 className="cartao__titulo">App na tela de início</h2>
-        {instalacao.instalado ? (
-          <p className="instalar__ok"><Icone nome="check" /> Você já está usando o app instalado.</p>
-        ) : instalacao.podeInstalar ? (
-          <>
-            <p>Instale o RA Funcional para abrir em tela cheia, como um aplicativo.</p>
-            <Botao variante="contorno" onClick={() => void instalacao.instalar()}>
-              <Icone nome="instalar" /> Instalar app
-            </Botao>
-          </>
-        ) : instalacao.ios ? (
-          <p>
-            No iPhone: toque em <strong>Compartilhar</strong> <Icone nome="compartilhar" tamanho={16} /> no Safari e depois em{' '}
-            <strong>Adicionar à Tela de Início</strong>. Assim o app abre em tela cheia.
-          </p>
-        ) : (
-          <p>
-            No Android (Chrome): abra o menu <strong>⋮</strong> e toque em <strong>Instalar app</strong> ou{' '}
-            <strong>Adicionar à tela inicial</strong>. No iPhone, use o Safari: <strong>Compartilhar</strong> →{' '}
-            <strong>Adicionar à Tela de Início</strong>.
-          </p>
-        )}
-      </section>
+      {/* Já instalado é o padrão: não ocupa espaço. O cartão só aparece quando há o que fazer. */}
+      {!instalacao.instalado && (
+        <section className="cartao instalar">
+          <h2 className="cartao__titulo">Instalar o app</h2>
+          {instalacao.podeInstalar ? (
+            <>
+              <p>Abra o RA Funcional em tela cheia, direto da tela de início, como um aplicativo.</p>
+              <Botao variante="contorno" onClick={() => void instalacao.instalar()}>
+                <Icone nome="instalar" /> Instalar app
+              </Botao>
+            </>
+          ) : instalacao.ios ? (
+            <p>
+              No iPhone: toque em <strong>Compartilhar</strong> <Icone nome="compartilhar" tamanho={16} /> no Safari e depois em{' '}
+              <strong>Adicionar à Tela de Início</strong>. Assim o app abre em tela cheia.
+            </p>
+          ) : (
+            <p>
+              No Android (Chrome): abra o menu <strong>⋮</strong> e toque em <strong>Instalar app</strong> ou{' '}
+              <strong>Adicionar à tela inicial</strong>. No iPhone, use o Safari: <strong>Compartilhar</strong> →{' '}
+              <strong>Adicionar à Tela de Início</strong>.
+            </p>
+          )}
+        </section>
+      )}
 
       <Botao variante="contorno" className="botao--largo" carregando={saindo} onClick={() => void sairDaConta()}>
         <Icone nome="sair" /> Sair da conta

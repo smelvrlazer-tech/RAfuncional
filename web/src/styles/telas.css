@@ -862,13 +862,6 @@
   display: grid;
   gap: 10px;
 }
-.instalar__ok {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--cor-sucesso-texto);
-  font-weight: 700;
-}
 .instalar svg,
 .instalar p svg {
   display: inline-block;
