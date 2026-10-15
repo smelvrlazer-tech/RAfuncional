@@ -1,10 +1,12 @@
 import { useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../../auth/AuthContext'
-import { Aviso, Avatar, Botao, EsqueletoLista } from '../../components/Basicos'
+import { Aviso, Botao, EsqueletoLista } from '../../components/Basicos'
+import { Icone } from '../../components/Icone'
 import { Sino } from '../../components/Sino'
 import { chaveDiaSP, rotuloDiaLongo, semanaSeguinte } from '../../lib/datetime'
 import { mensagemErro } from '../../lib/erros'
+import { proximaAulaMinha, rotuloQuando } from '../../lib/proximaAula'
 import { CartaoSessao } from './CartaoSessao'
 import { SeletorDias } from './SeletorDias'
 import { useAgenda, useLimiteBloqueio } from './useAgenda'
@@ -53,21 +55,31 @@ export function Agenda() {
   const primeiroNome = nome.split(/\s+/)[0] ?? ''
   const ativo = perfil?.ativo ?? true
   const proximoDia = dias.find((d) => d.chave > selecionado && comAula.has(d.chave))
+  const proxima = useMemo(() => proximaAulaMinha(linhas ?? [], agora), [linhas, agora])
 
   return (
     <div className="tela tela--agenda">
-      <header className="cabecalho">
-        <div className="cabecalho__texto">
-          <p className="cabecalho__sobre">{primeiroNome ? `Olá, ${primeiroNome}` : 'RA Funcional'}</p>
-          <h1 className="cabecalho__titulo">Sua semana</h1>
+      {/* Uma linha: quem é e qual dia está aberto. O dia escolhido é o título da tela. */}
+      <header className="topo-agenda">
+        <div className="topo-agenda__texto">
+          <p className="topo-agenda__ola">{primeiroNome ? `Olá, ${primeiroNome}` : 'RA Funcional'}</p>
+          <h1 className="topo-agenda__titulo" id="rotulo-dia">{rotuloDiaLongo(selecionado)}</h1>
         </div>
-        <div className="cabecalho__acoes">
-          <Sino />
-          <Link to="/perfil" className="cabecalho__perfil" aria-label={`Seu perfil (${nome})`}>
-            <Avatar nome={nome} />
-          </Link>
-        </div>
+        <Sino />
       </header>
+
+      {proxima && (
+        <Link to={`/sessao/${proxima.id}`} className={`proxima ${proxima.meu_status === 'espera' ? 'proxima--espera' : ''}`}>
+          <span className="proxima__rotulo">
+            {proxima.meu_status === 'espera'
+              ? `Você está na fila${proxima.minha_posicao ? ` · Nº${proxima.minha_posicao}` : ''}`
+              : 'Sua próxima aula'}
+          </span>
+          <span className="proxima__quando">{rotuloQuando(proxima, agora)}</span>
+          <span className="proxima__nome">{proxima.turma_nome}</span>
+          <Icone nome="seta" tamanho={20} />
+        </Link>
+      )}
 
       {!ativo && (
         <Aviso tom="alerta" titulo="Conta desativada">
@@ -94,13 +106,6 @@ export function Agenda() {
       />
 
       <section className="dia-agenda" aria-labelledby="rotulo-dia" aria-busy={carregando}>
-        <div className="dia-agenda__cabeca">
-          <h2 id="rotulo-dia" className="dia-agenda__titulo">{rotuloDiaLongo(selecionado)}</h2>
-          {doDia.length > 0 && (
-            <span className="dia-agenda__contagem">{doDia.length} {doDia.length === 1 ? 'aula' : 'aulas'}</span>
-          )}
-        </div>
-
         {erro != null && (
           <Aviso tom="erro" role="alert" titulo="Não foi possível carregar a agenda">
             {mensagemErro(erro)}{' '}
@@ -123,7 +128,7 @@ export function Agenda() {
           </div>
         ) : (
           <ol className="lista-sessoes">
-            {doDia.map((s, i) => (
+            {doDia.map((s) => (
               <li key={s.id}>
                 <CartaoSessao
                   sessao={s}
@@ -131,7 +136,6 @@ export function Agenda() {
                   ativo={ativo}
                   limiteMin={limiteMin}
                   onAtualizar={recarregar}
-                  indice={i}
                 />
               </li>
             ))}

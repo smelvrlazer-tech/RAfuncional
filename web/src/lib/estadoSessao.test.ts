@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import {
-  estadoSessao, textoVagas, fracaoOcupada, tempoParaFechar, proximaComVaga, JANELA_PRAZO_MIN,
+  estadoSessao, textoVagas, fracaoOcupada, tempoParaFechar, proximaComVaga, JANELA_PRAZO_MIN, resumoLinha,
 } from './estadoSessao'
 import type { LinhaAgenda } from './tipos'
 
@@ -195,5 +195,28 @@ describe('textoVagas / fracaoOcupada', () => {
     expect(fracaoOcupada(linha({ vagas: 10, confirmados: 3 }))).toBeCloseTo(0.3)
     expect(fracaoOcupada(linha({ vagas: 10, confirmados: 12 }))).toBe(1)
     expect(fracaoOcupada(linha({ vagas: 0, confirmados: 0 }))).toBe(1)
+  })
+})
+
+describe('resumoLinha (texto curto da lista)', () => {
+  const r = (p: Partial<LinhaAgenda>) => resumoLinha(linha(p), AGORA)
+
+  it('vagas em versão curta, com a duração', () => {
+    expect(r({ vagas_restantes: 7 })).toBe('7 vagas · 60 min')
+    expect(r({ vagas_restantes: 1, duracao_min: 50 })).toBe('1 vaga · 50 min')
+  })
+
+  it('lotada diz o tamanho da fila', () => {
+    expect(r({ vagas_restantes: 0 })).toBe('Lotada · 60 min')
+    expect(r({ vagas_restantes: 0, na_espera: 2 })).toBe('Lotada · 2 na fila · 60 min')
+  })
+
+  it('aula que começou ou terminou diz isso em vez das vagas', () => {
+    expect(r({ inicia_em: '2026-08-04T07:30:00Z' })).toBe('Em andamento · 60 min')
+    expect(r({ inicia_em: '2026-08-04T06:00:00Z' })).toBe('Encerrada · 60 min')
+  })
+
+  it('aula cancelada: só a duração (o selo "cancelada" já diz o resto)', () => {
+    expect(r({ cancelada: true, vagas_restantes: 4 })).toBe('60 min')
   })
 })

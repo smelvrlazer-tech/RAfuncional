@@ -86,6 +86,21 @@ export function textoVagas(s: LinhaAgenda): string {
   return s.vagas_restantes === 1 ? '1 vaga livre' : `${s.vagas_restantes} vagas livres`
 }
 
+/**
+ * Linha de apoio da aula na lista da agenda, curta para caber ao lado do botão:
+ * "10 vagas · 50 min", "Lotada · 2 na fila · 60 min", "Em andamento · 60 min", "Encerrada · 60 min".
+ * Aula que já começou ou passou diz isso aqui, em vez de um selo inteiro (é a exceção mais fraca).
+ */
+export function resumoLinha(s: LinhaAgenda, agora: Date): string {
+  const duracao = `${s.duracao_min} min`
+  if (s.cancelada) return duracao
+  const inicio = new Date(s.inicia_em).getTime()
+  const t = agora.getTime()
+  if (t >= inicio) return `${t < inicio + s.duracao_min * 60_000 ? 'Em andamento' : 'Encerrada'} · ${duracao}`
+  if (s.vagas_restantes <= 0) return `${textoVagas(s)} · ${duracao}`
+  return `${s.vagas_restantes === 1 ? '1 vaga' : `${s.vagas_restantes} vagas`} · ${duracao}`
+}
+
 /** Só nas últimas horas antes de o prazo fechar o tempo restante vira informação útil. */
 export const JANELA_PRAZO_MIN = 180
 

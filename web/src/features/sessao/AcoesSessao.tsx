@@ -75,7 +75,10 @@ export function AcoesSessao({ sessao, estado, limiteMin, onAtualizar, grande = f
   }
 
   const { acao, tom } = estado
-  const mostrarChip = tom !== 'disponivel' && (tom !== 'lotada' || compacto)
+  // "Lotada" já aparece no texto da aula (lista) e na barra de vagas (detalhe): o chip só repetiria.
+  // Na lista, encerrada/em andamento, confirmado e fila vão no texto da linha (CartaoSessao), sem selo.
+  const naLinha = compacto && (tom === 'encerrada' || tom === 'confirmado' || tom === 'espera')
+  const mostrarChip = tom !== 'disponivel' && tom !== 'lotada' && !naLinha
   const pedeConfirmacao = acao === 'cancelar'
   const principal = acao === 'checkin' || acao === 'entrar_fila'
   const apoio = grande ? textoApoio(sessao, acao, limiteMin) : null
@@ -93,7 +96,8 @@ export function AcoesSessao({ sessao, estado, limiteMin, onAtualizar, grande = f
         {mostrarChip && <Chip tom={tom}>{compacto ? rotuloChipCompacto(estado, sessao) : estado.rotulo}</Chip>}
         {acao && !confirmando && (
           <Botao
-            variante={principal ? (grande || compacto ? 'primario' : 'contorno') : 'texto'}
+            // Na lista, entrar na fila é secundário: o botão cheio fica para "Reservar".
+            variante={!principal ? 'texto' : compacto && acao === 'entrar_fila' ? 'contorno' : grande || compacto ? 'primario' : 'contorno'}
             className={`${principal ? 'acoes__principal' : 'acoes__secundaria'} ${compacto && principal ? 'botao--compacto' : ''}`}
             carregando={enviando}
             aria-label={nomeBotao}

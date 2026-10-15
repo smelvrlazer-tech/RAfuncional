@@ -6,9 +6,9 @@ interface Props {
   dias: DiaSeletor[]
   selecionado: string
   onSelecionar: (chave: string) => void
-  /** Dias em que o aluno está confirmado ou na fila (o ponto fica verde). */
+  /** Dias em que o aluno está confirmado ou na fila: só eles ganham o ponto (sinaliza a exceção). */
   marcados: Set<string>
-  /** Dias com pelo menos uma aula (ponto coral; os demais ficam esmaecidos). */
+  /** Dias com pelo menos uma aula (os demais ficam esmaecidos). */
   comAula: Set<string>
 }
 
@@ -40,7 +40,7 @@ export function SeletorDias({ dias, selecionado, onSelecionar, marcados, comAula
                 <span className="dia__semana">{d.semanaCurta}</span>
                 <span className="dia__numero">{d.numero}</span>
                 <span
-                  className={`dia__ponto ${marcados.has(d.chave) ? 'dia__ponto--meu' : comAula.has(d.chave) ? 'dia__ponto--on' : ''}`}
+                  className={`dia__ponto ${marcados.has(d.chave) ? 'dia__ponto--meu' : ''}`}
                   aria-hidden="true"
                 />
               </button>

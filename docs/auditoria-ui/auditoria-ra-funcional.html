@@ -1,0 +1,436 @@
+<title>Auditoria UI/UX RA Funcional</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Public+Sans:wght@400;500;600;700&family=Bricolage+Grotesque:wght@700&family=Archivo:wght@400;600;700&display=swap">
+<style>
+/* Layout: relatório de leitura em coluna única (até 46rem), com figuras que podem sair para 68rem. */
+:root {
+  --bg: #f6f7f9; --superficie: #ffffff; --tinta: #14181d; --suave: #5a6370; --linha: #dde1e7;
+  --destaque: #1f4fd1; --destaque-fundo: #e8eeff;
+  --alta: #b42318; --alta-fundo: #fdecea; --media: #9a5b00; --media-fundo: #fdf1dc; --baixa: #3f5b78; --baixa-fundo: #e6edf5;
+  --ok: #17693f; --ok-fundo: #e1f3e8;
+  --display: 'Barlow Condensed', 'Arial Narrow', system-ui, sans-serif;
+  --texto: 'Public Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #12151a; --superficie: #1a1e25; --tinta: #eceef1; --suave: #a0a8b3; --linha: #2c323b;
+  --destaque: #8fb0ff; --destaque-fundo: #1c2740;
+  --alta: #ff9a8f; --alta-fundo: #3a1c19; --media: #f0bc6a; --media-fundo: #33270f; --baixa: #a9c1dc; --baixa-fundo: #1d2a38;
+  --ok: #7fd3a4; --ok-fundo: #15301f; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #12151a; --superficie: #1a1e25; --tinta: #eceef1; --suave: #a0a8b3; --linha: #2c323b;
+  --destaque: #8fb0ff; --destaque-fundo: #1c2740;
+  --alta: #ff9a8f; --alta-fundo: #3a1c19; --media: #f0bc6a; --media-fundo: #33270f; --baixa: #a9c1dc; --baixa-fundo: #1d2a38;
+  --ok: #7fd3a4; --ok-fundo: #15301f; color-scheme: dark }
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--tinta); font-family: var(--texto); font-size: 1rem; line-height: 1.6; margin: 0; }
+.pagina { padding-inline: 20px; padding-block: 40px 80px; }
+.col { max-width: 46rem; margin-inline: auto; }
+.largo { max-width: 68rem; margin-inline: auto; }
+h1, h2, h3 { font-family: var(--display); font-weight: 700; line-height: 1.1; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2.4rem, 6vw, 3.6rem); letter-spacing: -0.005em; }
+h2 { font-size: 2rem; margin-top: 3.5rem; padding-top: 1.25rem; border-top: 2px solid var(--tinta); }
+h3 { font-size: 1.4rem; margin-top: 2rem; }
+p { margin: 0.75rem 0 0; }
+.lead { font-size: 1.15rem; color: var(--suave); margin-top: 1rem; }
+a { color: var(--destaque); }
+strong { font-weight: 600; }
+ul, ol { margin: 0.75rem 0 0; padding-left: 1.2rem; }
+li { margin-top: 0.35rem; }
+code { font-size: 0.9em; background: var(--superficie); border: 1px solid var(--linha); border-radius: 4px; padding: 0 4px; }
+
+.veredito { margin-top: 2rem; background: var(--superficie); border: 1px solid var(--linha); border-left: 4px solid var(--destaque); padding: 1.1rem 1.25rem; }
+.veredito p:first-child { margin-top: 0; }
+
+.numeros { display: grid; grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr)); gap: 1px; background: var(--linha); border: 1px solid var(--linha); margin-top: 1.5rem; }
+.numeros div { background: var(--superficie); padding: 0.9rem 1rem; }
+.numeros b { display: block; font-family: var(--display); font-size: 2.1rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.numeros span { display: block; color: var(--suave); font-size: 0.875rem; margin-top: 0.3rem; line-height: 1.35; }
+
+.achado { margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--linha); }
+.achado h4 { font-family: var(--texto); font-size: 1.05rem; font-weight: 700; margin: 0.4rem 0 0; line-height: 1.35; }
+.tag { display: inline-block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 2px 8px; border-radius: 3px; }
+.tag.alta { color: var(--alta); background: var(--alta-fundo); }
+.tag.media { color: var(--media); background: var(--media-fundo); }
+.tag.baixa { color: var(--baixa); background: var(--baixa-fundo); }
+.tag.ok { color: var(--ok); background: var(--ok-fundo); }
+.cod { color: var(--suave); font-size: 0.8125rem; font-weight: 600; margin-left: 0.5rem; }
+.muda { margin-top: 0.6rem; padding: 0.6rem 0.8rem; background: var(--destaque-fundo); border-radius: 4px; }
+.muda b { color: var(--destaque); }
+
+figure { margin: 1.5rem 0 0; }
+figcaption { color: var(--suave); font-size: 0.875rem; margin-top: 0.5rem; line-height: 1.45; }
+.fones { display: flex; gap: 14px; overflow-x: auto; padding-bottom: 8px; align-items: flex-start; }
+.fones figure { flex: 0 0 auto; width: 232px; margin: 0; }
+.fones img, .tela img { display: block; width: 100%; height: auto; border: 1px solid var(--linha); border-radius: 6px; background: #fff; }
+.tela img { max-width: 100%; }
+.duas { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: 18px; }
+.duas figure { margin: 0; }
+
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.9375rem; }
+th, td { text-align: left; padding: 0.55rem 0.6rem; border-bottom: 1px solid var(--linha); vertical-align: top; }
+th { font-size: 0.8125rem; color: var(--suave); font-weight: 600; }
+.rolagem { overflow-x: auto; }
+.rolagem table { min-width: 34rem; }
+td.n { font-variant-numeric: tabular-nums; white-space: nowrap; font-weight: 600; }
+
+/* ---------- Esboços das três direções: componentes reais em CSS, não imagens ---------- */
+.direcoes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr)); gap: 24px; margin-top: 1.5rem; align-items: start; }
+.dir h3 { margin-top: 0; }
+.dir p { font-size: 0.9375rem; }
+.fone { --f-bg: #fff; --f-sup: #fff; --f-tinta: #111418; --f-suave: #5c6570; --f-linha: #d9dde3; --f-acao: #1d4ed8; --f-sobre: #fff; --f-ok: #0f7a4a; --f-raio: 6px;
+  --f-display: 'Barlow Condensed', 'Arial Narrow', sans-serif; --f-texto: 'Public Sans', system-ui, sans-serif;
+  margin-top: 1rem; width: 100%; max-width: 300px; background: var(--f-bg); color: var(--f-tinta); font-family: var(--f-texto);
+  border: 1px solid var(--linha); border-radius: 22px; overflow: hidden; font-size: 13px; line-height: 1.35; }
+.fone[data-dir="b"] { --f-bg: #1b1f24; --f-sup: #252a31; --f-tinta: #f1efe8; --f-suave: #9aa3ad; --f-linha: #343a43; --f-acao: #ffcf33; --f-sobre: #1b1f24; --f-ok: #62cf93; --f-raio: 4px; }
+.fone[data-dir="c"] { --f-bg: #fbfaf7; --f-sup: #fff; --f-tinta: #16332e; --f-suave: #55645f; --f-linha: #e3ddcf; --f-acao: #c94f1c; --f-sobre: #fff; --f-ok: #1f6b42; --f-raio: 12px;
+  --f-display: 'Bricolage Grotesque', system-ui, sans-serif; --f-texto: 'Archivo', system-ui, sans-serif; }
+.f-topo { display: flex; justify-content: space-between; align-items: center; padding: 16px 16px 10px; }
+.f-topo small { display: block; color: var(--f-suave); font-size: 12px; }
+.f-topo strong { font-family: var(--f-display); font-size: 24px; font-weight: 700; line-height: 1.05; }
+.f-sino { min-width: 30px; height: 30px; display: grid; place-items: center; border: 1px solid var(--f-linha); border-radius: 50%; font-size: 12px; font-weight: 700; }
+.f-prox { margin: 0 16px; padding: 10px 12px; background: var(--f-tinta); color: var(--f-bg); border-radius: var(--f-raio); display: flex; justify-content: space-between; gap: 8px; align-items: center; }
+.fone[data-dir="b"] .f-prox { background: var(--f-acao); color: var(--f-sobre); }
+.f-prox small { display: block; opacity: 0.75; font-size: 11px; }
+.f-prox b { font-family: var(--f-display); font-size: 19px; font-weight: 700; }
+.f-prox span { font-size: 11px; font-weight: 700; white-space: nowrap; }
+.f-dias { display: grid; grid-template-columns: repeat(5, 1fr); margin: 14px 16px 0; border: 1px solid var(--f-linha); border-radius: var(--f-raio); overflow: hidden; }
+.f-dias div { text-align: center; padding: 6px 0; border-left: 1px solid var(--f-linha); font-size: 10px; color: var(--f-suave); font-weight: 600; }
+.f-dias div:first-child { border-left: 0; }
+.f-dias b { display: block; font-family: var(--f-display); font-size: 18px; color: var(--f-tinta); line-height: 1.1; }
+.f-dias .on { background: var(--f-tinta); color: var(--f-bg); }
+.f-dias .on b { color: var(--f-bg); }
+.f-lista { list-style: none; margin: 10px 0 0; padding: 0 16px; }
+.f-lista li { display: grid; grid-template-columns: 54px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 12px 0; border-top: 1px solid var(--f-linha); margin: 0; }
+.f-hora { font-family: var(--f-display); font-size: 25px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1; }
+.f-nome { font-weight: 700; font-size: 14px; }
+.f-meta { color: var(--f-suave); font-size: 12px; }
+.f-btn { background: var(--f-acao); color: var(--f-sobre); border-radius: var(--f-raio); padding: 7px 11px; font-weight: 700; font-size: 12px; }
+.f-btn.sec { background: transparent; color: var(--f-tinta); border: 1px solid var(--f-tinta); }
+.f-st { color: var(--f-ok); font-weight: 700; font-size: 12px; }
+.f-abas { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--f-linha); margin-top: 6px; background: var(--f-sup); }
+.f-abas span { text-align: center; padding: 11px 0 13px; font-size: 11px; font-weight: 600; color: var(--f-suave); }
+.f-abas .on { color: var(--f-tinta); box-shadow: inset 0 2px 0 var(--f-acao); }
+
+/* Esboço do desktop do aluno */
+.desk { margin-top: 1rem; border: 1px solid var(--linha); border-radius: 8px; overflow: hidden; background: #fff; color: #111418; font-size: 13px; display: grid; grid-template-columns: 150px minmax(0, 1.1fr) minmax(0, 1fr); min-width: 40rem; }
+.desk > div { padding: 16px; min-width: 0; }
+.desk .lat { background: #111418; color: #fff; }
+.desk .lat b { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; display: block; margin-bottom: 14px; }
+.desk .lat span { display: block; padding: 7px 8px; border-radius: 4px; font-weight: 600; opacity: 0.7; }
+.desk .lat .on { background: #fff; color: #111418; opacity: 1; }
+.desk .meio { border-right: 1px solid #d9dde3; }
+.desk h5 { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; margin: 0 0 8px; font-weight: 700; }
+.desk .lin { display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 10px 8px; border-top: 1px solid #d9dde3; }
+.desk .lin.on { background: #eef2ff; }
+.desk .lin b { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; }
+.desk .lin small, .desk .det small { color: #5c6570; display: block; }
+.desk .bloco { border-left: 3px solid #111418; padding-left: 10px; margin-top: 10px; }
+.desk .bloco b { display: block; font-size: 12px; }
+.desk .cta { display: inline-block; margin-top: 14px; background: #1d4ed8; color: #fff; font-weight: 700; padding: 9px 14px; border-radius: 6px; }
+
+.decisao { margin-top: 1rem; background: var(--superficie); border: 1px solid var(--linha); padding: 1rem 1.15rem; }
+.decisao b.d { font-family: var(--display); font-size: 1.3rem; color: var(--destaque); margin-right: 0.5rem; }
+.decisao p { margin-top: 0.4rem; }
+.rodape { color: var(--suave); font-size: 0.875rem; margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--linha); }
+</style>
+
+<div class="pagina">
+<div class="col">
+  <p style="color:var(--suave);font-weight:600;margin:0">RA Funcional · 9 de outubro de 2026 · para aprovação do Pedro</p>
+  <h1>Auditoria de UI/UX e responsividade</h1>
+  <p class="lead">O que faz o app parecer genérico e "feito por IA", onde a experiência falha no celular e no computador, e uma proposta de melhoria em fases para você aprovar antes de qualquer mudança no código.</p>
+
+  <div class="veredito">
+    <p><strong>Veredito.</strong> A sua impressão está certa e tem causa identificável. O app funciona bem (regras, estados, acessibilidade básica), mas a camada visual é um conjunto de escolhas que modelos de IA fazem por padrão: fundo creme com laranja queimado, círculos decorativos, tudo em cartão arredondado com sombra, rótulos pequenos em maiúsculas sobre cada título e uma metáfora de "ingresso" repetida em todo lugar. Nada disso vem da academia do Rafael.</p>
+    <p>O segundo problema é de produto: a tela mais usada (a agenda do aluno) gasta metade do celular antes de mostrar a primeira aula, e no computador o app do aluno é só a coluna do celular no meio de uma tela vazia.</p>
+    <p>A boa notícia é que a base está organizada. Todas as cores passam por um único arquivo de tokens, então trocar a identidade custa pouco. O trabalho maior é de estrutura das telas.</p>
+  </div>
+
+  <div class="numeros">
+    <div><b>51%</b><span>da altura do celular até a primeira aula aparecer na agenda</span></div>
+    <div><b>32</b><span>tamanhos de fonte diferentes no CSS (12 só na agenda)</span></div>
+    <div><b>58</b><span>usos de sombra e 11 raios de borda diferentes</span></div>
+    <div><b>14</b><span>rótulos em maiúsculas com letras espaçadas</span></div>
+    <div><b>~450 px</b><span>de largura útil do app do aluno numa tela de 1440 px</span></div>
+    <div><b>3,2:1</b><span>contraste do texto branco no botão laranja (o mínimo recomendado é 4,5:1)</span></div>
+  </div>
+
+  <h2>Como a auditoria foi feita</h2>
+  <p>Abri todas as telas com dados de exemplo, logado como aluna (Ana) e como treinador (Rafael), em duas larguras: celular (375 px) e computador (1440 a 1536 px). Capturei cada tela, medi posições e tamanhos pelo navegador e contei padrões no código de estilos (2.610 linhas de CSS). Os números acima vêm dessas medições, não de estimativa.</p>
+  <p>O que não entrou: teste com alunos reais, iPhone e Android físicos, tablet (768 px) e leitor de tela. Recomendo validar a direção escolhida com o Rafael e dois ou três alunos antes de finalizar.</p>
+</div>
+
+<div class="largo">
+  <figure>
+    <div class="fones">
+      <figure><img src="img/m-entrar.jpg" alt="Tela de login no celular" width="232"><figcaption>Login</figcaption></figure>
+      <figure><img src="img/m-agenda.jpg" alt="Agenda do aluno no celular" width="232"><figcaption>Agenda</figcaption></figure>
+      <figure><img src="img/m-detalhe.jpg" alt="Detalhe da aula no celular" width="232"><figcaption>Detalhe da aula</figcaption></figure>
+      <figure><img src="img/m-minhas.jpg" alt="Minhas aulas no celular" width="232"><figcaption>Minhas aulas</figcaption></figure>
+      <figure><img src="img/m-notif.jpg" alt="Notificações no celular" width="232"><figcaption>Notificações</figcaption></figure>
+      <figure><img src="img/m-t-painel.jpg" alt="Painel do treinador no celular" width="232"><figcaption>Treinador: painel</figcaption></figure>
+      <figure><img src="img/m-t-sessao.jpg" alt="Sessão do treinador no celular" width="232"><figcaption>Treinador: sessão</figcaption></figure>
+      <figure><img src="img/m-t-turmas.jpg" alt="Turmas no celular" width="232"><figcaption>Treinador: turmas</figcaption></figure>
+    </div>
+    <figcaption>Estado atual no celular (375 px). Role para o lado para ver todas.</figcaption>
+  </figure>
+</div>
+
+<div class="col">
+  <h2>Parte 1. Por que parece feito por IA</h2>
+  <p>Cada item abaixo, sozinho, é aceitável. Juntos, formam o visual que hoje se reconhece de longe como gerado. A gravidade indica o quanto o item pesa nessa impressão.</p>
+
+  <div class="achado">
+    <span class="tag alta">Alta</span><span class="cod">A1</span>
+    <h4>A paleta é a mais usada em interfaces geradas: creme, laranja queimado e verde escuro</h4>
+    <p>Fundo <code>#f8f5ec</code>, ação <code>#e86a3a</code> e marca <code>#1f4e46</code>. É a combinação "papel quente com terracota" que aparece em milhares de sites e apps feitos com IA no último ano. Ela não remete a treino funcional, e sim a cafeteria ou marca de cosmético natural.</p>
+    <p class="muda"><b>Proposta:</b> trocar por uma paleta que saia do universo da academia (ver as três direções na Parte 4), de preferência a partir das cores que o Rafael já usa em uniforme, fachada ou Instagram.</p>
+  </div>
+
+  <div class="achado">
+    <span class="tag alta">Alta</span><span class="cod">A2</span>
+    <h4>Enfeites sem função: círculos nos cabeçalhos e a metáfora do ingresso</h4>
+    <p>Todo cabeçalho verde tem dois círculos translúcidos decorativos. Os cartões imitam ingressos, com picote, furos laterais e linha tracejada, no login, na agenda, no detalhe da aula e no perfil. Esses elementos não informam nada e são os primeiros que denunciam um layout gerado. Os círculos já causaram um bug real (o cabeçalho do painel deslizava ao clicar), corrigido hoje.</p>
+    <p class="muda"><b>Proposta:</b> remover círculos, picotes e furos. Se a ideia de "reserva" for importante, ela aparece no texto e no estado da aula, não em ornamento.</p>
+  </div>
+
+  <div class="achado">
+    <span class="tag alta">Alta</span><span class="cod">A3</span>
+    <h4>Tudo é um cartão arredondado com sombra</h4>
+    <p>São 58 usos de sombra e 11 raios de borda diferentes (de 2 px a 46 px, mais pílulas). Quando cabeçalho, aviso, seletor de dia, aula, formulário e botão têm todos o mesmo tratamento de "caixa flutuante", nada se destaca e a tela fica com cara de modelo pronto.</p>
+    <p class="muda"><b>Proposta:</b> um sistema curto: 2 raios (um para controles, um para superfícies), 1 sombra reservada a elementos que realmente flutuam (barra de ação, diálogo). Listas separadas por linha fina em vez de cartões empilhados.</p>
+  </div>
+
+  <div class="achado">
+    <span class="tag media">Média</span><span class="cod">A4</span>
+    <h4>Rótulo em maiúsculas acima de cada título</h4>
+    <p>"SALA DE CONTROLE" sobre "Painel do dia", "AGENDA SEMANAL" sobre "Turmas", "CALENDÁRIO" sobre "Treinos", "TURMA DE ALUNOS" sobre "Alunos", "TREINO DO DIA", "RA FUNCIONAL". São 14 no total. Repetem o que o título já diz e são um dos sinais mais reconhecíveis de layout gerado.</p>
+    <p class="muda"><b>Proposta:</b> manter no máximo um ou dois, onde o rótulo acrescenta informação (por exemplo, a data sobre o nome da aula). Remover os demais.</p>
+  </div>
+
+  <div class="achado">
+    <span class="tag media">Média</span><span class="cod">A5</span>
+    <h4>Tipografia sem escala definida</h4>
+    <p>O CSS usa 32 tamanhos de fonte diferentes (0,95rem, 0,9375rem e 1rem convivem, por exemplo). Só a agenda mostra 12 tamanhos na mesma tela. O olho não percebe uma hierarquia, percebe ruído. A fonte de títulos (Bricolage Grotesque) é simpática, mas tem personalidade de marca de consumo, não de esporte.</p>
+    <p class="muda"><b>Proposta:</b> escala de 6 tamanhos, com um papel para cada um. Horários e números em fonte condensada, de placar, que é o que o aluno procura primeiro.</p>
+  </div>
+
+  <div class="achado">
+    <span class="tag alta">Alta</span><span class="cod">A6</span>
+    <h4>Não há nada do Rafael no app</h4>
+    <p>O logo é um quadrado com "RA" genérico. Não existe foto do espaço, das aulas ou do treinador, nem a cor real da marca. Esse é o ponto que mais separa um app profissional de um modelo: material verdadeiro. Nenhuma paleta escolhida por mim resolve isso sozinha.</p>
+    <p class="muda"><b>Proposta:</b> pedir ao Rafael o logo (se existir), 3 a 6 fotos reais e as cores que ele usa. Uma foto real na tela de login e no topo da agenda muda a percepção mais do que qualquer ajuste de CSS.</p>
+  </div>
+
+  <h2>Parte 2. Experiência de uso</h2>
+
+  <div class="achado">
+    <span class="tag alta">Alta</span><span class="cod">U1</span>
+    <h4>Agenda: metade da tela vai embora antes da primeira aula</h4>
+    <p>No celular, o cartão "Sua semana" ocupa 18% da altura sem oferecer ação, depois vêm o aviso e o seletor de dias. A primeira aula começa em 51% da tela e só 2 aulas cabem inteiras. O aluno abre o app para uma coisa: ver e reservar a aula. Isso deveria ser o que ele vê sem rolar.</p>
+    <p class="muda"><b>Proposta:</b> cabeçalho de uma linha (data e sino), "sua próxima aula" em destaque no topo, lista de aulas em linhas compactas. Meta: 4 a 5 aulas visíveis sem rolar.</p>
+  </div>
+
+  <div class="achado">
+    <span class="tag alta">Alta</span><span class="cod">U2</span>
+    <h4>As cores dizem coisas diferentes em cada lugar</h4>
+    <p>O laranja é o bloco de hora da aula disponível, o botão de reservar, a barra de lotação, o ponto no seletor de dias e os links de "Desativar" e "Cancelar". O verde é "confirmado", mas também é o fundo dos cabeçalhos. A aula lotada fica cinza, que normalmente significa desabilitado, embora ainda aceite fila de espera. Quando uma cor significa cinco coisas, ela deixa de orientar.</p>
+    <p class="muda"><b>Proposta:</b> uma cor de ação, usada só em botões de ação. Estado da aula comunicado por texto e ícone primeiro, com cor de apoio fixa: confirmado, lista de espera, lotada, encerrada.</p>
+  </div>
+
+  <div class="achado">
+    <span class="tag media">Média</span><span class="cod">U3</span>
+    <h4>Detalhe da aula: treino em texto corrido e vídeo sem imagem</h4>
+    <p>Aquecimento, bloco principal e finalizador aparecem como três parágrafos iguais. O vídeo é um retângulo listrado com um botão de play desenhado, sem a miniatura real. Para o aluno, o treino do dia é o conteúdo mais valioso do app.</p>
+    <p class="muda"><b>Proposta:</b> treino em blocos identificados (Aquecimento, Principal, Finalizador) com tempos em destaque. Vídeo com a miniatura real do YouTube.</p>
+  </div>
+
+  <div class="achado">
+    <span class="tag media">Média</span><span class="cod">U4</span>
+    <h4>"Minhas aulas" é uma tela quase vazia</h4>
+    <p>Mostra apenas a lista de aulas confirmadas, que é uma versão filtrada da agenda. Não há histórico nem frequência. É uma aba inteira da navegação com pouco valor.</p>
+    <p class="muda"><b>Proposta:</b> próximas aulas no topo e, abaixo, a frequência do mês (quantas aulas, em que dias). Isso dá motivo para abrir a aba e é um argumento de venda para o Rafael.</p>
+  </div>
+
+  <div class="achado">
+    <span class="tag media">Média</span><span class="cod">U5</span>
+    <h4>Avisos com tom errado e carregamento sem resposta</h4>
+    <p>"Os treinos da próxima semana já estão no ar" aparece numa faixa rosada com ícone de alerta, visual de erro para uma boa notícia. A tela de login abre com um aviso rosado permanente explicando o óbvio. Logo depois do login vi uma tela totalmente em branco por alguns segundos, e "Minhas aulas" ficou mais de 3 segundos em "Carregando".</p>
+    <p class="muda"><b>Proposta:</b> avisos por tipo (novidade, atenção, erro) com cores próprias. Texto de ajuda do login como legenda discreta. Esqueleto de carregamento em todas as telas e investigação do tempo de resposta.</p>
+  </div>
+
+  <div class="achado">
+    <span class="tag media">Média</span><span class="cod">U6</span>
+    <h4>Treinador: ações destrutivas chamam mais atenção que o conteúdo</h4>
+    <p>Na lista de alunos, "Desativar" aparece em laranja sublinhado em todas as linhas, a mesma cor da ação principal. Em Turmas, cada linha repete "Editar" e "Desativar". A lista de alunos não tem busca: com 60 nomes (situação que capturei durante os testes) vira uma rolagem longa.</p>
+    <p class="muda"><b>Proposta:</b> ações de linha num menu discreto. Busca e filtro (ativos, inativos) em Alunos. Coluna de frequência, que é o que o treinador quer saber.</p>
+  </div>
+
+  <div class="achado">
+    <span class="tag baixa">Baixa</span><span class="cod">U7</span>
+    <h4>Turmas: 15 linhas para mostrar 3 turmas</h4>
+    <p>As mesmas três turmas (06:00, 07:00, 18:30) são repetidas em cinco dias, cada uma num cartão. A informação é uma grade de dias por horários.</p>
+    <p class="muda"><b>Proposta:</b> grade semanal (dias nas colunas, horários nas linhas). No celular, um dia por vez com os mesmos dados.</p>
+  </div>
+
+  <h2>Parte 3. Responsividade</h2>
+</div>
+
+<div class="largo">
+  <div class="duas" style="margin-top:1.5rem">
+    <figure class="tela"><img src="img/d-agenda.jpg" alt="Agenda do aluno no computador: coluna estreita no centro"><figcaption>Aluno no computador (1440 px): a agenda é a coluna do celular centralizada, com a barra de abas embaixo.</figcaption></figure>
+    <figure class="tela"><img src="img/d-detalhe.jpg" alt="Detalhe da aula no computador"><figcaption>Detalhe da aula no computador: mesmo problema. Lista e detalhe caberiam lado a lado.</figcaption></figure>
+    <figure class="tela"><img src="img/d-t-painel.jpg" alt="Painel do treinador no computador"><figcaption>Treinador no computador: a estrutura com menu lateral funciona. O cabeçalho é grande demais para o que informa.</figcaption></figure>
+    <figure class="tela"><img src="img/d-t-turmas.jpg" alt="Turmas no computador"><figcaption>Turmas: 15 cartões quase idênticos em duas colunas.</figcaption></figure>
+    <figure class="tela"><img src="img/d-t-alunos60.jpg" alt="Lista com 60 alunos sem busca"><figcaption>Alunos com 60 cadastros: sem busca nem filtro. O seletor "Ver como" cobre "Revogar" no canto.</figcaption></figure>
+    <figure class="tela"><img src="img/d-t-treinos.jpg" alt="Treinos no computador"><figcaption>Treinos: a semana em colunas é a tela mais bem resolvida. Serve de referência para Turmas.</figcaption></figure>
+  </div>
+</div>
+
+<div class="col">
+  <div class="achado">
+    <span class="tag alta">Alta</span><span class="cod">R1</span>
+    <h4>No computador, o app do aluno usa menos de um terço da tela</h4>
+    <p>Em 1440 px, o conteúdo fica numa coluna de cerca de 450 px, com a barra de abas de celular flutuando embaixo. Não é um layout de desktop, é o celular ampliado. A documentação do projeto previa lista e detalhe lado a lado acima de 1240 px, mas isso não está no app.</p>
+    <p class="muda"><b>Proposta:</b> a partir de 900 px, menu lateral no lugar da barra de abas e duas colunas (lista de aulas e detalhe). Como o aluno usa quase sempre o celular, sugiro um desktop correto e simples, sem recursos extras.</p>
+  </div>
+
+  <div class="achado">
+    <span class="tag media">Média</span><span class="cod">R2</span>
+    <h4>Cinco pontos de quebra sem padrão</h4>
+    <p>O CSS muda de layout em 640, 720, 960, 1180 e 1440 px, valores que surgiram tela a tela. Isso torna o comportamento imprevisível em tablets e em janelas reduzidas, que não foram testados.</p>
+    <p class="muda"><b>Proposta:</b> três pontos de quebra para o app inteiro (600, 900, 1200 px) e verificação obrigatória em 375, 768 e 1440 px a cada tela entregue.</p>
+  </div>
+
+  <div class="achado">
+    <span class="tag media">Média</span><span class="cod">R3</span>
+    <h4>O seletor "Ver como Celular / Computador" está no produto</h4>
+    <p>É um botão flutuante que aparece em telas largas, para qualquer usuário, e cobre conteúdo no canto inferior direito. Foi útil para demonstrar o app para você, mas não faz sentido para o aluno nem para o Rafael.</p>
+    <p class="muda"><b>Proposta:</b> remover do app publicado e manter apenas em modo de desenvolvimento.</p>
+  </div>
+
+  <div class="achado">
+    <span class="tag media">Média</span><span class="cod">R4</span>
+    <h4>Contraste do botão principal abaixo do recomendado</h4>
+    <p>Texto branco sobre o laranja <code>#e86a3a</code> dá 3,2:1. O mínimo recomendado para texto é 4,5:1 (3:1 só vale para texto grande). O branco sobre o verde de "confirmado" dá 4,0:1. No sol, na porta da academia, isso faz diferença. Os demais pares que medi passam.</p>
+    <p class="muda"><b>Proposta:</b> a nova paleta já nasce com todos os pares acima de 4,5:1, verificados antes de aplicar.</p>
+  </div>
+
+  <div class="achado">
+    <span class="tag baixa">Baixa</span><span class="cod">R5</span>
+    <h4>Sem tema escuro</h4>
+    <p>O app só tem tema claro. Para quem abre às 5h30 no escuro para conferir a aula das 6h, um tema escuro é conforto real. Não é urgente, mas a estrutura de tokens permite fazer junto com a nova paleta por um custo baixo.</p>
+  </div>
+
+  <h3>O que está bom e deve ser preservado</h3>
+  <ul>
+    <li><span class="tag ok">Manter</span> Regras de negócio no servidor, estados da aula claros e mensagens de erro em português direto.</li>
+    <li><span class="tag ok">Manter</span> Todos os alvos de toque medidos têm 44 px ou mais. Nenhuma tela tem rolagem horizontal em 375 px.</li>
+    <li><span class="tag ok">Manter</span> Cores 100% em tokens, num único arquivo. A troca de identidade não exige varrer componentes.</li>
+    <li><span class="tag ok">Manter</span> Barra de ação fixa no detalhe da aula e a navegação por abas no celular.</li>
+    <li><span class="tag ok">Manter</span> A tela de Treinos do treinador (semana em colunas) como referência de densidade.</li>
+  </ul>
+
+  <h2>Parte 4. Três direções visuais para escolher</h2>
+  <p>As três resolvem os mesmos problemas de estrutura e mostram a mesma agenda: cabeçalho de uma linha, próxima aula em destaque e lista compacta. Muda a identidade. São esboços para decidir o caminho, não o desenho final. Se o Rafael tiver marca própria, ela substitui as cores de qualquer uma das três.</p>
+</div>
+
+<div class="largo">
+  <div class="direcoes">
+    <div class="dir">
+      <h3>A. Quadro de treino</h3>
+      <p>Branco, preto e um azul de sinalização. Horários em fonte de placar. Referência: o quadro onde o treino é escrito e o cronômetro da sala. Limpo, direto, envelhece bem. <strong>É a que recomendo se não houver marca do Rafael.</strong></p>
+      <div class="fone" data-dir="a" aria-label="Esboço da agenda na direção A">
+        <div class="f-topo"><div><small>Olá, Ana</small><strong>Segunda, 12 de outubro</strong></div><span class="f-sino">1</span></div>
+        <div class="f-prox"><div><small>Sua próxima aula</small><b>Hoje, 06:00</b></div><span>Funcional Manhã</span></div>
+        <div class="f-dias"><div class="on">SEG<b>12</b></div><div>TER<b>13</b></div><div>QUA<b>14</b></div><div>QUI<b>15</b></div><div>SEX<b>16</b></div></div>
+        <ul class="f-lista">
+          <li><span class="f-hora">06:00</span><div><div class="f-nome">Funcional Manhã</div><div class="f-meta">60 min · 11 vagas</div></div><span class="f-st">Confirmada</span></li>
+          <li><span class="f-hora">07:00</span><div><div class="f-nome">Funcional Cedo</div><div class="f-meta">60 min · lotada</div></div><span class="f-btn sec">Entrar na fila</span></li>
+          <li><span class="f-hora">18:30</span><div><div class="f-nome">Funcional Noite</div><div class="f-meta">50 min · 10 vagas</div></div><span class="f-btn">Reservar</span></li>
+        </ul>
+        <div class="f-abas"><span class="on">Agenda</span><span>Minhas aulas</span><span>Perfil</span></div>
+      </div>
+    </div>
+    <div class="dir">
+      <h3>B. Piso e fita</h3>
+      <p>Escuro por padrão: cinza de piso emborrachado e amarelo de fita de marcação. Tem mais atitude e funciona bem de madrugada. Risco: fundo escuro com uma cor forte também é um visual comum hoje, e exige fotos boas para não ficar pesado.</p>
+      <div class="fone" data-dir="b" aria-label="Esboço da agenda na direção B">
+        <div class="f-topo"><div><small>Olá, Ana</small><strong>Segunda, 12 de outubro</strong></div><span class="f-sino">1</span></div>
+        <div class="f-prox"><div><small>Sua próxima aula</small><b>Hoje, 06:00</b></div><span>Funcional Manhã</span></div>
+        <div class="f-dias"><div class="on">SEG<b>12</b></div><div>TER<b>13</b></div><div>QUA<b>14</b></div><div>QUI<b>15</b></div><div>SEX<b>16</b></div></div>
+        <ul class="f-lista">
+          <li><span class="f-hora">06:00</span><div><div class="f-nome">Funcional Manhã</div><div class="f-meta">60 min · 11 vagas</div></div><span class="f-st">Confirmada</span></li>
+          <li><span class="f-hora">07:00</span><div><div class="f-nome">Funcional Cedo</div><div class="f-meta">60 min · lotada</div></div><span class="f-btn sec">Entrar na fila</span></li>
+          <li><span class="f-hora">18:30</span><div><div class="f-nome">Funcional Noite</div><div class="f-meta">50 min · 10 vagas</div></div><span class="f-btn">Reservar</span></li>
+        </ul>
+        <div class="f-abas"><span class="on">Agenda</span><span>Minhas aulas</span><span>Perfil</span></div>
+      </div>
+    </div>
+    <div class="dir">
+      <h3>C. Marca atual, sem excessos</h3>
+      <p>Mantém o verde e o laranja que você aprovou em 3 de outubro e as fontes atuais, mas tira círculos, picotes, sombras e rótulos. É a mais barata e de menor risco. A cara muda menos: resolve o "básico e bagunçado", resolve só em parte o "cara de IA".</p>
+      <div class="fone" data-dir="c" aria-label="Esboço da agenda na direção C">
+        <div class="f-topo"><div><small>Olá, Ana</small><strong>Segunda, 12 de outubro</strong></div><span class="f-sino">1</span></div>
+        <div class="f-prox"><div><small>Sua próxima aula</small><b>Hoje, 06:00</b></div><span>Funcional Manhã</span></div>
+        <div class="f-dias"><div class="on">SEG<b>12</b></div><div>TER<b>13</b></div><div>QUA<b>14</b></div><div>QUI<b>15</b></div><div>SEX<b>16</b></div></div>
+        <ul class="f-lista">
+          <li><span class="f-hora">06:00</span><div><div class="f-nome">Funcional Manhã</div><div class="f-meta">60 min · 11 vagas</div></div><span class="f-st">Confirmada</span></li>
+          <li><span class="f-hora">07:00</span><div><div class="f-nome">Funcional Cedo</div><div class="f-meta">60 min · lotada</div></div><span class="f-btn sec">Entrar na fila</span></li>
+          <li><span class="f-hora">18:30</span><div><div class="f-nome">Funcional Noite</div><div class="f-meta">50 min · 10 vagas</div></div><span class="f-btn">Reservar</span></li>
+        </ul>
+        <div class="f-abas"><span class="on">Agenda</span><span>Minhas aulas</span><span>Perfil</span></div>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:2.5rem">Como ficaria o aluno no computador (direção A)</h3>
+  <div class="rolagem">
+    <div class="desk" aria-label="Esboço do layout de desktop do aluno">
+      <div class="lat"><b>RA Funcional</b><span class="on">Agenda</span><span>Minhas aulas</span><span>Perfil</span></div>
+      <div class="meio">
+        <h5>Segunda, 12 de outubro</h5>
+        <div class="lin on"><b>06:00</b><div>Funcional Manhã<small>60 min · 11 vagas</small></div><span style="color:#0f7a4a;font-weight:700">Confirmada</span></div>
+        <div class="lin"><b>07:00</b><div>Funcional Cedo<small>60 min · lotada</small></div><span>Fila</span></div>
+        <div class="lin"><b>18:30</b><div>Funcional Noite<small>50 min · 10 vagas</small></div><span style="color:#1d4ed8;font-weight:700">Reservar</span></div>
+      </div>
+      <div class="det">
+        <h5>Funcional Manhã</h5>
+        <small>06:00 a 07:00 · 60 min · 11 vagas livres</small>
+        <div class="bloco"><b>Aquecimento · 8 min</b>Mobilidade articular e polichinelos</div>
+        <div class="bloco"><b>Principal · 4 voltas, 40s / 20s</b>Agachamento com kettlebell, remada no TRX, avanço alternado, prancha</div>
+        <div class="bloco"><b>Finalizador · 3 min</b>Burpees no seu ritmo</div>
+        <span class="cta">Cancelar presença</span>
+      </div>
+    </div>
+  </div>
+  <p style="color:var(--suave);font-size:0.875rem">Menu lateral no lugar da barra de abas, lista de aulas à esquerda e a aula selecionada à direita, com o treino em blocos.</p>
+</div>
+
+<div class="col">
+  <h2>Parte 5. Plano de execução</h2>
+  <p>Cada fase termina com as telas verificadas em 375, 768 e 1440 px, com capturas para você conferir, e os testes automatizados passando. Nada muda nas regras de negócio, no banco ou nos endereços das telas.</p>
+  <div class="rolagem">
+  <table>
+    <thead><tr><th>Fase</th><th>O que entra</th><th>Resolve</th><th>Tamanho</th></tr></thead>
+    <tbody>
+      <tr><td class="n">1</td><td><strong>Fundamentos.</strong> Nova paleta e fontes nos tokens, escala de 6 tamanhos, 2 raios, 1 sombra, 3 pontos de quebra. Remoção de círculos, picotes e rótulos. Seletor "Ver como" fora do produto.</td><td>A1 a A5, R2, R3, R4</td><td>Médio</td></tr>
+      <tr><td class="n">2</td><td><strong>Aluno no celular.</strong> Agenda compacta com próxima aula no topo, detalhe com treino em blocos e miniatura do vídeo, Minhas aulas com frequência, login e perfil redesenhados, avisos por tipo, esqueletos de carregamento.</td><td>U1 a U5, A6</td><td>Grande</td></tr>
+      <tr><td class="n">3</td><td><strong>Aluno no computador e tablet.</strong> Menu lateral e duas colunas a partir de 900 px.</td><td>R1</td><td>Médio</td></tr>
+      <tr><td class="n">4</td><td><strong>Treinador.</strong> Painel mais denso, Turmas em grade semanal, Alunos com busca, filtro e frequência, ações de linha em menu.</td><td>U6, U7</td><td>Grande</td></tr>
+      <tr><td class="n">5</td><td><strong>Acabamento.</strong> Tema escuro (se aprovado), revisão de contraste e foco, teste em aparelhos reais.</td><td>R5</td><td>Pequeno</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>A ordem sugerida entrega primeiro o que o aluno vê todos os dias. As fases 1 e 2 juntas já mudam a percepção do app. Recomendo fazer a publicação online só depois da fase 2.</p>
+
+  <h2>Decisões que preciso de você</h2>
+  <div class="decisao"><b class="d">1</b><strong>Direção visual: A, B ou C?</strong><p>Recomendo a A. Se o Rafael tiver identidade própria, uso as cores dele sobre a estrutura da A.</p></div>
+  <div class="decisao"><b class="d">2</b><strong>Existe material real do Rafael?</strong><p>Logo, fotos das aulas ou do espaço, cores do uniforme ou do Instagram. É o que mais tira a cara de modelo pronto. Sem isso, sigo com tipografia e cor apenas, e deixo os espaços de foto preparados.</p></div>
+  <div class="decisao"><b class="d">3</b><strong>Quanto investir no computador para o aluno?</strong><p>Minha sugestão: um desktop correto e simples (fase 3), sem recursos exclusivos. O treinador já tem um desktop melhor e recebe a fase 4.</p></div>
+  <div class="decisao"><b class="d">4</b><strong>Tema escuro entra?</strong><p>Na direção B ele é o padrão. Nas direções A e C é opcional, na fase 5.</p></div>
+  <div class="decisao"><b class="d">5</b><strong>Posso seguir a ordem das fases?</strong><p>Fase 1 e 2 primeiro, com uma parada para você ver a agenda nova antes de eu aplicar o padrão nas outras telas.</p></div>
+
+  <p class="rodape">Auditoria feita sobre o app em desenvolvimento local, com dados de exemplo do ambiente DEV. As capturas mostram o estado de 9 de outubro de 2026. Os esboços das direções são componentes ilustrativos, não o projeto final.</p>
+</div>
+</div>

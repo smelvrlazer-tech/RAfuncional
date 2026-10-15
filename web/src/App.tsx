@@ -79,13 +79,13 @@ export function App() {
       </main>
     )
   }
-  return (
-    <VisaoDispositivo>
-      <AuthProvider>
-        <a href="#conteudo" className="pular">Pular para o conteúdo</a>
-        <AvisoOffline />
-        <Conteudo />
-      </AuthProvider>
-    </VisaoDispositivo>
+  const app = (
+    <AuthProvider>
+      <a href="#conteudo" className="pular">Pular para o conteúdo</a>
+      <AvisoOffline />
+      <Conteudo />
+    </AuthProvider>
   )
+  // "Ver como celular/computador" é ferramenta de desenvolvimento: não vai para o app publicado.
+  return import.meta.env.DEV ? <VisaoDispositivo>{app}</VisaoDispositivo> : app
 }

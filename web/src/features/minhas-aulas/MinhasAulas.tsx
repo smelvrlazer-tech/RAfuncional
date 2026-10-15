@@ -45,7 +45,7 @@ export function MinhasAulas() {
               <h2 id={`dia-${grupo.dia}`} className="dia-agenda__titulo">{rotuloDiaLongo(grupo.dia)}</h2>
             </div>
             <ol className="lista-sessoes">
-              {grupo.aulas.map((s, i) => (
+              {grupo.aulas.map((s) => (
                 <li key={s.id}>
                   <CartaoSessao
                     sessao={s}
@@ -53,7 +53,6 @@ export function MinhasAulas() {
                     ativo={ativo}
                     limiteMin={limiteMin}
                     onAtualizar={recarregar}
-                    indice={i}
                   />
                 </li>
               ))}

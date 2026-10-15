@@ -1,99 +1,105 @@
 /*
- * RA Funcional — design tokens (identidade v3: verde-petróleo, coral e amarelo sobre creme).
- * Toda cor, fonte, raio e sombra do app mora aqui. Nenhum outro arquivo de estilo
- * tem cor literal: para ajustar a marca, altere só este arquivo.
+ * RA Funcional — design tokens. Direção A "Quadro de treino" (aprovada em 15/10/2026, ver
+ * docs/auditoria-ui/): branco, preto de tinta de marcador e um azul de sinalização para ação.
+ * Paleta provisória até chegar a identidade visual do Rafael: para trocar, mude só os VALORES
+ * abaixo; os nomes são semânticos e o resto do CSS não tem cor literal.
  *
- * Contrastes calculados (WCAG 2.x, fórmula de luminância relativa). Texto abaixo de
- * 24px precisa de 4,5:1; texto grande (>= 24px, ou >= 18,66px em negrito) precisa de 3:1.
+ * Regras do sistema (auditoria, Parte 1):
+ *   - uma cor de ação (--cor-acento), usada só em botões e links de ação;
+ *   - estado da aula por texto + ícone, com a cor de estado como apoio;
+ *   - 2 raios (controles e superfícies), 1 sombra real (só o que flutua: barra fixa, diálogo);
+ *   - superfícies separadas por filete, não por sombra (--sombra-cartao é um filete de 1px);
+ *   - escala tipográfica de 6 tamanhos (--t-*), números e horários em fonte condensada.
  *
- *   texto / fundo                                          razão
- *   --cor-tinta sobre --cor-papel ....................... 12,45
- *   --cor-tinta sobre --cor-superficie .................. 13,57
- *   --cor-texto-suave sobre papel / superfície / papel-escuro  5,71 / 6,22 / 5,04
- *   --cor-texto-invertido sobre --cor-marca ............. 8,61
- *   --cor-texto-invertido-suave sobre marca / marca-2 ... 5,86 / 4,45 (só sobre marca; no hover usa-se o invertido: 6,54)
- *   --cor-acento-claro sobre --cor-marca ................ 4,66
- *   --cor-sobre-acento (branco) sobre --cor-acento-forte  4,55  (botões pequenos)
- *   --cor-sobre-acento (branco) sobre --cor-acento ...... 3,20  (SÓ texto grande/negrito >= 19px)
- *   --cor-acento-texto sobre superfície / papel / info .. 5,52 / 5,06 / 4,63
- *   --cor-sucesso-texto sobre --cor-sucesso-fundo ....... 5,45
- *   branco sobre --cor-sucesso .......................... 4,04  (SÓ hora grande em negrito)
- *   --cor-aviso-texto sobre --cor-aviso-fundo ........... 7,02
- *   --cor-tinta sobre --cor-aviso ....................... 8,09
- *   --cor-bloqueio-texto sobre --cor-bloqueio-fundo ..... 5,84
- *   --cor-perigo-texto sobre --cor-perigo-fundo ......... 5,58
- *   branco sobre --cor-perigo ........................... 6,06
- *   --cor-tinta sobre --cor-info-fundo .................. 11,40
- *
- * O coral puro (--cor-acento) contra branco ou creme dá só 3,2:1: nunca é cor de texto
- * pequeno. Texto coral usa --cor-acento-texto (sobre claro) ou --cor-acento-claro (sobre petróleo).
+ * Contrastes (WCAG 2.x). Texto pequeno precisa de 4,5:1.
+ *   --cor-tinta sobre papel / superfície ............... 16,93 / 18,47
+ *   --cor-texto-suave sobre papel / superfície / papel-escuro  5,67 / 6,18 / 5,17
+ *   --cor-texto-invertido sobre --cor-marca ............ 18,47
+ *   --cor-texto-invertido-suave sobre marca / marca-2 .. 9,63 / 6,93
+ *   --cor-acento-claro sobre --cor-marca ............... 8,98
+ *   branco sobre --cor-acento / hover .................. 6,70 / 8,13
+ *   --cor-acento-texto sobre superfície / papel / info . 6,70 / 6,14 / 5,83
+ *   --cor-sucesso-texto sobre fundo / superfície ....... 5,83 / 6,67
+ *   branco sobre --cor-sucesso ......................... 4,98
+ *   --cor-aviso-texto sobre --cor-aviso-fundo .......... 7,21
+ *   --cor-tinta sobre --cor-aviso ...................... 10,16
+ *   --cor-bloqueio-texto sobre --cor-bloqueio-fundo .... 6,70
+ *   --cor-perigo-texto sobre fundo / superfície ........ 6,15 / 7,47
+ *   branco sobre --cor-perigo .......................... 5,88
  */
 :root {
   /* Marca e superfícies */
-  --cor-marca: #1f4e46;
-  --cor-marca-2: #2a6157;
-  --cor-papel: #f8f5ec;
-  --cor-papel-escuro: #ede7d8;
+  --cor-marca: #111418;
+  --cor-marca-2: #2a3039;
+  --cor-papel: #f4f5f7;
+  --cor-papel-escuro: #e8ebef;
   --cor-superficie: #ffffff;
-  --cor-superficie-2: #fbf9f3;
-  --cor-linha: #e3ddcf;
+  --cor-superficie-2: #f9fafb;
+  --cor-linha: #dfe3e8;
+  --cor-linha-forte: #111418;
 
-  /* Texto (a tinta só é cor de texto e de filetes finos) */
-  --cor-tinta: #16332e;
-  --cor-texto-suave: #55645f;
-  --cor-texto-invertido: #f8f5ec;
-  --cor-texto-invertido-suave: #bfd0cb;
+  /* Texto */
+  --cor-tinta: #111418;
+  --cor-texto-suave: #59626e;
+  --cor-texto-invertido: #ffffff;
+  --cor-texto-invertido-suave: #b4bcc6;
 
-  /* Ação (coral) */
-  --cor-acento: #e86a3a;
-  --cor-acento-hover: #d05a2a;
-  --cor-acento-forte: #c94f1c;
-  --cor-acento-texto: #b5441a;
-  --cor-acento-claro: #f7a27f;
+  /* Ação (azul de sinalização) */
+  --cor-acento: #1d4ed8;
+  --cor-acento-hover: #1a43bd;
+  --cor-acento-forte: #1d4ed8;
+  --cor-acento-texto: #1d4ed8;
+  --cor-acento-claro: #93b4ff;
   --cor-sobre-acento: #ffffff;
-  --cor-foco: #e86a3a;
+  --cor-foco: #1d4ed8;
 
   /* Estados: sólido / texto / fundo */
-  --cor-sucesso: #2f8f5b;
-  --cor-sucesso-texto: #1f6b42;
-  --cor-sucesso-fundo: #ddf0e4;
-  --cor-aviso: #f2c14e;
+  --cor-sucesso: #13804b;
+  --cor-sucesso-texto: #0e6a3d;
+  --cor-sucesso-fundo: #e2f4ea;
+  --cor-aviso: #f2b705;
   --cor-aviso-texto: #6b4a00;
-  --cor-aviso-fundo: #fbefc9;
-  --cor-bloqueio: #7c8783;
-  --cor-bloqueio-texto: #4f5b57;
-  --cor-bloqueio-fundo: #e7eae8;
-  --cor-perigo: #b3361f;
-  --cor-perigo-texto: #a12e1a;
-  --cor-perigo-fundo: #f8ddd6;
-  --cor-info-fundo: #fde7dc;
+  --cor-aviso-fundo: #fdf2d0;
+  --cor-bloqueio: #7a838e;
+  --cor-bloqueio-texto: #4b535d;
+  --cor-bloqueio-fundo: #eceef1;
+  --cor-perigo: #c0291b;
+  --cor-perigo-texto: #a3231a;
+  --cor-perigo-fundo: #fbe4e1;
+  /* Novidade (ex.: "treinos da semana no ar"): azul claro, não cor de alerta */
+  --cor-info-fundo: #e9efff;
 
-  /* Tipografia */
-  --fonte-display: 'Bricolage Grotesque Variable', 'Archivo Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --fonte-texto: 'Archivo Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  /* Números (horas, vagas, contagens): Archivo em negrito e condensado */
-  --fonte-numeros: 'Archivo Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --largura-numeros: 76%;
-  --tamanho-texto: 1rem;
-  --tamanho-pequeno: 0.875rem;
+  /* Tipografia: títulos e números condensados (placar), texto corrido neutro */
+  --fonte-display: 'Barlow Condensed', 'Arial Narrow', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --fonte-texto: 'Public Sans Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --fonte-numeros: 'Barlow Condensed', 'Arial Narrow', system-ui, sans-serif;
+  --largura-numeros: 100%;
+
+  /* Escala tipográfica (6 tamanhos). Use estes em CSS novo. */
+  --t-legenda: 0.8125rem;   /* 13px: metadados, rótulos de campo pequenos */
+  --t-pequeno: 0.875rem;    /* 14px: apoio, texto secundário */
+  --t-texto: 1rem;          /* 16px: texto corrido, nomes em listas */
+  --t-destaque: 1.25rem;    /* 20px: subtítulos de seção */
+  --t-titulo: 1.75rem;      /* 28px: título de tela */
+  --t-numero: 1.75rem;      /* 28px: horários em lista (fonte condensada) */
+
+  /* Aliases antigos (CSS ainda não migrado) */
+  --tamanho-texto: var(--t-texto);
+  --tamanho-pequeno: var(--t-pequeno);
   --tamanho-mini: 0.75rem;
   --entrelinha: 1.5;
 
-  /* Raios */
-  --raio-p: 8px;
-  --raio-m: 14px;
-  --raio-g: 20px;
+  /* Raios: controles (botões, campos, chips) e superfícies (cartões, painéis) */
+  --raio-p: 6px;
+  --raio-m: 6px;
+  --raio-g: 10px;
   --raio-pilula: 999px;
 
-  /* Sombras (suaves, com a tinta petróleo) */
-  --sombra-cartao:
-    0 1px 2px rgba(22, 51, 46, 0.06),
-    0 6px 18px -8px rgba(22, 51, 46, 0.16);
-  --sombra-elevada:
-    0 2px 4px rgba(22, 51, 46, 0.06),
-    0 18px 36px -14px rgba(22, 51, 46, 0.28);
-  --sombra-botao: 0 6px 14px -6px rgba(201, 79, 28, 0.55);
-  --sombra-campo: inset 0 1px 2px rgba(22, 51, 46, 0.05);
+  /* Sombras: superfícies usam filete; sombra real só no que flutua */
+  --sombra-cartao: 0 0 0 1px var(--cor-linha);
+  --sombra-elevada: 0 12px 32px -12px rgba(17, 20, 24, 0.28), 0 0 0 1px var(--cor-linha);
+  --sombra-botao: none;
+  --sombra-campo: none;
 
   /* Espaço e layout */
   --espaco-1: 4px;
@@ -105,31 +111,29 @@
   --largura-coluna: 480px;
   --alvo-toque: 44px;
 
-  /* Efeitos (círculos decorativos, anel do play, véu do modal) */
-  --sombra-furo: rgba(22, 51, 46, 0.14);
-  --circulo-acento: rgba(232, 106, 58, 0.2);
-  --circulo-aviso: rgba(242, 193, 78, 0.16);
-  --anel-play: rgba(232, 106, 58, 0.32);
-  --listra-video: rgba(248, 245, 236, 0.05);
-  --cor-veu: rgba(22, 51, 46, 0.6);
+  /* Efeitos */
+  --sombra-furo: transparent;
+  --anel-play: rgba(255, 255, 255, 0.22);
+  --listra-video: transparent;
+  --cor-veu: rgba(17, 20, 24, 0.55);
 
   /* Painel do treinador (desktop-first) */
   --largura-painel: 1360px;
   --largura-lateral: 236px;
 
   /* PWA (manter em sincronia com o manifest em vite.config.ts) */
-  --cor-tema: #1f4e46;
+  --cor-tema: #111418;
 
-  /* Movimento (a mesma curva em todo o app: sai rápido, assenta suave) */
+  /* Movimento */
   --curva-saida: cubic-bezier(0.2, 0.7, 0.2, 1);
   --curva-entrada: cubic-bezier(0.4, 0, 1, 1);
   --rapido: 140ms;
   --medio: 220ms;
 
-  /* Brilho de foco (halo coral em vez de contorno duro) */
-  --brilho-foco: 0 0 0 4px rgba(232, 106, 58, 0.18), 0 0 0 1.5px var(--cor-acento);
+  /* Foco */
+  --brilho-foco: 0 0 0 3px rgba(29, 78, 216, 0.25), 0 0 0 1.5px var(--cor-acento);
 
-  /* Base do esqueleto de carregamento */
-  --cor-esqueleto: #eae5d8;
-  --cor-esqueleto-brilho: #f6f2e8;
+  /* Esqueleto de carregamento */
+  --cor-esqueleto: #e8ebef;
+  --cor-esqueleto-brilho: #f4f5f7;
 }
