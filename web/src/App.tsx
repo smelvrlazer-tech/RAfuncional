@@ -59,12 +59,17 @@ export function Rotas() {
   )
 }
 
-/** O painel do treinador usa a largura toda (desktop-first); o app do aluno, a coluna estreita. */
+/**
+ * O painel do treinador usa a largura toda (desktop-first); o app do aluno, a coluna estreita;
+ * as telas de entrada (login e convite) ocupam a tela inteira, com a marca ao lado no computador.
+ */
 function Conteudo() {
   const { pathname } = useLocation()
   const treinador = pathname === '/treinador' || pathname.startsWith('/treinador/')
+  const acesso = pathname === '/entrar' || pathname === '/convite' || pathname.startsWith('/convite/')
+  const classe = treinador ? 'coluna coluna--larga' : acesso ? 'coluna coluna--acesso' : 'coluna'
   return (
-    <div id="conteudo" className={treinador ? 'coluna coluna--larga' : 'coluna'}>
+    <div id="conteudo" className={classe}>
       <Rotas />
     </div>
   )

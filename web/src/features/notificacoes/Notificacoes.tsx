@@ -100,7 +100,6 @@ export function Notificacoes() {
                     <span className="notificacao__texto">{n.corpo}</span>
                     <span className="notificacao__data">{formatarDataHoraCurta(n.criado_em)}</span>
                   </span>
-                  {!n.lida_em && <span className="notificacao__nova" aria-hidden="true">Nova</span>}
                 </button>
               </li>
             ))}

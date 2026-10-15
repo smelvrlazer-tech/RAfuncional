@@ -1,93 +1,71 @@
 /* Telas do aluno. Cores, fontes, raios e sombras só via tokens.css. */
 
 /* ------------------------------------------------------------ acesso (login, convite) */
+/* Tela inteira: sem a coluna estreita do aluno. */
+.coluna.coluna--acesso {
+  max-width: none;
+  padding: 0;
+}
 .acesso {
   display: grid;
-  place-items: center;
-  min-height: calc(100dvh - 48px);
-  padding-block: 16px;
-}
-.acesso__cartao {
-  width: 100%;
-  max-width: 420px;
-  overflow: hidden;
-  border-radius: var(--raio-g);
+  min-height: 100dvh;
+  grid-template-rows: auto 1fr;
   background: var(--cor-superficie);
-  box-shadow: var(--sombra-elevada);
-  animation: subir 420ms var(--curva-saida) both;
 }
-.acesso__topo {
-  position: relative;
+/* Painel da marca. Quando chegar a foto do Rafael, use-a aqui como fundo
+   (background: linear-gradient(escurecimento), url(...) center / cover) mantendo o texto branco. */
+.acesso__marca {
   display: grid;
-  justify-items: start;
-  gap: 4px;
-  padding: 26px 24px 34px;
-  overflow: hidden;
-  overflow: clip;
+  align-content: end;
+  gap: 6px;
+  padding: max(28px, env(safe-area-inset-top)) var(--espaco-5) var(--espaco-5);
   background: var(--cor-marca);
   color: var(--cor-texto-invertido);
 }
-.acesso__topo > * {
-  position: relative;
-  z-index: 1;
-}
-.acesso__topo .selo {
-  --selo-fundo: var(--cor-marca-2);
-  --selo-furo: var(--cor-marca);
-  margin-bottom: 14px;
-  box-shadow: inset 0 0 0 1.5px var(--cor-texto-invertido-suave);
-}
 .acesso__nome {
-  font-family: var(--fonte-texto);
+  font-family: var(--fonte-display);
   font-weight: 700;
-  font-size: 0.8125rem;
-  letter-spacing: 0.08em;
+  font-size: 2.25rem;
+  line-height: 1;
   text-transform: uppercase;
-  color: var(--cor-acento-claro);
+  letter-spacing: 0.01em;
 }
 .acesso__lema {
-  font-family: var(--fonte-display);
-  font-weight: 800;
-  font-size: 1.95rem;
-  line-height: 1.05;
-  letter-spacing: 0;
-  text-wrap: balance;
-  max-width: 14ch;
-}
-.acesso__destaque {
-  color: var(--cor-aviso);
-}
-.acesso__subtitulo {
-  margin-top: 6px;
+  font-size: var(--t-pequeno);
   color: var(--cor-texto-invertido-suave);
 }
 .acesso__corpo {
-  position: relative;
   display: grid;
-  gap: 16px;
-  padding: 28px 24px 24px;
+  align-content: start;
+  justify-items: center;
+  padding: var(--espaco-5) var(--espaco-5) max(var(--espaco-6), env(safe-area-inset-bottom));
 }
-/* Picote na divisa entre o topo e o corpo (o "destaque" do ingresso). */
-.acesso__corpo::before,
-.acesso__corpo::after {
-  content: '';
-  position: absolute;
-  top: -11px;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--cor-papel);
+.acesso__conteudo {
+  display: grid;
+  gap: var(--espaco-4);
+  width: 100%;
+  max-width: 400px;
 }
-.acesso__corpo::before { left: -11px; }
-.acesso__corpo::after { right: -11px; }
-.acesso__conta {
-  font-size: 0.95rem;
+.acesso__cabeca {
+  display: grid;
+  gap: 4px;
+}
+.acesso__titulo {
+  font-size: var(--t-titulo);
+  line-height: 1.05;
+}
+.acesso__subtitulo {
+  font-size: var(--t-pequeno);
   color: var(--cor-texto-suave);
-  text-align: center;
+}
+.acesso__conta {
+  font-size: var(--t-pequeno);
+  color: var(--cor-texto-suave);
 }
 .acesso__rodape {
-  text-align: center;
-  font-size: 0.9375rem;
+  padding-top: var(--espaco-3);
+  border-top: 1px solid var(--cor-linha);
+  font-size: var(--t-pequeno);
   color: var(--cor-texto-suave);
 }
 .acesso__rodape a {
@@ -100,16 +78,27 @@
   display: grid;
   gap: 10px;
 }
-.confirme__titulo {
-  font-family: var(--fonte-display);
-  font-weight: 800;
-  font-size: 1.5rem;
-  line-height: 1.15;
-  letter-spacing: 0;
-}
 .confirme__dica {
+  font-size: var(--t-pequeno);
   color: var(--cor-texto-suave);
 }
+/* Computador e tablet deitado: marca à esquerda na altura toda, formulário centrado à direita. */
+@media (min-width: 900px) {
+  .acesso {
+    grid-template-columns: minmax(320px, 5fr) 7fr;
+    grid-template-rows: none;
+  }
+  .acesso__marca {
+    padding: var(--espaco-6) 48px 48px;
+  }
+  .acesso__nome { font-size: 4rem; }
+  .acesso__lema { font-size: var(--t-destaque); }
+  .acesso__corpo {
+    align-content: center;
+    padding: 48px;
+  }
+}
+
 
 /* ------------------------------------------------------------ topo da agenda (uma linha) */
 .topo-agenda {
@@ -479,31 +468,45 @@
   width: 100%;
 }
 
-/* ------------------------------------------------------------ detalhe (ticket) */
-.ticket {
-  --pad: 20px;
-  position: relative;
-  padding: 22px var(--pad) 8px;
-  border-radius: var(--raio-g);
-  background: var(--cor-superficie);
-  box-shadow: var(--sombra-elevada);
-  animation: subir 400ms var(--curva-saida) both;
+/* ------------------------------------------------------------ detalhe da aula */
+.detalhe-aula {
+  display: grid;
+  gap: 6px;
 }
-.ticket__titulo {
-  font-weight: 800;
-  font-size: 2rem;
+.detalhe-aula__titulo {
+  font-size: var(--t-titulo);
   line-height: 1.05;
-  letter-spacing: 0;
 }
-.ticket--cancelada .ticket__titulo {
+.detalhe-aula--cancelada .detalhe-aula__titulo {
   text-decoration: line-through;
-  text-decoration-thickness: 3px;
+  text-decoration-thickness: 2px;
   color: var(--cor-texto-suave);
 }
-.ticket__meta {
-  margin-top: 8px;
-  color: var(--cor-texto-suave);
+.detalhe-aula__meta {
+  font-family: var(--fonte-numeros);
+  font-weight: 600;
+  font-size: var(--t-destaque);
   font-variant-numeric: tabular-nums;
+}
+.detalhe-aula__vagas {
+  display: grid;
+  gap: 6px;
+  margin-top: 4px;
+  font-size: var(--t-pequeno);
+  color: var(--cor-texto-suave);
+}
+.detalhe-aula__vagas .barra-vagas--larga { margin-top: 0; }
+.detalhe-aula__vagas .barra-vagas__preenchido { background: var(--cor-tinta); }
+
+/* A tela do detalhe ocupa a altura toda: em página curta, a barra de ação fica no pé, não no meio. */
+.tela--detalhe {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100dvh - var(--espaco-4) - var(--espaco-6));
+}
+.tela--detalhe .barra-acao {
+  margin-top: auto;
+  margin-bottom: calc(-1 * max(var(--espaco-6), env(safe-area-inset-bottom)));
 }
 /* Barra de ação fixa no rodapé: botão principal e o texto de apoio com o prazo. */
 .barra-acao {
@@ -514,9 +517,8 @@
   gap: 8px;
   margin-inline: calc(var(--espaco-4) * -1);
   padding: 12px var(--espaco-4) max(14px, env(safe-area-inset-bottom));
-  background: var(--cor-papel);
+  background: var(--cor-superficie);
   border-top: 1px solid var(--cor-linha);
-  box-shadow: 0 -12px 22px -16px var(--sombra-furo);
 }
 .barra-acao .botao:disabled {
   background: var(--cor-bloqueio-fundo);
@@ -527,31 +529,25 @@
 .encerrado {
   display: flex;
   align-items: flex-start;
-  gap: 14px;
-  padding: 16px;
+  gap: 12px;
+  padding: 14px 16px;
   border-radius: var(--raio-g);
-  background: var(--cor-superficie);
-  box-shadow: var(--sombra-cartao);
+  background: var(--cor-bloqueio-fundo);
 }
 .encerrado__icone {
   flex: none;
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: var(--cor-bloqueio-fundo);
+  margin-top: 2px;
   color: var(--cor-bloqueio-texto);
 }
 .encerrado__titulo {
+  font-size: var(--t-texto);
+  font-family: var(--fonte-texto);
   font-weight: 700;
-  font-size: 1.1875rem;
-  line-height: 1.2;
-  letter-spacing: 0;
 }
 .encerrado__texto {
-  margin-top: 4px;
-  color: var(--cor-texto-suave);
+  margin-top: 2px;
+  font-size: var(--t-pequeno);
+  color: var(--cor-bloqueio-texto);
 }
 /* Relógio do prazo: só nas últimas horas, dentro da barra de ação. */
 .prazo {
@@ -563,20 +559,20 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
+  font-size: var(--t-pequeno);
   color: var(--cor-aviso-texto);
   font-variant-numeric: tabular-nums;
 }
 .prazo__barra {
   display: block;
   height: 4px;
-  border-radius: 4px;
+  border-radius: 2px;
   background: var(--cor-aviso-fundo);
   overflow: hidden;
 }
 .prazo__restante {
   display: block;
   height: 100%;
-  border-radius: inherit;
   background: var(--cor-aviso);
   transition: width 400ms ease;
 }
@@ -585,8 +581,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 14px;
-  padding: 16px;
+  gap: 12px;
+  padding: 14px 16px;
   border-radius: var(--raio-g);
   background: var(--cor-superficie);
   box-shadow: var(--sombra-cartao);
@@ -600,127 +596,134 @@
   min-width: 0;
 }
 .sugestao__sobre {
+  font-size: var(--t-legenda);
+  font-weight: 600;
   color: var(--cor-acento-texto);
-  font-size: 0.8125rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
 }
 .sugestao__titulo {
+  font-family: var(--fonte-numeros);
   font-weight: 700;
-  font-size: 1.1875rem;
-  line-height: 1.2;
-  letter-spacing: 0;
+  font-size: var(--t-destaque);
+  line-height: 1.15;
 }
 .sugestao__meta {
+  font-size: var(--t-pequeno);
   color: var(--cor-texto-suave);
 }
+
+/* ------------------------------------------------------------ treino do dia */
 .treino {
   display: grid;
-  gap: 10px;
-  padding-bottom: 14px;
+  gap: var(--espaco-3);
+  padding-top: var(--espaco-4);
+  border-top: 2px solid var(--cor-linha-forte);
 }
 .treino__sobre {
-  font-weight: 700;
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--cor-acento-texto);
+  font-family: var(--fonte-texto);
+  font-size: var(--t-pequeno);
+  font-weight: 600;
+  color: var(--cor-texto-suave);
 }
 .treino__titulo {
+  font-family: var(--fonte-display);
   font-weight: 700;
-  font-size: 1.4rem;
-  line-height: 1.2;
+  font-size: var(--t-destaque);
+  line-height: 1.15;
+  margin-top: -6px;
 }
-.treino__texto {
+/* Cada bloco do treino com um filete à esquerda, como numa ficha de treino. */
+.treino__blocos {
   display: grid;
-  gap: 10px;
+  gap: var(--espaco-3);
+}
+.bloco-treino {
+  display: grid;
+  gap: 2px;
+  padding-left: 12px;
+  border-left: 3px solid var(--cor-tinta);
+}
+.bloco-treino__titulo {
+  font-weight: 700;
+  font-size: var(--t-pequeno);
+}
+.bloco-treino__texto {
   white-space: pre-line;
 }
 .em-breve {
   display: grid;
-  gap: 4px;
-  padding: 18px;
-  border: 2px dashed var(--cor-linha);
-  border-radius: var(--raio-m);
-  text-align: center;
+  gap: 2px;
+  padding: 14px 16px;
+  border-radius: var(--raio-g);
+  background: var(--cor-superficie);
+  box-shadow: var(--sombra-cartao);
 }
 .em-breve__titulo {
-  font-family: var(--fonte-display);
   font-weight: 700;
-  font-size: 1.35rem;
-  letter-spacing: 0;
 }
 .em-breve__texto {
+  font-size: var(--t-pequeno);
   color: var(--cor-texto-suave);
 }
 
-/* bloco de vídeo: cartão verde-petróleo com listras discretas, abre o link em nova aba */
+/* Vídeo: miniatura real (YouTube) com o play por cima e a legenda embaixo; outros links numa linha. */
 .video {
-  position: relative;
   display: grid;
-  align-content: end;
-  min-height: 190px;
-  margin-top: 6px;
-  padding: 16px;
   overflow: hidden;
-  border-radius: var(--raio-m);
-  background:
-    repeating-linear-gradient(135deg, transparent 0 16px, var(--listra-video) 16px 32px),
-    var(--cor-marca);
-  color: var(--cor-texto-invertido);
-  text-decoration: none;
+  border-radius: var(--raio-g);
+  background: var(--cor-superficie);
   box-shadow: var(--sombra-cartao);
+  color: var(--cor-tinta);
+  text-decoration: none;
 }
-.video__selo {
-  position: absolute;
-  top: 14px;
-  left: 14px;
-  padding: 3px 10px;
-  border-radius: var(--raio-pilula);
-  background: var(--cor-acento-forte);
-  color: var(--cor-sobre-acento);
-  font-weight: 700;
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+.video__quadro {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  max-width: 100%;
+  background: var(--cor-marca);
 }
-.video__play {
+.video__imagem {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.video__quadro .video__play {
   position: absolute;
   top: 50%;
   left: 50%;
+  width: 56px;
+  height: 56px;
+  margin: -28px 0 0 -28px;
+}
+.video__play {
   display: grid;
   place-items: center;
-  width: 66px;
-  height: 66px;
-  margin: -46px 0 0 -33px;
-  padding-left: 4px;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  padding-left: 3px;
   border-radius: 50%;
-  background: var(--cor-acento);
-  color: var(--cor-sobre-acento);
-  box-shadow: 0 0 0 8px var(--anel-play);
-  transition: transform 180ms ease;
+  background: var(--cor-marca);
+  color: var(--cor-texto-invertido);
+  transition: transform var(--rapido) ease;
 }
-.video:hover .video__play {
-  transform: scale(1.06);
-}
+.video:hover .video__play { transform: scale(1.06); }
 .video__texto {
-  position: relative;
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  padding: 12px 14px;
 }
 .video__titulo {
-  font-family: var(--fonte-display);
   font-weight: 700;
-  font-size: 1.35rem;
-  letter-spacing: 0;
-  line-height: 1.15;
 }
 .video__link {
-  font-size: 0.9375rem;
-  color: var(--cor-texto-invertido-suave);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  margin-left: auto;
+  font-size: var(--t-pequeno);
+  color: var(--cor-acento-texto);
 }
+
 
 /* ------------------------------------------------------------ notificações */
 .notificacoes__topo {
@@ -728,32 +731,40 @@
   justify-content: flex-end;
   margin-block: -8px -8px;
 }
+/* Uma superfície só, avisos separados por filete; o não lido tem ponto azul e título em negrito. */
 .notificacoes {
   display: grid;
-  gap: 10px;
+  border-radius: var(--raio-g);
+  background: var(--cor-superficie);
+  box-shadow: var(--sombra-cartao);
+}
+.notificacoes > li + li {
+  border-top: 1px solid var(--cor-linha);
 }
 .notificacao {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
+  gap: 10px;
   width: 100%;
   min-height: 64px;
   padding: 14px 16px;
   border: 0;
-  border-radius: var(--raio-m);
-  background: var(--cor-superficie);
-  box-shadow: var(--sombra-cartao);
+  background: transparent;
   text-align: left;
   cursor: pointer;
 }
+.notificacao:hover { background: var(--cor-superficie-2); }
+.notificacoes > li:first-child .notificacao { border-radius: var(--raio-g) var(--raio-g) 0 0; }
+.notificacoes > li:last-child .notificacao { border-radius: 0 0 var(--raio-g) var(--raio-g); }
+.notificacoes > li:only-child .notificacao { border-radius: var(--raio-g); }
 .notificacao__marca {
   flex: none;
-  width: 10px;
-  height: 10px;
-  margin-top: 7px;
+  width: 8px;
+  height: 8px;
+  margin-top: 8px;
   border-radius: 50%;
-  background: var(--cor-acento);
 }
+.notificacao--nova .notificacao__marca { background: var(--cor-acento); }
 .notificacao__corpo {
   display: grid;
   gap: 2px;
@@ -761,66 +772,49 @@
   min-width: 0;
 }
 .notificacao__titulo {
-  font-weight: 700;
+  font-weight: 600;
 }
+.notificacao--nova .notificacao__titulo { font-weight: 700; }
 .notificacao__texto {
-  font-size: 0.9375rem;
+  font-size: var(--t-pequeno);
 }
+.notificacao--lida .notificacao__texto { color: var(--cor-texto-suave); }
 .notificacao__data {
-  font-size: 0.8125rem;
+  font-size: var(--t-legenda);
   color: var(--cor-texto-suave);
   font-variant-numeric: tabular-nums;
-}
-.notificacao__nova {
-  flex: none;
-  padding: 2px 8px;
-  border-radius: var(--raio-pilula);
-  background: var(--cor-info-fundo);
-  font-weight: 700;
-  font-size: 0.75rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--cor-acento-texto);
-}
-.notificacao--lida {
-  background: var(--cor-superficie-2);
-  box-shadow: none;
-  outline: 1px solid var(--cor-linha);
-  outline-offset: -1px;
-}
-.notificacao--lida .notificacao__marca {
-  background: transparent;
-  box-shadow: inset 0 0 0 1.5px var(--cor-linha);
-}
-.notificacao--lida .notificacao__titulo {
-  font-weight: 600;
 }
 
 /* ------------------------------------------------------------ perfil */
 .perfil-cartao {
   display: grid;
-  gap: 12px;
+  gap: var(--espaco-4);
 }
 .perfil-cartao__topo {
   display: flex;
   align-items: center;
   gap: 14px;
+  padding-bottom: var(--espaco-4);
+  border-bottom: 1px solid var(--cor-linha);
 }
+.perfil-cartao__topo > div { min-width: 0; }
 .perfil-cartao__nome {
   font-family: var(--fonte-display);
-  font-weight: 800;
-  font-size: 1.5rem;
+  font-weight: 700;
+  font-size: var(--t-destaque);
   line-height: 1.1;
-  letter-spacing: 0;
 }
 .perfil-cartao__email {
   color: var(--cor-texto-suave);
-  font-size: 0.95rem;
-  word-break: break-all;
+  font-size: var(--t-pequeno);
+  overflow-wrap: anywhere;
 }
 .instalar {
   display: grid;
   gap: 10px;
+}
+.instalar p {
+  font-size: var(--t-pequeno);
 }
 .instalar svg,
 .instalar p svg {
@@ -829,6 +823,7 @@
 }
 /* Ação secundária e discreta ("Desativar"): não esticada como o botão principal do cartão. */
 .avisos .botao--texto { justify-self: start; }
+
 
 /* ------------------------------------------------------------ desktop */
 @media (min-width: 600px) {
@@ -898,4 +893,74 @@
 .titulo-aba__resumo {
   color: var(--cor-texto-suave);
   font-weight: 600;
+}
+
+/* ------------------------------------------------------------ frequência do mês (minhas aulas) */
+.frequencia {
+  display: grid;
+  gap: var(--espaco-3);
+  padding: 14px 16px 16px;
+  border-radius: var(--raio-g);
+  background: var(--cor-superficie);
+  box-shadow: var(--sombra-cartao);
+}
+.frequencia__cabeca {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--espaco-3);
+}
+.frequencia__titulo {
+  font-size: var(--t-destaque);
+}
+.frequencia__total {
+  font-size: var(--t-pequeno);
+  color: var(--cor-texto-suave);
+  white-space: nowrap;
+}
+.frequencia__total strong {
+  font-family: var(--fonte-numeros);
+  font-size: var(--t-numero);
+  line-height: 1;
+  color: var(--cor-tinta);
+}
+/* Calendário do mês, segunda a domingo: dia com aula feita fica preenchido. */
+.calendario {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
+  text-align: center;
+}
+.calendario__semana {
+  font-size: var(--t-legenda);
+  font-weight: 600;
+  color: var(--cor-texto-suave);
+  padding-bottom: 2px;
+}
+.calendario__dia {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  max-width: 100%;
+  border-radius: var(--raio-p);
+  font-family: var(--fonte-numeros);
+  font-weight: 600;
+  font-size: var(--t-texto);
+  font-variant-numeric: tabular-nums;
+  color: var(--cor-tinta);
+  background: var(--cor-papel);
+}
+.calendario__dia--vazio { background: transparent; }
+.calendario__dia--futuro { color: var(--cor-texto-suave); background: transparent; }
+.calendario__dia--feito {
+  background: var(--cor-marca);
+  color: var(--cor-texto-invertido);
+  font-weight: 700;
+}
+.calendario__dia--hoje { box-shadow: inset 0 0 0 2px var(--cor-acento); }
+
+/* Sair da conta: ação de saída, quieta e alinhada à esquerda. */
+.perfil__sair {
+  justify-self: start;
+  color: var(--cor-texto-suave);
 }

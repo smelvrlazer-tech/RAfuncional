@@ -14,6 +14,43 @@ export function paragrafos(texto: string | null | undefined): string[] {
   return texto.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean)
 }
 
+export interface BlocoTreino {
+  /** "Aquecimento", "Bloco principal (4 voltas, 40s / 20s)"... ou null num parágrafo sem rótulo. */
+  titulo: string | null
+  texto: string
+}
+
+/**
+ * Divide o treino em blocos. O treinador escreve parágrafos como "Aquecimento: 8 min de mobilidade";
+ * o que vem antes dos dois-pontos vira o título do bloco. Parágrafo sem rótulo curto fica sem título.
+ */
+export function blocosDoTreino(texto: string | null | undefined): BlocoTreino[] {
+  return paragrafos(texto).map((p) => {
+    const m = p.match(/^([^:\n]{2,60}):\s*([\s\S]+)$/)
+    // Exige que o rótulo comece com letra: "06:00 começa..." não é um título.
+    if (m && /^\p{L}/u.test(m[1]!)) return { titulo: m[1]!.trim(), texto: m[2]!.trim() }
+    return { titulo: null, texto: p }
+  })
+}
+
+/** Miniatura de um vídeo do YouTube (watch, youtu.be, shorts, embed), ou null para outros links. */
+export function miniaturaYoutube(url: string): string | null {
+  let u: URL
+  try {
+    u = new URL(url)
+  } catch {
+    return null
+  }
+  if (u.protocol !== 'https:' && u.protocol !== 'http:') return null
+  const host = u.hostname.replace(/^www\.|^m\./, '')
+  let id: string | null = null
+  if (host === 'youtu.be') id = u.pathname.slice(1).split('/')[0] ?? null
+  else if (host === 'youtube.com' || host.endsWith('.youtube.com')) {
+    id = u.searchParams.get('v') ?? u.pathname.match(/^\/(?:shorts|embed|live)\/([^/?#]+)/)?.[1] ?? null
+  }
+  return id && /^[A-Za-z0-9_-]{11}$/.test(id) ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : null
+}
+
 export interface InfoVideo {
   plataforma: string
   /** Só http(s) é aberto. Qualquer outra coisa é tratada como link inválido. */

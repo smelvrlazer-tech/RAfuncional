@@ -121,9 +121,8 @@ export function Convite({ semPerfil = false }: { semPerfil?: boolean }) {
 
   if (confirmeEmail) {
     return (
-      <TelaAcesso subtitulo="Falta só confirmar seu e-mail">
+      <TelaAcesso titulo="Confira sua caixa de entrada" subtitulo="Falta só confirmar seu e-mail.">
         <div className="confirme" role="status">
-          <p className="confirme__titulo">Confira sua caixa de entrada</p>
           <p>
             Enviamos um link de confirmação para <strong>{confirmeEmail}</strong>. Abra o link e depois entre com seu
             e-mail e senha: seu convite será concluído automaticamente neste aparelho.
@@ -135,17 +134,19 @@ export function Convite({ semPerfil = false }: { semPerfil?: boolean }) {
     )
   }
 
-  const subtitulo = semPerfil ? 'Falta pouco para liberar sua agenda' : 'Você foi convidado(a) para treinar'
+  // Conta sem convite vinculado é a exceção: só ela ganha aviso. No caminho normal, uma linha de contexto basta.
+  const titulo = semPerfil ? 'Vincule seu convite' : 'Criar sua conta'
+  const subtitulo = semPerfil
+    ? 'Falta pouco para liberar sua agenda.'
+    : 'Com a conta você reserva suas aulas. O código do convite já vem preenchido pelo link.'
   const faixa = semPerfil ? (
-    <Aviso titulo="Sua conta ainda não está vinculada a um convite">
-      Informe o código do convite que o seu treinador enviou. Não tem um? Peça um convite ao seu treinador.
+    <Aviso tom="alerta" titulo="Sua conta ainda não está vinculada a um convite">
+      Informe o código do convite que o seu treinador enviou. Não tem um? Peça ao seu treinador.
     </Aviso>
-  ) : (
-    <Aviso>Crie sua conta para fazer check-in nas aulas. O código do convite já vem preenchido pelo link.</Aviso>
-  )
+  ) : undefined
 
   return (
-    <TelaAcesso subtitulo={subtitulo} faixa={faixa}>
+    <TelaAcesso titulo={titulo} subtitulo={subtitulo} faixa={faixa}>
       {logado && <p className="acesso__conta">Conectado como <strong>{sessao.user.email}</strong></p>}
       <form className="formulario" onSubmit={enviar} noValidate>
         <Campo rotulo="Seu nome" icone="pessoa" autoComplete="name" value={nome} onChange={(e) => setNome(e.target.value)}

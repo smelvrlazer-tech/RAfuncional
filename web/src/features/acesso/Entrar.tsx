@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { Link } from 'react-router-dom'
-import { Aviso, Botao, Campo } from '../../components/Basicos'
+import { Botao, Campo } from '../../components/Basicos'
 import { mensagemErro } from '../../lib/erros'
 import { supabase } from '../../lib/supabase'
 import { TelaAcesso } from './TelaAcesso'
@@ -28,9 +28,7 @@ export function Entrar() {
   }
 
   return (
-    <TelaAcesso
-      faixa={<Aviso>Entre com o e-mail e a senha que você cadastrou pelo convite.</Aviso>}
-    >
+    <TelaAcesso titulo="Entrar" subtitulo="Use o e-mail e a senha do seu cadastro.">
       <form className="formulario" onSubmit={entrar} noValidate>
         <Campo rotulo="E-mail" icone="email" type="email" inputMode="email" autoComplete="email" value={email}
           onChange={(e) => setEmail(e.target.value)} required />
@@ -42,7 +40,7 @@ export function Entrar() {
         </Botao>
       </form>
       <p className="acesso__rodape">
-        Ainda não tem conta? O cadastro é só por convite — <Link to="/convite">tenho um código</Link>.
+        Recebeu um convite do seu treinador? <Link to="/convite">Use seu código</Link>
       </p>
     </TelaAcesso>
   )

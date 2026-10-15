@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { useAuth } from '../../auth/AuthContext'
-import { Aviso, Avatar, Botao, Campo, Perfuracao } from '../../components/Basicos'
+import { Aviso, Avatar, Botao, Campo } from '../../components/Basicos'
 import { Icone } from '../../components/Icone'
 import { mensagemErro } from '../../lib/erros'
 import { supabase } from '../../lib/supabase'
@@ -62,7 +62,6 @@ export function Perfil() {
             Você não pode fazer check-in no momento. Fale com o seu treinador.
           </Aviso>
         )}
-        <Perfuracao />
         <form className="formulario" onSubmit={salvar} noValidate>
           <Campo rotulo="Nome" value={nome} onChange={(e) => setNome(e.target.value)} autoComplete="name" required />
           <Campo
@@ -109,7 +108,7 @@ export function Perfil() {
         </section>
       )}
 
-      <Botao variante="contorno" className="botao--largo" carregando={saindo} onClick={() => void sairDaConta()}>
+      <Botao variante="texto" className="perfil__sair" carregando={saindo} onClick={() => void sairDaConta()}>
         <Icone nome="sair" /> Sair da conta
       </Botao>
     </div>

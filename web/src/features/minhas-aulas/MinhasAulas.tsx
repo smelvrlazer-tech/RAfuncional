@@ -7,8 +7,9 @@ import { mensagemErro } from '../../lib/erros'
 import { minhasAulas, textoResumoMinhasAulas } from '../../lib/minhasAulas'
 import { CartaoSessao } from '../agenda/CartaoSessao'
 import { useAgenda, useLimiteBloqueio } from '../agenda/useAgenda'
+import { Frequencia } from './Frequencia'
 
-/** Aba "Minhas aulas": só o que a pessoa reservou (confirmado ou fila), dos próximos dias. */
+/** Aba "Minhas aulas": o que a pessoa reservou (confirmado ou fila) e a frequência do mês. */
 export function MinhasAulas() {
   const { perfil } = useAuth()
   const { agora, linhas, erro, recarregar } = useAgenda()
@@ -60,6 +61,8 @@ export function MinhasAulas() {
           </section>
         ))
       )}
+
+      <Frequencia agora={agora} />
     </div>
   )
 }

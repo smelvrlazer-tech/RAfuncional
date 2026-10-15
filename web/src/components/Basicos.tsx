@@ -4,11 +4,6 @@ import { Link } from 'react-router-dom'
 import { Icone, type NomeIcone } from './Icone'
 import { iniciais } from '../lib/texto'
 
-/** Divisor tracejado com "picotes" laterais, como o canhoto de um ticket. */
-export function Perfuracao({ className = '' }: { className?: string }) {
-  return <div className={`perfuracao ${className}`} role="presentation" />
-}
-
 type Variante = 'primario' | 'contorno' | 'texto' | 'escuro' | 'perigo'
 
 export function Botao({
