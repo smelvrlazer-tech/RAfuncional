@@ -12,11 +12,12 @@ describe('início: estúdio, quem vai, aviso e métricas', () => {
   })
 
   it('info_estudio devolve o nome do treinador ao aluno', async () => {
-    const treinador = await criarUsuario('treinador')
+    await criarUsuario('treinador')
     const aluno = await criarUsuario('aluno')
     const { data, error } = await aluno.cliente.rpc('info_estudio')
     expect(error).toBeNull()
-    const { data: p } = await admin.from('perfis').select('nome').eq('id', treinador.id).single()
+    // Vale o treinador mais antigo (pode existir o do seed DEV).
+    const { data: p } = await admin.from('perfis').select('nome').eq('papel', 'treinador').eq('ativo', true).order('criado_em').limit(1).single()
     expect(data.treinador_nome).toBe(p!.nome)
   })
 

@@ -186,14 +186,14 @@
 /* ------------------------------------------------------------ seletor de dias (faixa do quadro) */
 .seletor-dias {
   margin-inline: calc(var(--espaco-4) * -1);
-  background: var(--cor-superficie);
-  border-block: 1px solid var(--cor-linha);
 }
 .seletor-dias__lista {
   display: flex;
+  gap: 8px;
   overflow-x: auto;
   scroll-snap-type: x proximity;
-  padding: 6px var(--espaco-3);
+  scroll-padding-inline: var(--espaco-4);
+  padding: 2px var(--espaco-4);
   scrollbar-width: none;
 }
 .seletor-dias__lista::-webkit-scrollbar {
@@ -207,17 +207,18 @@
   display: grid;
   justify-items: center;
   align-content: center;
-  width: 52px;
-  height: 60px;
-  padding: 0;
+  width: 58px;
+  height: 72px;
+  padding: 6px 0;
   border: 0;
   border-radius: var(--raio-p);
-  background: transparent;
+  background: var(--cor-superficie);
+  box-shadow: inset 0 0 0 1px var(--cor-linha);
   color: var(--cor-tinta);
   cursor: pointer;
   transition: background-color var(--rapido) ease;
 }
-.dia:hover { background: var(--cor-papel); }
+.dia:hover { background: var(--cor-superficie-2); }
 .dia__semana {
   font-size: var(--t-legenda);
   font-weight: 600;
@@ -1039,11 +1040,8 @@
     column-gap: 32px;
     align-items: start;
   }
-  .seletor-dias {
-    margin-inline: 0;
-    border: 1px solid var(--cor-linha);
-    border-radius: var(--raio-g);
-  }
+  .seletor-dias { margin-inline: 0; }
+  .seletor-dias__lista { padding-inline: 0; }
   .agenda__painel {
     position: sticky;
     top: 32px;
