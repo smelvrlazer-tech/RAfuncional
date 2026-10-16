@@ -4,11 +4,12 @@ import { useAuth } from '../../auth/AuthContext'
 import { Aviso, Botao, EsqueletoLista } from '../../components/Basicos'
 import { Icone } from '../../components/Icone'
 import { Sino } from '../../components/Sino'
-import { chaveDiaSP, rotuloDiaLongo, semanaSeguinte } from '../../lib/datetime'
+import { chaveDiaSP, formatarHora, rotuloDiaLongo, semanaSeguinte } from '../../lib/datetime'
 import { mensagemErro } from '../../lib/erros'
 import { proximaAulaMinha, rotuloQuando } from '../../lib/proximaAula'
 import { enderecoNoPainel } from '../../lib/rotas'
 import { MIDIA_LARGA, useMidia } from '../../lib/useMidia'
+import { PlanoEtiqueta } from '../minhas-aulas/PlanoEtiqueta'
 import { DetalheSessao } from '../sessao/DetalheSessao'
 import { CartaoSessao } from './CartaoSessao'
 import { SeletorDias } from './SeletorDias'
@@ -77,6 +78,7 @@ export function Agenda() {
           <div className="topo-agenda__texto">
             <p className="topo-agenda__ola">{primeiroNome ? `Olá, ${primeiroNome}` : 'RA Funcional'}</p>
             <h1 className="topo-agenda__titulo" id="rotulo-dia">{rotuloDiaLongo(selecionado)}</h1>
+            <PlanoEtiqueta />
           </div>
           <Sino />
         </header>
@@ -90,6 +92,11 @@ export function Agenda() {
             </span>
             <span className="proxima__quando">{rotuloQuando(proxima, agora)}</span>
             <span className="proxima__nome">{proxima.turma_nome}</span>
+            {proxima.meu_status === 'confirmado' && (
+              <span className="proxima__nota">
+                Cancelamento até {formatarHora(new Date(new Date(proxima.inicia_em).getTime() - limiteMin * 60_000))}
+              </span>
+            )}
             <Icone nome="seta" tamanho={20} />
           </Link>
         )}

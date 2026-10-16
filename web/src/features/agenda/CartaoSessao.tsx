@@ -50,6 +50,11 @@ export function CartaoSessao({ sessao, agora, ativo, limiteMin, onAtualizar, par
         )}
       </Link>
       <AcoesSessao sessao={sessao} estado={estado} limiteMin={limiteMin} onAtualizar={onAtualizar} compacto />
+      {!sessao.cancelada && estado.tom !== 'encerrada' && (
+        <span className="barra-vagas barra-vagas--linha" aria-hidden="true">
+          <span className="barra-vagas__preenchido" style={{ width: `${Math.min(100, Math.round((sessao.confirmados / sessao.vagas) * 100))}%` }} />
+        </span>
+      )}
     </article>
   )
 }

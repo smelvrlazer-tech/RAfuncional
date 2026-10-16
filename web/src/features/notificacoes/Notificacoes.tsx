@@ -29,6 +29,7 @@ export function Notificacoes() {
   const { recarregarNaoLidas } = useNaoLidas()
   const [lista, setLista] = useState<Notificacao[] | null>(null)
   const [erro, setErro] = useState<unknown>(null)
+  const [filtro, setFiltro] = useState<'todas' | 'vagas' | 'avisos'>('todas')
 
   const carregar = useCallback(async () => {
     const { data, error } = await supabase
@@ -61,6 +62,8 @@ export function Notificacoes() {
   }
 
   const naoLidas = (lista ?? []).filter((n) => !n.lida_em)
+  const ehVaga = (n: Notificacao) => /vaga liberada/i.test(n.titulo)
+  const visiveis = (lista ?? []).filter((n) => filtro === 'todas' || (filtro === 'vagas' ? ehVaga(n) : !ehVaga(n)))
 
   return (
     <div className="tela">
@@ -83,8 +86,15 @@ export function Notificacoes() {
               </Botao>
             </div>
           )}
+          <div className="segmentado" role="group" aria-label="Filtrar avisos">
+            {([['todas', 'Todas'], ['vagas', 'Vagas liberadas'], ['avisos', 'Avisos']] as const).map(([valor, rotulo]) => (
+              <button key={valor} type="button" className="segmentado__opcao" aria-pressed={filtro === valor} onClick={() => setFiltro(valor)}>
+                {rotulo}
+              </button>
+            ))}
+          </div>
           <ul className="notificacoes">
-            {(lista ?? []).map((n) => (
+            {visiveis.map((n) => (
               <li key={n.id}>
                 <button
                   type="button"

@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../auth/AuthContext'
 import { Aviso, Botao, EsqueletoLista } from '../../components/Basicos'
-import { rotuloDiaLongo } from '../../lib/datetime'
+import { formatarPrazoExtenso, rotuloDiaLongo } from '../../lib/datetime'
 import { mensagemErro } from '../../lib/erros'
 import { minhasAulas, textoResumoMinhasAulas } from '../../lib/minhasAulas'
 import { CartaoSessao } from '../agenda/CartaoSessao'
@@ -18,7 +18,13 @@ export function MinhasAulas() {
   const limiteMin = useLimiteBloqueio()
   const ativo = perfil?.ativo ?? true
   const resumo = useMemo(() => minhasAulas(linhas ?? [], agora), [linhas, agora])
-  const [aba, setAba] = useState<'proximas' | 'historico'>('proximas')
+  const [aba, setAba] = useState<'proximas' | 'fila' | 'historico'>('proximas')
+  const gruposAba = useMemo(
+    () => resumo.grupos
+      .map((g) => ({ ...g, aulas: g.aulas.filter((s) => s.meu_status === (aba === 'fila' ? 'espera' : 'confirmado')) }))
+      .filter((g) => g.aulas.length > 0),
+    [resumo, aba],
+  )
 
   return (
     <div className="tela tela--minhas-aulas">
@@ -30,13 +36,18 @@ export function MinhasAulas() {
       <PlanoSemana versao={linhas?.length ?? 0} />
 
       <div className="segmentado" role="group" aria-label="Mostrar">
-        <button type="button" className="segmentado__opcao" aria-pressed={aba === 'proximas'} onClick={() => setAba('proximas')}>Próximas</button>
+        <button type="button" className="segmentado__opcao" aria-pressed={aba === 'proximas'} onClick={() => setAba('proximas')}>
+          Próximas <span className="segmentado__num">{resumo.confirmadas}</span>
+        </button>
+        <button type="button" className="segmentado__opcao" aria-pressed={aba === 'fila'} onClick={() => setAba('fila')}>
+          Lista de espera <span className="segmentado__num">{resumo.naFila}</span>
+        </button>
         <button type="button" className="segmentado__opcao" aria-pressed={aba === 'historico'} onClick={() => setAba('historico')}>Histórico</button>
       </div>
 
       {aba === 'historico' && <Historico />}
 
-      <div className="minhas-aulas__lista" hidden={aba !== 'proximas'}>
+      <div className="minhas-aulas__lista" hidden={aba === 'historico'}>
         {erro != null && (
           <Aviso tom="erro" role="alert" titulo="Não foi possível carregar suas aulas">
             {mensagemErro(erro)}{' '}
@@ -46,14 +57,14 @@ export function MinhasAulas() {
 
         {linhas === null && !erro ? (
           <EsqueletoLista texto="Carregando suas aulas…" itens={2} />
-        ) : resumo.grupos.length === 0 && !erro ? (
+        ) : gruposAba.length === 0 && !erro ? (
           <div className="vazio">
-            <p className="vazio__titulo">Você ainda não reservou nenhuma aula</p>
-            <p className="vazio__texto">Escolha um horário na agenda e garanta seu lugar.</p>
+            <p className="vazio__titulo">{aba === 'fila' ? 'Você não está em nenhuma lista de espera' : 'Você ainda não reservou nenhuma aula'}</p>
+            <p className="vazio__texto">{aba === 'fila' ? 'Quando uma aula estiver lotada, você pode entrar na fila e é chamado automaticamente.' : 'Escolha um horário na agenda e garanta seu lugar.'}</p>
             <Link to="/" className="botao botao--primario">Ver a agenda</Link>
           </div>
         ) : (
-          resumo.grupos.map((grupo) => (
+          gruposAba.map((grupo) => (
             <section key={grupo.dia} className="dia-agenda" aria-labelledby={`dia-${grupo.dia}`}>
               <div className="dia-agenda__cabeca">
                 <h2 id={`dia-${grupo.dia}`} className="dia-agenda__titulo">{rotuloDiaLongo(grupo.dia)}</h2>
@@ -77,6 +88,11 @@ export function MinhasAulas() {
       </div>
 
       <Frequencia agora={agora} />
+
+      <p className="lembrete">
+        <strong>Lembrete:</strong> se não puder ir, cancele com pelo menos {formatarPrazoExtenso(limiteMin)} de antecedência.
+        Assim a vaga é liberada para quem está na lista de espera.
+      </p>
     </div>
   )
 }
