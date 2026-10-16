@@ -10,6 +10,7 @@ import { mensagemErro } from '../../lib/erros'
 import { estadoSessao, fracaoOcupada, proximaComVaga, tempoParaFechar, textoVagas } from '../../lib/estadoSessao'
 import { blocosDoTreino, descreverVideo, miniaturaYoutube } from '../../lib/texto'
 import type { LinhaAgenda } from '../../lib/tipos'
+import { enderecoNoPainel } from '../../lib/rotas'
 import { useAoFocar } from '../../lib/useFoco'
 import { buscarAgenda, buscarSessao } from '../agenda/api'
 import { DIAS_AGENDA, useAgora, useLimiteBloqueio } from '../agenda/useAgenda'
@@ -37,8 +38,18 @@ function BlocoVideo({ url }: { url: string }) {
   )
 }
 
-export function DetalheSessao() {
-  const { id = '' } = useParams()
+interface PropsDetalhe {
+  /** Aula a mostrar. Sem ela, vem da rota (/sessao/:id). */
+  id?: string
+  /** Dentro da agenda no computador: sem barra de voltar e com links que abrem no painel. */
+  embutido?: boolean
+  /** Chamado depois de reservar/cancelar, para quem mostra a lista ao lado atualizar também. */
+  aoMudar?: () => Promise<unknown> | void
+}
+
+export function DetalheSessao({ id: idProp, embutido = false, aoMudar }: PropsDetalhe = {}) {
+  const params = useParams()
+  const id = idProp ?? params.id ?? ''
   const { perfil } = useAuth()
   const agora = useAgora()
   const limiteMin = useLimiteBloqueio()
@@ -72,14 +83,19 @@ export function DetalheSessao() {
   }, [lotadaSemMim, inicioAula])
 
   const voltar = sessao ? `/?dia=${chaveDiaSP(sessao.inicia_em)}` : '/'
+  const barra = embutido ? null : <BarraTopo titulo="Aula" />
+  const atualizar = async () => {
+    await recarregar()
+    await aoMudar?.()
+  }
 
   if (sessao === undefined && !erro) {
-    return <div className="tela"><BarraTopo titulo="Aula" /><Carregando texto="Carregando a aula…" /></div>
+    return <div className="tela">{barra}<Carregando texto="Carregando a aula…" /></div>
   }
   if (!sessao) {
     return (
       <div className="tela">
-        <BarraTopo titulo="Aula" />
+        {barra}
         {erro ? (
           <Aviso tom="erro" role="alert" titulo="Não foi possível carregar">
             {mensagemErro(erro)} <Botao variante="texto" onClick={() => void recarregar()}>Tentar de novo</Botao>
@@ -104,8 +120,8 @@ export function DetalheSessao() {
   const sugestao = estado.tom === 'lotada' ? proximaComVaga(seguintes, sessao, { agora, limiteMin }) : null
 
   return (
-    <div className="tela tela--detalhe">
-      <BarraTopo titulo={rotuloDiaLongo(chaveDiaSP(sessao.inicia_em))} voltarPara={voltar} />
+    <div className={`tela ${embutido ? 'tela--detalhe-embutido' : 'tela--detalhe'}`}>
+      {!embutido && <BarraTopo titulo={rotuloDiaLongo(chaveDiaSP(sessao.inicia_em))} voltarPara={voltar} />}
 
       <header className={`detalhe-aula detalhe-aula--${estado.tom}`}>
         <h2 className="detalhe-aula__titulo">{sessao.turma_nome}</h2>
@@ -149,7 +165,7 @@ export function DetalheSessao() {
       </section>
 
       {sugestao && (
-        <Link className="sugestao" to={`/sessao/${sugestao.id}`}>
+        <Link className="sugestao" to={embutido ? enderecoNoPainel(sugestao) : `/sessao/${sugestao.id}`}>
           <span className="sugestao__texto">
             <span className="sugestao__sobre">Próxima aula com vaga</span>
             <span className="sugestao__titulo">{sugestao.turma_nome} · {formatarHora(sugestao.inicia_em)}</span>
@@ -187,7 +203,7 @@ export function DetalheSessao() {
         {encerrado && (
           <Botao variante="primario" className="botao--largo" disabled>Check-in indisponível</Botao>
         )}
-        <AcoesSessao sessao={sessao} estado={estado} limiteMin={limiteMin} onAtualizar={recarregar} grande />
+        <AcoesSessao sessao={sessao} estado={estado} limiteMin={limiteMin} onAtualizar={atualizar} grande />
       </section>
     </div>
   )

@@ -11,6 +11,8 @@ const ITENS: { para: string; rotulo: string; icone: NomeIcone; fim?: boolean }[]
 export function NavInferior() {
   return (
     <nav className="nav-inferior" aria-label="Navegação principal">
+      {/* Só aparece no menu lateral do computador. */}
+      <p className="nav-inferior__marca" aria-hidden="true">RA Funcional</p>
       <ul>
         {ITENS.map((item) => (
           <li key={item.para}>

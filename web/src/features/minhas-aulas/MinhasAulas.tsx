@@ -24,43 +24,45 @@ export function MinhasAulas() {
         <p className="titulo-aba__resumo">{linhas ? textoResumoMinhasAulas(resumo) : 'Carregando…'}</p>
       </header>
 
-      {erro != null && (
-        <Aviso tom="erro" role="alert" titulo="Não foi possível carregar suas aulas">
-          {mensagemErro(erro)}{' '}
-          <Botao variante="texto" onClick={() => void recarregar()}>Tentar de novo</Botao>
-        </Aviso>
-      )}
+      <div className="minhas-aulas__lista">
+        {erro != null && (
+          <Aviso tom="erro" role="alert" titulo="Não foi possível carregar suas aulas">
+            {mensagemErro(erro)}{' '}
+            <Botao variante="texto" onClick={() => void recarregar()}>Tentar de novo</Botao>
+          </Aviso>
+        )}
 
-      {linhas === null && !erro ? (
-        <EsqueletoLista texto="Carregando suas aulas…" itens={2} />
-      ) : resumo.grupos.length === 0 && !erro ? (
-        <div className="vazio">
-          <p className="vazio__titulo">Você ainda não reservou nenhuma aula</p>
-          <p className="vazio__texto">Escolha um horário na agenda e garanta seu lugar.</p>
-          <Link to="/" className="botao botao--primario">Ver a agenda</Link>
-        </div>
-      ) : (
-        resumo.grupos.map((grupo) => (
-          <section key={grupo.dia} className="dia-agenda" aria-labelledby={`dia-${grupo.dia}`}>
-            <div className="dia-agenda__cabeca">
-              <h2 id={`dia-${grupo.dia}`} className="dia-agenda__titulo">{rotuloDiaLongo(grupo.dia)}</h2>
-            </div>
-            <ol className="lista-sessoes">
-              {grupo.aulas.map((s) => (
-                <li key={s.id}>
-                  <CartaoSessao
-                    sessao={s}
-                    agora={agora}
-                    ativo={ativo}
-                    limiteMin={limiteMin}
-                    onAtualizar={recarregar}
-                  />
-                </li>
-              ))}
-            </ol>
-          </section>
-        ))
-      )}
+        {linhas === null && !erro ? (
+          <EsqueletoLista texto="Carregando suas aulas…" itens={2} />
+        ) : resumo.grupos.length === 0 && !erro ? (
+          <div className="vazio">
+            <p className="vazio__titulo">Você ainda não reservou nenhuma aula</p>
+            <p className="vazio__texto">Escolha um horário na agenda e garanta seu lugar.</p>
+            <Link to="/" className="botao botao--primario">Ver a agenda</Link>
+          </div>
+        ) : (
+          resumo.grupos.map((grupo) => (
+            <section key={grupo.dia} className="dia-agenda" aria-labelledby={`dia-${grupo.dia}`}>
+              <div className="dia-agenda__cabeca">
+                <h2 id={`dia-${grupo.dia}`} className="dia-agenda__titulo">{rotuloDiaLongo(grupo.dia)}</h2>
+              </div>
+              <ol className="lista-sessoes">
+                {grupo.aulas.map((s) => (
+                  <li key={s.id}>
+                    <CartaoSessao
+                      sessao={s}
+                      agora={agora}
+                      ativo={ativo}
+                      limiteMin={limiteMin}
+                      onAtualizar={recarregar}
+                    />
+                  </li>
+                ))}
+              </ol>
+            </section>
+          ))
+        )}
+      </div>
 
       <Frequencia agora={agora} />
     </div>

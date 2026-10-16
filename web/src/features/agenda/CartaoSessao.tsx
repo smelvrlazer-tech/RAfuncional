@@ -11,6 +11,10 @@ interface Props {
   ativo: boolean
   limiteMin: number
   onAtualizar: () => Promise<unknown> | void
+  /** Para onde a linha leva. Padrão: a página da aula; no computador, o painel ao lado. */
+  para?: string
+  /** A aula que está aberta no painel (computador). */
+  aberta?: boolean
 }
 
 /**
@@ -18,14 +22,19 @@ interface Props {
  * direita, a situação ("Confirmada", "Na fila") ou a ação ("Reservar", "Entrar na fila").
  * A linha inteira leva ao detalhe (link esticado); os botões ficam por cima do link.
  */
-export function CartaoSessao({ sessao, agora, ativo, limiteMin, onAtualizar }: Props) {
+export function CartaoSessao({ sessao, agora, ativo, limiteMin, onAtualizar, para, aberta = false }: Props) {
   const estado = estadoSessao(sessao, { agora, ativo, limiteMin })
   return (
     <article
-      className={`cartao-sessao cartao-sessao--${estado.tom}`}
+      className={`cartao-sessao cartao-sessao--${estado.tom} ${aberta ? 'cartao-sessao--aberta' : ''}`}
       aria-labelledby={`sessao-${sessao.id}`}
     >
-      <Link to={`/sessao/${sessao.id}`} className="cartao-sessao__link">
+      <Link
+        to={para ?? `/sessao/${sessao.id}`}
+        replace={!!para}
+        aria-current={aberta ? 'true' : undefined}
+        className="cartao-sessao__link"
+      >
         <span className="cartao-sessao__hora">{formatarHora(sessao.inicia_em)}</span>
         <span className="cartao-sessao__nome" id={`sessao-${sessao.id}`}>{sessao.turma_nome}</span>
         {/* Confirmado / na fila: a situação vira o texto da linha, e à direita fica só a ação quieta. */}
