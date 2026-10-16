@@ -10,9 +10,10 @@ import type { Perfil } from '../../../lib/tipos'
 import { useAgora } from '../../agenda/useAgenda'
 import { Anuncio, Controle, EstadoLista, type Retorno } from '../comum'
 import { useCarga } from '../useCarga'
-import { contarAulasNoPeriodo, definirAlunoAtivo, listarAlunos, listarConvites } from './api'
+import { contarAulasNoPeriodo, definirAlunoAtivo, definirPlano, listarAlunos, listarConvites } from './api'
 import { ListaConvites } from './ListaConvites'
 import { NovoConvite } from './NovoConvite'
+import { RelatorioMensal } from './RelatorioMensal'
 
 export function Alunos() {
   const agora = useAgora()
@@ -34,6 +35,16 @@ export function Alunos() {
   const opcoes: [FiltroAlunos, string, number][] = [
     ['todos', 'Todos', lista.length], ['ativos', 'Ativos', ativos], ['inativos', 'Inativos', lista.length - ativos],
   ]
+
+  async function mudarPlano(a: Perfil, valor: string) {
+    try {
+      await definirPlano(a.id, valor ? Number(valor) : null)
+      setRetorno({ tom: 'sucesso', texto: valor ? `Plano de ${a.nome}: ${valor}x por semana.` : `${a.nome} ficou sem plano definido.` })
+      await alunos.recarregar()
+    } catch (e) {
+      setRetorno({ tom: 'erro', texto: mensagemErro(e, { treinador: true }) })
+    }
+  }
 
   async function confirmar() {
     if (!alvo) return
@@ -86,13 +97,14 @@ export function Alunos() {
                     <th scope="col">Nome</th>
                     <th scope="col" className="tabela__tel">Telefone</th>
                     <th scope="col" className="tabela__num">Aulas em {nomeDoMes(hoje)}</th>
+                    <th scope="col">Plano</th>
                     <th scope="col">Situação</th>
                     <th scope="col"><span className="sr-only">Ação</span></th>
                   </tr>
                 </thead>
                 <tbody>
                   {visiveis.length === 0 && (
-                    <tr><td colSpan={5} className="tabela__vazio">Nenhum aluno encontrado.</td></tr>
+                    <tr><td colSpan={6} className="tabela__vazio">Nenhum aluno encontrado.</td></tr>
                   )}
                   {visiveis.map((a) => (
                     <tr key={a.id} className={a.ativo ? '' : 'tabela__linha--inativa'}>
@@ -102,6 +114,13 @@ export function Alunos() {
                       </th>
                       <td className="tabela__tel">{a.telefone ? <a href={`tel:${a.telefone.replace(/[^\d+]/g, '')}`}>{a.telefone}</a> : <span className="tabela__vazio">—</span>}</td>
                       <td className="tabela__num">{aulasMes.dados ? (aulasMes.dados.get(a.id) ?? 0) : '–'}</td>
+                      <td>
+                        <select className="campo__entrada plano-select" value={a.plano_aulas_semana ?? ''}
+                          aria-label={`Plano de ${a.nome}`} onChange={(e) => void mudarPlano(a, e.target.value)}>
+                          <option value="">Sem plano</option>
+                          {[1, 2, 3, 4, 5, 6, 7].map((n) => <option key={n} value={n}>{n}x por semana</option>)}
+                        </select>
+                      </td>
                       <td>{a.ativo ? <span className="situacao-ativo">Ativo</span> : <Chip tom="cancelada">Inativo</Chip>}</td>
                       <td className="tabela__acao">
                         <Botao variante="texto" onClick={() => { setErroDialogo(null); setAlvo(a) }}
@@ -122,6 +141,8 @@ export function Alunos() {
           <ListaConvites carga={convites} agora={agora} />
         </div>
       </div>
+
+      <RelatorioMensal hoje={hoje} />
 
       <Dialogo
         aberto={alvo !== null}

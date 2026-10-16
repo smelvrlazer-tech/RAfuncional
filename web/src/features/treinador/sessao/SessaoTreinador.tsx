@@ -3,13 +3,13 @@ import { Link, useParams } from 'react-router-dom'
 import { Aviso, Avatar, Botao } from '../../../components/Basicos'
 import { Chip } from '../../../components/Chip'
 import { Icone } from '../../../components/Icone'
-import { LISTA_VAZIA, type AlunoNaSessao, type ListaSessao } from '../../../lib/checkins'
+import { LISTA_VAZIA, type AlunoNaSessao, type ListaSessao, type Presenca } from '../../../lib/checkins'
 import { chaveDiaSP, formatarIntervalo, rotuloDiaLongo } from '../../../lib/datetime'
 import { mensagemErro } from '../../../lib/erros'
 import { estadoAula } from '../../../lib/estadoAula'
 import { useAgora, useLimiteBloqueio } from '../../agenda/useAgenda'
 import { Anuncio, Controle, EstadoLista, type Retorno } from '../comum'
-import { buscarAula, buscarListas, cancelarAula, removerAluno } from '../painel/api'
+import { buscarAula, buscarListas, cancelarAula, marcarPresenca, removerAluno } from '../painel/api'
 import { useCarga } from '../useCarga'
 import { consequenciaRemocao, DialogoCancelar, DialogoRemover, type AlvoRemocao } from './DialogosSessao'
 
@@ -19,8 +19,10 @@ async function carregar(id: string) {
   return { aula, lista: listas.get(id) ?? LISTA_VAZIA }
 }
 
-function ListaAlunos({ titulo, alunos, fila, onRemover, podeRemover }: {
+function ListaAlunos({ titulo, alunos, fila, onRemover, podeRemover, onPresenca }: {
   titulo: string; alunos: AlunoNaSessao[]; fila?: boolean; podeRemover: boolean; onRemover: (a: AlunoNaSessao) => void
+  /** Só quando a aula já começou: mostra Compareceu / Faltou ao lado de cada confirmado. */
+  onPresenca?: (a: AlunoNaSessao, p: Presenca | null) => void
 }) {
   const Tag = fila ? 'ol' : 'ul'
   return (
@@ -34,6 +36,16 @@ function ListaAlunos({ titulo, alunos, fila, onRemover, podeRemover }: {
             <li key={a.alunoId} className="lista-sessao__item">
               {fila ? <span className="chamada__pos">{i + 1}º</span> : <Avatar nome={a.nome} className="avatar--mini" />}
               <span className="lista-sessao__nome">{a.nome}</span>
+              {onPresenca && (
+                <span className="presenca" role="group" aria-label={`Presença de ${a.nome}`}>
+                  {(['compareceu', 'faltou'] as const).map((p) => (
+                    <button key={p} type="button" className={`presenca__opcao presenca__opcao--${p}`} aria-pressed={a.presenca === p}
+                      onClick={() => onPresenca(a, a.presenca === p ? null : p)}>
+                      {p === 'compareceu' ? 'Compareceu' : 'Faltou'}
+                    </button>
+                  ))}
+                </span>
+              )}
               {podeRemover && (
                 <Botao variante="texto" onClick={() => onRemover(a)} aria-label={`Remover ${a.nome}`}>Remover</Botao>
               )}
@@ -75,6 +87,16 @@ export function SessaoTreinador() {
       await recarregar()
     } finally {
       setEnviando(false)
+    }
+  }
+
+  async function presenca(a: AlunoNaSessao, p: Presenca | null) {
+    try {
+      await marcarPresenca(id, a.alunoId, p)
+      substituir(await carregar(id))
+      setRetorno(null)
+    } catch (e) {
+      setRetorno({ tom: 'erro', texto: mensagemErro(e, { treinador: true, limiteMin }) })
     }
   }
 
@@ -130,7 +152,8 @@ export function SessaoTreinador() {
 
             <div className="sessao-grade">
               <ListaAlunos titulo="Confirmados" alunos={lista.confirmados} podeRemover={!aula.cancelada}
-                onRemover={(a) => setAlvo({ aluno: a, confirmado: true })} />
+                onRemover={(a) => setAlvo({ aluno: a, confirmado: true })}
+                onPresenca={estado.comecou && !aula.cancelada ? (a, p) => void presenca(a, p) : undefined} />
               <ListaAlunos titulo="Lista de espera" alunos={lista.espera} fila podeRemover={!aula.cancelada}
                 onRemover={(a) => setAlvo({ aluno: a, confirmado: false })} />
             </div>

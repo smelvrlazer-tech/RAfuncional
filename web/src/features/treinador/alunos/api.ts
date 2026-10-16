@@ -5,7 +5,7 @@ import type { Convite, Perfil } from '../../../lib/tipos'
 export async function listarAlunos(): Promise<Perfil[]> {
   const { data, error } = await supabase
     .from('perfis')
-    .select('id, nome, telefone, papel, ativo')
+    .select('id, nome, telefone, papel, ativo, plano_aulas_semana')
     .eq('papel', 'aluno')
     .order('nome', { ascending: true })
   if (error) throw error
@@ -16,6 +16,29 @@ export async function listarAlunos(): Promise<Perfil[]> {
 export async function definirAlunoAtivo(perfilId: string, ativo: boolean): Promise<void> {
   const { error } = await supabase.rpc('treinador_definir_ativo', { p_perfil_id: perfilId, p_ativo: ativo })
   if (error) throw error
+}
+
+/** Plano em aulas por semana (1 a 14); null remove o plano. */
+export async function definirPlano(perfilId: string, aulas: number | null): Promise<void> {
+  const { error } = await supabase.rpc('treinador_definir_plano', { p_perfil_id: perfilId, p_aulas: aulas })
+  if (error) throw error
+}
+
+export interface LinhaRelatorio {
+  aluno_id: string
+  nome: string
+  plano_aulas_semana: number | null
+  reservas: number
+  compareceu: number
+  faltas: number
+  sem_marcacao: number
+  no_show: number
+}
+
+export async function relatorioMensal(ano: number, mes: number): Promise<LinhaRelatorio[]> {
+  const { data, error } = await supabase.rpc('treinador_relatorio_mensal', { p_ano: ano, p_mes: mes })
+  if (error) throw error
+  return (Array.isArray(data) ? data : []) as LinhaRelatorio[]
 }
 
 export async function criarConvite(nome: string | null): Promise<string> {

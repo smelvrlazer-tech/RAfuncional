@@ -1,6 +1,8 @@
 /** Agrupamento dos check-ins do dia para o painel do treinador. */
 
 export type StatusCheckin = 'confirmado' | 'espera' | 'cancelado'
+/** Marcação do treinador depois da aula; null = ainda não marcada. */
+export type Presenca = 'compareceu' | 'faltou'
 
 /** Linha de `checkins` com o embed `perfis(nome)` do PostgREST. */
 export interface LinhaCheckin {
@@ -8,6 +10,7 @@ export interface LinhaCheckin {
   aluno_id: string
   status: StatusCheckin
   posicao_fila: number | null
+  presenca?: Presenca | null
   perfis: { nome: string } | { nome: string }[] | null
 }
 
@@ -16,6 +19,7 @@ export interface AlunoNaSessao {
   nome: string
   /** Posição na fila (só para quem está em espera). */
   posicao: number | null
+  presenca: Presenca | null
 }
 
 export interface ListaSessao {
@@ -36,7 +40,7 @@ export function agruparCheckins(linhas: LinhaCheckin[]): Map<string, ListaSessao
   for (const l of linhas) {
     if (l.status === 'cancelado') continue
     const g = grupos.get(l.sessao_id) ?? { confirmados: [], espera: [] }
-    const aluno = { alunoId: l.aluno_id, nome: nomeDe(l.perfis), posicao: l.status === 'espera' ? l.posicao_fila : null }
+    const aluno = { alunoId: l.aluno_id, nome: nomeDe(l.perfis), posicao: l.status === 'espera' ? l.posicao_fila : null, presenca: l.presenca ?? null }
     ;(l.status === 'confirmado' ? g.confirmados : g.espera).push(aluno)
     grupos.set(l.sessao_id, g)
   }

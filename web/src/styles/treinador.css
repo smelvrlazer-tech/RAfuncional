@@ -763,3 +763,32 @@
   .semana-treinos { grid-template-columns: repeat(7, minmax(0, 1fr)); }
   .dia-treino { min-height: 160px; }
 }
+
+/* ------------------------------------------------------------ presença, plano e relatório */
+.presenca { display: inline-flex; gap: 4px; flex: none; }
+.presenca__opcao {
+  min-height: 36px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: var(--raio-p);
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--cor-linha);
+  color: var(--cor-texto-suave);
+  font: inherit;
+  font-size: var(--t-pequeno);
+  font-weight: 600;
+  cursor: pointer;
+}
+.presenca__opcao:hover { color: var(--cor-tinta); box-shadow: inset 0 0 0 1px var(--cor-linha-forte); }
+.presenca__opcao--compareceu[aria-pressed='true'] { background: var(--cor-sucesso-fundo); color: var(--cor-sucesso-texto); box-shadow: inset 0 0 0 1px var(--cor-sucesso); }
+.presenca__opcao--faltou[aria-pressed='true'] { background: var(--cor-perigo-fundo); color: var(--cor-perigo-texto); box-shadow: inset 0 0 0 1px var(--cor-perigo); }
+.plano-select { min-height: 40px; width: auto; padding-block: 0; }
+.relatorio__cabeca { display: flex; align-items: center; justify-content: space-between; gap: var(--espaco-3); }
+.relatorio__mes { display: flex; gap: 8px; }
+.relatorio__dica { margin-bottom: 8px; font-size: var(--t-pequeno); color: var(--cor-aviso-texto); }
+.relatorio__alerta { color: var(--cor-perigo-texto); }
+@media (max-width: 599px) {
+  .lista-sessao__item { flex-wrap: wrap; padding-block: 8px; }
+  .presenca { width: 100%; }
+  .presenca__opcao { flex: 1; }
+}

@@ -1,4 +1,4 @@
-import { agruparCheckins, type LinhaCheckin, type ListaSessao } from '../../../lib/checkins'
+import { agruparCheckins, type LinhaCheckin, type ListaSessao, type Presenca } from '../../../lib/checkins'
 import { intervaloDiaSP } from '../../../lib/semana'
 import { supabase } from '../../../lib/supabase'
 
@@ -46,7 +46,7 @@ export async function buscarListas(sessaoIds: string[]): Promise<Map<string, Lis
   if (!sessaoIds.length) return new Map()
   const { data, error } = await supabase
     .from('checkins')
-    .select('sessao_id, aluno_id, status, posicao_fila, perfis(nome)')
+    .select('sessao_id, aluno_id, status, posicao_fila, presenca, perfis(nome)')
     .in('sessao_id', sessaoIds)
     .in('status', ['confirmado', 'espera'])
   if (error) throw error
@@ -56,6 +56,12 @@ export async function buscarListas(sessaoIds: string[]): Promise<Map<string, Lis
 /** Exceção administrativa: notifica o aluno e promove o 1º da fila (se a aula não estiver bloqueada). */
 export async function removerAluno(sessaoId: string, alunoId: string): Promise<void> {
   const { error } = await supabase.rpc('treinador_remover_aluno', { p_sessao_id: sessaoId, p_aluno_id: alunoId })
+  if (error) throw error
+}
+
+/** Marca (ou limpa, com null) a presença de um confirmado em aula que já começou. */
+export async function marcarPresenca(sessaoId: string, alunoId: string, presenca: Presenca | null): Promise<void> {
+  const { error } = await supabase.rpc('treinador_marcar_presenca', { p_sessao_id: sessaoId, p_aluno_id: alunoId, p_presenca: presenca })
   if (error) throw error
 }
 

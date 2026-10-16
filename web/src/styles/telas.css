@@ -1084,3 +1084,26 @@
   }
   .tela--detalhe { margin-inline: auto; }
 }
+
+/* ------------------------------------------------------------ plano da semana e histórico */
+.plano {
+  display: grid;
+  gap: 6px;
+  padding: 12px 14px;
+  border-radius: var(--raio-g);
+  background: var(--cor-superficie);
+  box-shadow: var(--sombra-cartao);
+}
+.plano__linha { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; }
+.plano__titulo { font-size: var(--t-destaque); }
+.plano__uso { font-size: var(--t-pequeno); color: var(--cor-texto-suave); }
+.plano__uso strong { font-family: var(--fonte-numeros); font-size: var(--t-destaque); color: var(--cor-tinta); font-weight: 400; }
+.plano .barra-vagas--larga { margin-top: 4px; }
+.plano--passou .barra-vagas__preenchido { background: var(--cor-aviso); }
+.plano__aviso { font-size: var(--t-pequeno); color: var(--cor-aviso-texto); }
+.historico { display: grid; gap: var(--espaco-3); }
+.historico__item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; }
+.historico__hora { width: 4.25rem; font-family: var(--fonte-numeros); font-size: var(--t-numero); line-height: 1; color: var(--cor-texto-suave); font-variant-numeric: tabular-nums; }
+.historico__texto { flex: 1; min-width: 0; display: grid; }
+.historico__nome { font-weight: 600; }
+.historico__dia { font-size: var(--t-legenda); color: var(--cor-texto-suave); }

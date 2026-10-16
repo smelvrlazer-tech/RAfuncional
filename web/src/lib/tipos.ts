@@ -30,6 +30,8 @@ export interface Perfil {
   telefone: string | null
   papel: Papel
   ativo: boolean
+  /** Aulas por semana do plano do aluno; null = sem plano definido. */
+  plano_aulas_semana?: number | null
 }
 
 export interface Notificacao {
