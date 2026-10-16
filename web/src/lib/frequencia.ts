@@ -13,6 +13,11 @@ export interface FrequenciaMes {
   dias: Set<string>
 }
 
+/** "outubro" para "2026-10-15". */
+export function nomeDoMes(chave: string): string {
+  return MESES[Number(chave.slice(5, 7)) - 1] ?? ''
+}
+
 /** Primeiro dia do mês de `chaveHoje` (AAAA-MM-01). */
 export function inicioDoMes(chaveHoje: string): string {
   return `${chaveHoje.slice(0, 7)}-01`
@@ -27,7 +32,7 @@ export function frequenciaDoMes(linhas: LinhaAgenda[], agora: Date): FrequenciaM
     return l.meu_status === 'confirmado' && !l.cancelada && fim <= t && chaveDiaSP(l.inicia_em).startsWith(prefixo)
   })
   return {
-    mes: MESES[Number(hoje.slice(5, 7)) - 1] ?? '',
+    mes: nomeDoMes(hoje),
     total: feitas.length,
     dias: new Set(feitas.map((l) => chaveDiaSP(l.inicia_em))),
   }

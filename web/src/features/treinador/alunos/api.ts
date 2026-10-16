@@ -1,3 +1,4 @@
+import { contarPorAluno } from '../../../lib/alunos'
 import { supabase } from '../../../lib/supabase'
 import type { Convite, Perfil } from '../../../lib/tipos'
 
@@ -55,4 +56,20 @@ export async function revogarConvite(id: string): Promise<boolean> {
     .select('id')
   if (error) throw error
   return ((data ?? []) as unknown[]).length > 0
+}
+
+/**
+ * Aulas de cada aluno no período: presenças confirmadas em aulas que começaram dentro dele e não
+ * foram canceladas (o RLS deixa o treinador ler todos os check-ins).
+ */
+export async function contarAulasNoPeriodo(inicio: Date, fim: Date): Promise<Map<string, number>> {
+  const { data, error } = await supabase
+    .from('checkins')
+    .select('aluno_id, sessoes!inner(inicia_em, cancelada)')
+    .eq('status', 'confirmado')
+    .eq('sessoes.cancelada', false)
+    .gte('sessoes.inicia_em', inicio.toISOString())
+    .lt('sessoes.inicia_em', fim.toISOString())
+  if (error) throw error
+  return contarPorAluno((data ?? []) as { aluno_id: string }[])
 }

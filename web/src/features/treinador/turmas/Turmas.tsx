@@ -5,9 +5,10 @@ import { Dialogo } from '../../../components/Dialogo'
 import { Icone } from '../../../components/Icone'
 import { SEMANA_CURTA, chaveDiaSP, diaDaSemana, formatarDataHoraCurta } from '../../../lib/datetime'
 import { mensagemErro } from '../../../lib/erros'
+import { MIDIA_LARGA, useMidia } from '../../../lib/useMidia'
 import type { Turma } from '../../../lib/tipos'
 import {
-  DIAS_SEMANA, ORDEM_DIAS, descreverOcupacao, formatarHoraTurma, type RelatorioTurma,
+  DIAS_SEMANA, ORDEM_DIAS, descreverOcupacao, formatarHoraTurma, gradeSemanal, type RelatorioTurma,
 } from '../../../lib/turmas'
 import { Anuncio, Controle, EstadoLista, type Retorno } from '../comum'
 import { useCarga } from '../useCarga'
@@ -131,10 +132,35 @@ export function Turmas() {
     : aulas === 1 ? `A aula futura já gerada continua na agenda${continuam}`
     : `As ${aulas} aulas futuras já geradas continuam na agenda${continuam}`
 
+  // Computador: grade horário × dia. Celular: lista por dia (mais fácil de rolar com o polegar).
+  const largo = useMidia(MIDIA_LARGA)
+  const grade = gradeSemanal(turmas)
+
+  function acoes(t: Turma) {
+    return (
+      <div className="turma__acoes">
+        <Botao variante="contorno" aria-label={`Editar ${descreverTurma(t)}`}
+          onClick={() => abrirForm(t)}>
+          <Icone nome="lapis" /> Editar
+        </Botao>
+        {t.ativa ? (
+          <Botao variante="texto" aria-label={`Desativar ${descreverTurma(t)}`} onClick={() => pedirDesativar(t)}>
+            Desativar
+          </Botao>
+        ) : (
+          <Botao variante="texto" aria-label={`Reativar ${descreverTurma(t)}`} carregando={enviando === t.id}
+            onClick={() => void mudarAtiva(t, true)}>
+            Reativar
+          </Botao>
+        )}
+      </div>
+    )
+  }
+
   return (
     <div className="tela-treinador">
-      <Controle compacto sobre="Agenda semanal" titulo="Turmas"
-        subtitulo="Os horários fixos da semana. A partir deles, as aulas são geradas automaticamente todos os dias para as próximas 4 semanas.">
+      <Controle titulo="Turmas"
+        subtitulo="Horários fixos da semana. As aulas são geradas sozinhas para as próximas 4 semanas.">
         {!form && (
           <Botao variante="primario" onClick={() => abrirForm(null)}>
             <Icone nome="mais" /> Nova turma
@@ -150,54 +176,78 @@ export function Turmas() {
         textoCarregando="Carregando as turmas…" tituloErro="Não foi possível carregar as turmas"
         tituloVazio="Nenhuma turma cadastrada" textoVazio="Crie a primeira turma com o botão “Nova turma”."
         onTentar={() => void recarregar()}>
-        <div className="grade-dias">
-          {ORDEM_DIAS.filter((d) => !semTurma.includes(d)).map((d) => (
-            <section key={d} className="dia-turmas" aria-labelledby={`dia-${d}`}>
-              <h2 className="dia-turmas__titulo" id={`dia-${d}`}>{DIAS_SEMANA[d]}</h2>
-              <ul className="turmas">
-                {turmas.filter((t) => t.dia_semana === d).map((t) => (
-                  <li key={t.id} className={`turma ${t.ativa ? '' : 'turma--inativa'}`}>
-                    <span className="turma__hora">{formatarHoraTurma(t.hora_inicio)}</span>
-                    <div className="turma__info">
-                      <p className="turma__nome">{t.nome}</p>
-                      <p className="turma__meta">
-                        {t.duracao_min} min · {t.vagas} vagas
-                        {!t.ativa && <Chip tom="cancelada">Inativa</Chip>}
-                      </p>
-                    </div>
-                    <div className="turma__acoes">
-                      <Botao variante="contorno" aria-label={`Editar ${descreverTurma(t)}`}
-                        onClick={() => abrirForm(t)}>
-                        <Icone nome="lapis" /> Editar
-                      </Botao>
-                      {t.ativa ? (
-                        <Botao variante="texto" aria-label={`Desativar ${descreverTurma(t)}`} onClick={() => pedirDesativar(t)}>
-                          Desativar
-                        </Botao>
-                      ) : (
-                        <Botao variante="texto" aria-label={`Reativar ${descreverTurma(t)}`} carregando={enviando === t.id}
-                          onClick={() => void mudarAtiva(t, true)}>
-                          Reativar
-                        </Botao>
-                      )}
-                    </div>
-                  </li>
+        {largo ? (
+          <div className="tabela-rolagem">
+            <table className="grade-turmas">
+              <caption className="sr-only">Turmas da semana por horário e dia</caption>
+              <thead>
+                <tr>
+                  <th scope="col"><span className="sr-only">Horário</span></th>
+                  {grade.dias.map((d) => <th scope="col" key={d}>{DIAS_SEMANA[d]!.split('-')[0]}</th>)}
+                </tr>
+              </thead>
+              <tbody>
+                {grade.horarios.map((h) => (
+                  <tr key={h}>
+                    <th scope="row" className="grade-turmas__hora">{h}</th>
+                    {grade.dias.map((d) => (
+                      <td key={d}>
+                        {grade.celula(h, d).map((t) => (
+                          <div key={t.id} className={`celula-turma ${t.ativa ? '' : 'celula-turma--inativa'}`}>
+                            <p className="celula-turma__nome">{t.nome}</p>
+                            <p className="celula-turma__meta">
+                              {t.duracao_min} min · {t.vagas} vagas
+                              {!t.ativa && <Chip tom="cancelada">Inativa</Chip>}
+                            </p>
+                            {acoes(t)}
+                          </div>
+                        ))}
+                      </td>
+                    ))}
+                  </tr>
                 ))}
-              </ul>
-            </section>
-          ))}
-        </div>
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div className="grade-dias">
+            {ORDEM_DIAS.filter((d) => !semTurma.includes(d)).map((d) => (
+              <section key={d} className="dia-turmas" aria-labelledby={`dia-${d}`}>
+                <h2 className="dia-turmas__titulo" id={`dia-${d}`}>{DIAS_SEMANA[d]}</h2>
+                <ul className="turmas">
+                  {turmas.filter((t) => t.dia_semana === d).map((t) => (
+                    <li key={t.id} className={`turma ${t.ativa ? '' : 'turma--inativa'}`}>
+                      <span className="turma__hora">{formatarHoraTurma(t.hora_inicio)}</span>
+                      <div className="turma__info">
+                        <p className="turma__nome">{t.nome}</p>
+                        <p className="turma__meta">
+                          {t.duracao_min} min · {t.vagas} vagas
+                          {!t.ativa && <Chip tom="cancelada">Inativa</Chip>}
+                        </p>
+                      </div>
+                      {acoes(t)}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ))}
+          </div>
+        )}
         {semTurma.length > 0 && (
           <p className="nota">Sem turmas: {semTurma.map((d) => DIAS_SEMANA[d]).join(', ')}.</p>
         )}
       </EstadoLista>
 
-      <Aviso titulo="Como as mudanças chegam à agenda">
-        Criar ou reativar uma turma faz as aulas aparecerem na próxima geração automática (diária). Editar dia,
-        horário ou vagas muda na hora as aulas futuras sem check-in; as que já têm alunos ficam como estão e são
-        listadas para você. Turmas nunca são apagadas: desativar só interrompe a geração de aulas novas e preserva
-        todo o histórico de presença.
-      </Aviso>
+      {/* Explicação de consulta, não aviso: fica recolhida para não competir com a grade. */}
+      <details className="explicacao">
+        <summary>Como as mudanças chegam à agenda</summary>
+        <p>
+          Criar ou reativar uma turma faz as aulas aparecerem na próxima geração automática (diária). Editar dia,
+          horário ou vagas muda na hora as aulas futuras sem check-in; as que já têm alunos ficam como estão e são
+          listadas para você. Turmas nunca são apagadas: desativar só interrompe a geração de aulas novas e preserva
+          todo o histórico de presença.
+        </p>
+      </details>
 
       <Dialogo
         aberto={desativar !== null}

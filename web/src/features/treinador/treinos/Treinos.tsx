@@ -42,7 +42,7 @@ export function Treinos() {
 
   return (
     <div className="tela-treinador">
-      <Controle compacto sobre="Calendário" titulo="Treinos"
+      <Controle titulo="Treinos"
         subtitulo={<>{rotuloSemana && <strong>{rotuloSemana} · </strong>}{formatarDataCurta(semana)} a {formatarDataCurta(fim)}</>}>
         <nav className="navegar-dia" aria-label="Escolher a semana">
           <button type="button" className="navegar-dia__seta" onClick={() => irPara(somarDias(semana, -7))}>

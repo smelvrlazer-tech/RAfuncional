@@ -2,12 +2,15 @@ import { useState } from 'react'
 import { Avatar, Botao } from '../../../components/Basicos'
 import { Chip } from '../../../components/Chip'
 import { Dialogo } from '../../../components/Dialogo'
+import { filtrarAlunos, type FiltroAlunos } from '../../../lib/alunos'
+import { chaveDiaSP, inicioDoDiaSP } from '../../../lib/datetime'
 import { mensagemErro } from '../../../lib/erros'
+import { inicioDoMes, nomeDoMes } from '../../../lib/frequencia'
 import type { Perfil } from '../../../lib/tipos'
 import { useAgora } from '../../agenda/useAgenda'
 import { Anuncio, Controle, EstadoLista, type Retorno } from '../comum'
 import { useCarga } from '../useCarga'
-import { definirAlunoAtivo, listarAlunos, listarConvites } from './api'
+import { contarAulasNoPeriodo, definirAlunoAtivo, listarAlunos, listarConvites } from './api'
 import { ListaConvites } from './ListaConvites'
 import { NovoConvite } from './NovoConvite'
 
@@ -19,9 +22,18 @@ export function Alunos() {
   const [enviando, setEnviando] = useState(false)
   const [erroDialogo, setErroDialogo] = useState<string | null>(null)
   const [retorno, setRetorno] = useState<Retorno>(null)
+  const [busca, setBusca] = useState('')
+  const [filtro, setFiltro] = useState<FiltroAlunos>('todos')
+  const hoje = chaveDiaSP(agora)
+  // Aulas do mês corrente até agora, por aluno. Se falhar, a coluna mostra traço (é informação extra).
+  const aulasMes = useCarga(() => contarAulasNoPeriodo(inicioDoDiaSP(inicioDoMes(hoje)), new Date()), `mes-${hoje}`)
 
   const lista = alunos.dados ?? []
   const ativos = lista.filter((a) => a.ativo).length
+  const visiveis = filtrarAlunos(lista, busca, filtro)
+  const opcoes: [FiltroAlunos, string, number][] = [
+    ['todos', 'Todos', lista.length], ['ativos', 'Ativos', ativos], ['inativos', 'Inativos', lista.length - ativos],
+  ]
 
   async function confirmar() {
     if (!alvo) return
@@ -42,7 +54,7 @@ export function Alunos() {
 
   return (
     <div className="tela-treinador">
-      <Controle compacto sobre="Turma de alunos" titulo="Alunos"
+      <Controle titulo="Alunos"
         subtitulo={alunos.dados ? `${ativos} ${ativos === 1 ? 'ativo' : 'ativos'} de ${lista.length} ${lista.length === 1 ? 'aluno' : 'alunos'}` : 'Carregando…'} />
 
       <div className="alunos-grade">
@@ -53,20 +65,43 @@ export function Alunos() {
             textoCarregando="Carregando alunos…" tituloErro="Não foi possível carregar os alunos"
             tituloVazio="Nenhum aluno ainda" textoVazio="Gere um link de convite e envie para o primeiro aluno."
             onTentar={() => void alunos.recarregar()}>
+            <div className="filtro-alunos">
+              <label className="sr-only" htmlFor="busca-alunos">Buscar aluno</label>
+              <input id="busca-alunos" type="search" className="campo__entrada filtro-alunos__busca"
+                placeholder="Buscar por nome ou telefone" value={busca} onChange={(e) => setBusca(e.target.value)} />
+              <div className="segmentado" role="group" aria-label="Situação">
+                {opcoes.map(([valor, rotulo, quantos]) => (
+                  <button key={valor} type="button" className="segmentado__opcao" aria-pressed={filtro === valor}
+                    onClick={() => setFiltro(valor)}>
+                    {rotulo} <span className="segmentado__num">{quantos}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
             <div className="tabela-rolagem">
               <table className="tabela">
-                <caption className="sr-only">Alunos cadastrados, com telefone e situação</caption>
+                <caption className="sr-only">Alunos cadastrados, com telefone, aulas no mês e situação</caption>
                 <thead>
-                  <tr><th scope="col">Nome</th><th scope="col" className="tabela__tel">Telefone</th><th scope="col">Situação</th><th scope="col"><span className="sr-only">Ação</span></th></tr>
+                  <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col" className="tabela__tel">Telefone</th>
+                    <th scope="col" className="tabela__num">Aulas em {nomeDoMes(hoje)}</th>
+                    <th scope="col">Situação</th>
+                    <th scope="col"><span className="sr-only">Ação</span></th>
+                  </tr>
                 </thead>
                 <tbody>
-                  {lista.map((a) => (
+                  {visiveis.length === 0 && (
+                    <tr><td colSpan={5} className="tabela__vazio">Nenhum aluno encontrado.</td></tr>
+                  )}
+                  {visiveis.map((a) => (
                     <tr key={a.id} className={a.ativo ? '' : 'tabela__linha--inativa'}>
                       <th scope="row">
                         <span className="tabela__nome"><Avatar nome={a.nome} className="avatar--mini" />{a.nome}</span>
                         {a.telefone && <a className="tabela__tel-movel" href={`tel:${a.telefone.replace(/[^\d+]/g, '')}`}>{a.telefone}</a>}
                       </th>
                       <td className="tabela__tel">{a.telefone ? <a href={`tel:${a.telefone.replace(/[^\d+]/g, '')}`}>{a.telefone}</a> : <span className="tabela__vazio">—</span>}</td>
+                      <td className="tabela__num">{aulasMes.dados ? (aulasMes.dados.get(a.id) ?? 0) : '–'}</td>
                       <td>{a.ativo ? <span className="situacao-ativo">Ativo</span> : <Chip tom="cancelada">Inativo</Chip>}</td>
                       <td className="tabela__acao">
                         <Botao variante="texto" onClick={() => { setErroDialogo(null); setAlvo(a) }}

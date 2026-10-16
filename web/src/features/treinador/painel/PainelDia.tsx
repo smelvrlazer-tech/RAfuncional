@@ -33,11 +33,8 @@ export function PainelDia() {
 
   return (
     <div className="tela-treinador">
-      <Controle
-        sobre="Sala de controle"
-        titulo="Painel do dia"
-        subtitulo={<>{relativo && <strong>{relativo} · </strong>}{rotuloDiaLongo(dia)}</>}
-      >
+      {/* O dia é o título: é o que muda nesta tela. "Hoje"/"Amanhã" vai acima como contexto. */}
+      <Controle sobre={relativo ?? 'Painel do dia'} titulo={rotuloDiaLongo(dia)}>
         <nav className="navegar-dia" aria-label="Escolher o dia">
           <button type="button" className="navegar-dia__seta" onClick={() => irPara(somarDias(dia, -1))}>
             <Icone nome="voltar" tamanho={20} /><span className="sr-only">Dia anterior</span>
@@ -74,9 +71,9 @@ export function PainelDia() {
           onTentar={() => void recarregar()}
         >
           <ul className="grade-aulas">
-            {dados?.aulas.map((a, i) => (
+            {dados?.aulas.map((a) => (
               <li key={a.id}>
-                <CartaoAula aula={a} lista={dados.listas.get(a.id) ?? LISTA_VAZIA} agora={agora} limiteMin={limiteMin} indice={i} />
+                <CartaoAula aula={a} lista={dados.listas.get(a.id) ?? LISTA_VAZIA} agora={agora} limiteMin={limiteMin} />
               </li>
             ))}
           </ul>

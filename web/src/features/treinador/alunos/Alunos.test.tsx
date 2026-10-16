@@ -75,4 +75,28 @@ describe('Alunos', () => {
     expect(upd.args('update')).toEqual([{ status: 'revogado' }])
     expect(upd.metodos.filter(([m]) => m === 'eq').map(([, a]) => a)).toEqual([['id', 'c1'], ['status', 'pendente']])
   })
+
+  it('busca por nome filtra a tabela; sem resultado, avisa', async () => {
+    render(<Alunos />)
+    const tabela = await screen.findByRole('table')
+    await userEvent.type(screen.getByLabelText('Buscar aluno'), 'bru')
+    const linhas = within(tabela).getAllByRole('row')
+    expect(linhas).toHaveLength(2)
+    expect(linhas[1]).toHaveTextContent('Bruno Lima')
+    await userEvent.clear(screen.getByLabelText('Buscar aluno'))
+    await userEvent.type(screen.getByLabelText('Buscar aluno'), 'zzz')
+    expect(within(tabela).getByText('Nenhum aluno encontrado.')).toBeInTheDocument()
+  })
+
+  it('filtro de situação mostra a contagem e só os alunos daquele grupo', async () => {
+    render(<Alunos />)
+    const tabela = await screen.findByRole('table')
+    const inativos = screen.getByRole('button', { name: /Inativos/ })
+    expect(inativos).toHaveTextContent('Inativos 1')
+    await userEvent.click(inativos)
+    expect(inativos).toHaveAttribute('aria-pressed', 'true')
+    const linhas = within(tabela).getAllByRole('row')
+    expect(linhas).toHaveLength(2)
+    expect(linhas[1]).toHaveTextContent('Bruno Lima')
+  })
 })

@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { describe, it, expect } from 'vitest'
 import {
-  descreverOcupacao, formatarHoraTurma, lerRelatorioTurma, resumoEdicaoTurma, validarTurma,
+  descreverOcupacao, formatarHoraTurma, gradeSemanal, lerRelatorioTurma, resumoEdicaoTurma, validarTurma,
 } from './turmas'
 
 const base = { nome: 'Funcional Manhã', dia_semana: '1', hora_inicio: '06:00', duracao_min: '60', vagas: '12' }
@@ -62,5 +62,29 @@ describe('relatório da edição (treinador_atualizar_turma)', () => {
     expect(descreverOcupacao({ ...a, confirmados: 2, na_espera: 1 })).toBe('2 confirmados, 1 na espera')
     expect(descreverOcupacao({ ...a, confirmados: 1, na_espera: 0 })).toBe('1 confirmado')
     expect(descreverOcupacao({ ...a, confirmados: 0, na_espera: 3 })).toBe('3 na espera')
+  })
+})
+
+describe('gradeSemanal', () => {
+  const t = (nome: string, dia_semana: number, hora_inicio: string) => ({ nome, dia_semana, hora_inicio })
+
+  it('dias de segunda a domingo com turma, horários em ordem e células por horário e dia', () => {
+    const g = gradeSemanal([
+      t('Noite', 1, '18:30:00'), t('Manhã', 1, '06:00:00'), t('Manhã', 3, '06:00:00'), t('Domingo', 0, '09:00:00'),
+    ])
+    expect(g.dias).toEqual([1, 3, 0])
+    expect(g.horarios).toEqual(['06:00', '09:00', '18:30'])
+    expect(g.celula('06:00', 1).map((x) => x.nome)).toEqual(['Manhã'])
+    expect(g.celula('06:00', 0)).toEqual([])
+    expect(g.celula('09:00', 0).map((x) => x.nome)).toEqual(['Domingo'])
+  })
+
+  it('duas turmas no mesmo horário e dia ficam juntas, em ordem alfabética', () => {
+    const g = gradeSemanal([t('Zumba', 2, '07:00'), t('Alongamento', 2, '07:00')])
+    expect(g.celula('07:00', 2).map((x) => x.nome)).toEqual(['Alongamento', 'Zumba'])
+  })
+
+  it('sem turmas: grade vazia', () => {
+    expect(gradeSemanal([])).toMatchObject({ dias: [], horarios: [] })
   })
 })

@@ -2,14 +2,17 @@ import type { ReactNode } from 'react'
 import { Aviso, Botao, EsqueletoLista } from '../../components/Basicos'
 import { mensagemErro } from '../../lib/erros'
 
-/** Cartão escuro de "sala de controle" no topo de cada tela do treinador. */
+/**
+ * Cabeçalho de cada tela do treinador: título e subtítulo à esquerda, ações à direita.
+ * `sobre` é um contexto curto acima do título (ex.: a data de uma aula); só use quando informa algo.
+ */
 export function Controle({
-  sobre, titulo, subtitulo, children, compacto = false,
-}: { sobre: string; titulo: string; subtitulo?: ReactNode; children?: ReactNode; compacto?: boolean }) {
+  sobre, titulo, subtitulo, children,
+}: { sobre?: string; titulo: string; subtitulo?: ReactNode; children?: ReactNode }) {
   return (
-    <header className={`controle ${compacto ? 'controle--compacto' : ''}`}>
+    <header className="controle">
       <div className="controle__texto">
-        <p className="controle__sobre">{sobre}</p>
+        {sobre && <p className="controle__sobre">{sobre}</p>}
         <h1 className="controle__titulo">{titulo}</h1>
         {subtitulo && <p className="controle__subtitulo">{subtitulo}</p>}
       </div>

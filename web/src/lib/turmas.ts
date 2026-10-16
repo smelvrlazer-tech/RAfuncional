@@ -133,3 +133,27 @@ export function descreverOcupacao(a: AulaPreservada): string {
   if (a.na_espera > 0) itens.push(`${a.na_espera} na espera`)
   return itens.join(', ')
 }
+
+/* ------------------------------------------------ grade semanal (tela Turmas no computador) */
+export interface GradeSemanal<T> {
+  /** Dias com pelo menos uma turma, de segunda a domingo. */
+  dias: number[]
+  /** Horários de início (HH:MM) presentes em algum dia, em ordem. */
+  horarios: string[]
+  /** Turmas daquele horário naquele dia (normalmente 0 ou 1). */
+  celula: (horario: string, dia: number) => T[]
+}
+
+/** Organiza as turmas numa grade horário × dia. */
+export function gradeSemanal<T extends { dia_semana: number; hora_inicio: string; nome: string }>(turmas: T[]): GradeSemanal<T> {
+  const mapa = new Map<string, T[]>()
+  for (const t of turmas) {
+    const chave = `${formatarHoraTurma(t.hora_inicio)}|${t.dia_semana}`
+    mapa.set(chave, [...(mapa.get(chave) ?? []), t].sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR')))
+  }
+  return {
+    dias: ORDEM_DIAS.filter((d) => turmas.some((t) => t.dia_semana === d)),
+    horarios: [...new Set(turmas.map((t) => formatarHoraTurma(t.hora_inicio)))].sort(),
+    celula: (horario, dia) => mapa.get(`${horario}|${dia}`) ?? [],
+  }
+}

@@ -12,25 +12,25 @@ interface Props {
   lista: ListaSessao
   agora: Date
   limiteMin: number
-  indice?: number
 }
 
 /**
  * Cartão de uma aula no painel do dia. O cartão inteiro leva à visão da sessão.
- * Faixa de cima colorida pelo estado (aberta = verde-petróleo, demais = cinza),
- * confirmados com ✓ e a fila de espera num rodapé amarelo.
+ * Check-in aberto é o normal: só o prazo aparece. Os outros estados (encerrada, lotada,
+ * cancelada...) ganham selo. Confirmados com ✓ e a fila de espera no rodapé.
  */
-export function CartaoAula({ aula, lista, agora, limiteMin, indice = 0 }: Props) {
+export function CartaoAula({ aula, lista, agora, limiteMin }: Props) {
   const estado = estadoAula(aula, agora, limiteMin)
   const idTitulo = `aula-${aula.id}`
   const ocupacao = aula.vagas > 0 ? Math.min(1, lista.confirmados.length / aula.vagas) : 1
   const aberta = estado.tom === 'disponivel'
   const fechaAs = formatarHora(new Date(new Date(aula.inicia_em).getTime() - limiteMin * 60_000))
   return (
-    <article className={`aula aula--${estado.tom}`} style={{ ['--i' as string]: indice }} aria-labelledby={idTitulo}>
+    <article className={`aula aula--${estado.tom}`} aria-labelledby={idTitulo}>
       <div className="aula__faixa">
-        <Chip tom={estado.tom}>{estado.rotulo}</Chip>
-        {aberta && <span className="aula__prazo">Fecha às {fechaAs}</span>}
+        {aberta
+          ? <span className="aula__prazo">Check-in fecha às {fechaAs}</span>
+          : <Chip tom={estado.tom}>{estado.rotulo}</Chip>}
       </div>
 
       <div className="aula__corpo">
