@@ -3,7 +3,7 @@ import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../../auth/AuthContext'
 import { Botao } from '../../components/Basicos'
 import { Icone, type NomeIcone } from '../../components/Icone'
-import { SeloRA } from '../../components/SeloRA'
+import { Logo } from '../../components/Logo'
 
 const ITENS: { para: string; rotulo: string; icone: NomeIcone; fim?: boolean }[] = [
   { para: '/treinador', rotulo: 'Painel', icone: 'grade', fim: true },
@@ -23,7 +23,7 @@ export function ShellTreinador() {
     <div className="painel">
       <header className="lateral">
         <div className="lateral__marca">
-          <SeloRA tamanho="p" />
+          <Logo altura={28} />
           <div>
             <p className="lateral__nome">RA Funcional</p>
             <p className="lateral__papel">Treinador{primeiroNome ? ` · ${primeiroNome}` : ''}</p>

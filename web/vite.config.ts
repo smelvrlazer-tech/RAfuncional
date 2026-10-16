@@ -4,8 +4,8 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // Cores do manifest: manter em sincronia com src/styles/tokens.css
 // (--cor-tema e --cor-papel).
-const COR_TEMA = '#111418'
-const COR_FUNDO = '#f4f5f7'
+const COR_TEMA = '#0f1113'
+const COR_FUNDO = '#0f1113'
 
 export default defineConfig({
   plugins: [
@@ -17,7 +17,7 @@ export default defineConfig({
       strategies: 'injectManifest',
       srcDir: 'src',
       filename: 'sw.ts',
-      includeAssets: ['favicon.svg', 'icons/apple-touch-icon.png'],
+      includeAssets: ['favicon.png', 'logo-horizontal.png', 'logo-monograma.png', 'icons/apple-touch-icon.png'],
       manifest: {
         name: 'RA Funcional',
         short_name: 'RA Funcional',

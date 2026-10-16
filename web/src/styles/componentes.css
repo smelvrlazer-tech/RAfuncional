@@ -1,55 +1,7 @@
 /* Componentes reutilizáveis. Cores, fontes, raios e sombras só via tokens.css. */
 
-/* ------------------------------------------------------------ selo RA */
-.selo {
-  --lado: 48px;
-  --selo-fundo: var(--cor-marca);
-  --selo-furo: var(--cor-papel);
-  position: relative;
-  display: inline-grid;
-  place-items: center;
-  width: var(--lado);
-  height: var(--lado);
-  border-radius: calc(var(--lado) * 0.26);
-  background: var(--selo-fundo);
-  color: var(--cor-texto-invertido);
-  box-shadow: var(--sombra-cartao);
-  flex: none;
-}
-/* Duas meias-luas nas laterais: o "picote" do ingresso. */
-.selo::before,
-.selo::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  width: calc(var(--lado) * 0.2);
-  height: calc(var(--lado) * 0.2);
-  margin-top: calc(var(--lado) * -0.1);
-  border-radius: 50%;
-  background: var(--selo-furo);
-}
-.selo::before { left: calc(var(--lado) * -0.1); }
-.selo::after { right: calc(var(--lado) * -0.1); }
-.selo__letras {
-  font-family: var(--fonte-display);
-  font-weight: 800;
-  font-size: calc(var(--lado) * 0.44);
-  line-height: 1;
-  letter-spacing: 0;
-  transform: translateY(-10%);
-}
-.selo__barra {
-  position: absolute;
-  left: 50%;
-  bottom: calc(var(--lado) * 0.19);
-  width: calc(var(--lado) * 0.3);
-  height: max(2px, calc(var(--lado) * 0.06));
-  margin-left: calc(var(--lado) * -0.15);
-  border-radius: var(--raio-pilula);
-  background: var(--cor-acento);
-}
-.selo--p { --lado: 36px; }
-.selo--g { --lado: 76px; }
+/* ------------------------------------------------------------ logo */
+.logo { display: block; flex: none; max-width: 100%; height: auto; object-fit: contain; }
 
 /* ------------------------------------------------------------ botões */
 .botao {

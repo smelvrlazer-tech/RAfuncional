@@ -8,7 +8,7 @@ import {
 } from '../../lib/datetime'
 import { mensagemErro } from '../../lib/erros'
 import { estadoSessao, fracaoOcupada, proximaComVaga, tempoParaFechar, textoVagas } from '../../lib/estadoSessao'
-import { blocosDoTreino, descreverVideo, miniaturaYoutube } from '../../lib/texto'
+import { blocosDoTreino, descreverVideo } from '../../lib/texto'
 import type { LinhaAgenda } from '../../lib/tipos'
 import { enderecoNoPainel } from '../../lib/rotas'
 import { useAoFocar } from '../../lib/useFoco'
@@ -16,24 +16,15 @@ import { buscarAgenda, buscarSessao } from '../agenda/api'
 import { DIAS_AGENDA, useAgora, useLimiteBloqueio } from '../agenda/useAgenda'
 import { AcoesSessao } from './AcoesSessao'
 
-/** Vídeo do treino: com a miniatura real quando é YouTube; para outros links, uma linha simples. */
+/** Vídeo do treino: o treino é presencial, então a demonstração é só um link discreto. */
 function BlocoVideo({ url }: { url: string }) {
   const info = descreverVideo(url)
   if (!info.seguro) return null
-  const miniatura = miniaturaYoutube(url)
   return (
-    <a className={`video ${miniatura ? 'video--miniatura' : ''}`} href={url} target="_blank" rel="noopener noreferrer">
-      {miniatura && (
-        <span className="video__quadro">
-          <img className="video__imagem" src={miniatura} alt="" loading="lazy" referrerPolicy="no-referrer" />
-          <span className="video__play" aria-hidden="true"><Icone nome="play" tamanho={22} /></span>
-        </span>
-      )}
-      <span className="video__texto">
-        {!miniatura && <span className="video__play" aria-hidden="true"><Icone nome="play" tamanho={18} /></span>}
-        <span className="video__titulo">Assistir demonstração</span>
-        <span className="video__link">{info.plataforma} <span className="sr-only">(abre em nova aba)</span> ↗</span>
-      </span>
+    <a className="video" href={url} target="_blank" rel="noopener noreferrer">
+      <span className="video__play" aria-hidden="true"><Icone nome="play" tamanho={14} /></span>
+      <span className="video__titulo">Ver demonstração em vídeo</span>
+      <span className="video__link">{info.plataforma} <span className="sr-only">(abre em nova aba)</span> ↗</span>
     </a>
   )
 }

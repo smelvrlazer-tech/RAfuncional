@@ -155,7 +155,6 @@
   border-bottom: 1px solid var(--cor-linha);
 }
 .lateral__marca { display: flex; align-items: center; gap: 10px; min-width: 0; }
-.lateral__marca .selo { display: none; }
 .lateral__nome {
   font-family: var(--fonte-display);
   font-weight: 700;
@@ -333,7 +332,7 @@
 .aula__placar-num span { font-size: var(--t-destaque); color: var(--cor-texto-suave); }
 .aula__placar-rotulo { font-size: var(--t-legenda); color: var(--cor-texto-suave); }
 .aula .barra-vagas--larga { margin-top: 0; }
-.aula .barra-vagas__preenchido { background: var(--cor-tinta); }
+.aula .barra-vagas__preenchido { background: var(--cor-acento); }
 .aula__obs { font-size: var(--t-pequeno); color: var(--cor-texto-suave); }
 .aula__listas { display: grid; gap: 12px; padding-top: 12px; border-top: 1px solid var(--cor-linha); }
 .aula__nada { font-size: var(--t-pequeno); color: var(--cor-texto-suave); }
@@ -748,7 +747,7 @@
     font-size: var(--t-texto);
   }
   .lateral__item:hover { background: var(--cor-papel-escuro); }
-  .lateral__item.active { background: var(--cor-marca); color: var(--cor-texto-invertido); }
+  .lateral__item.active { background: var(--cor-superficie-2); color: var(--cor-acento); box-shadow: inset 3px 0 0 var(--cor-acento); }
   .lateral__item.active::after { display: none; }
   .lateral__sair.botao--texto { margin-top: auto; align-self: flex-start; }
 

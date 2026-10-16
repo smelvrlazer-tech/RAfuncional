@@ -19,7 +19,7 @@
   align-content: end;
   gap: 6px;
   padding: max(28px, env(safe-area-inset-top)) var(--espaco-5) var(--espaco-5);
-  background: var(--cor-marca);
+  background: var(--cor-papel);
   color: var(--cor-texto-invertido);
 }
 .acesso__nome {
@@ -133,12 +133,13 @@
   align-items: center;
   padding: 12px 14px 12px 16px;
   border-radius: var(--raio-g);
-  background: var(--cor-marca);
+  background: var(--cor-superficie-2);
+  box-shadow: inset 3px 0 0 var(--cor-acento), 0 0 0 1px var(--cor-linha);
   color: var(--cor-texto-invertido);
   text-decoration: none;
   transition: background-color var(--rapido) ease;
 }
-.proxima:hover { background: var(--cor-marca-2); }
+.proxima:hover { background: var(--cor-marca); }
 .proxima__rotulo {
   grid-area: rotulo;
   font-size: var(--t-legenda);
@@ -240,10 +241,10 @@
 .dia--hoje .dia__semana { color: var(--cor-acento-texto); }
 .dia--vazio .dia__numero { color: var(--cor-texto-suave); font-weight: 600; }
 .dia--ativo,
-.dia--ativo:hover { background: var(--cor-marca); }
+.dia--ativo:hover { background: var(--cor-marca); box-shadow: inset 0 0 0 1px var(--cor-acento); }
 .dia--ativo .dia__semana,
-.dia--ativo .dia__numero { color: var(--cor-texto-invertido); }
-.dia--ativo .dia__ponto--meu { background: var(--cor-texto-invertido); }
+.dia--ativo .dia__numero { color: var(--cor-acento); }
+.dia--ativo .dia__ponto--meu { background: var(--cor-acento); }
 
 /* ------------------------------------------------------------ lista de aulas do dia */
 .dia-agenda {
@@ -496,7 +497,7 @@
   color: var(--cor-texto-suave);
 }
 .detalhe-aula__vagas .barra-vagas--larga { margin-top: 0; }
-.detalhe-aula__vagas .barra-vagas__preenchido { background: var(--cor-tinta); }
+.detalhe-aula__vagas .barra-vagas__preenchido { background: var(--cor-acento); }
 
 /* A tela do detalhe ocupa a altura toda: em página curta, a barra de ação fica no pé, não no meio. */
 .tela--detalhe {
@@ -665,62 +666,34 @@
   color: var(--cor-texto-suave);
 }
 
-/* Vídeo: miniatura real (YouTube) com o play por cima e a legenda embaixo; outros links numa linha. */
+/* Vídeo: uma linha discreta com link para a demonstração (o treino é presencial). */
 .video {
-  display: grid;
-  overflow: hidden;
-  border-radius: var(--raio-g);
-  background: var(--cor-superficie);
-  box-shadow: var(--sombra-cartao);
-  color: var(--cor-tinta);
-  text-decoration: none;
-}
-.video__quadro {
-  position: relative;
-  display: block;
-  aspect-ratio: 16 / 9;
-  max-width: 100%;
-  background: var(--cor-marca);
-}
-.video__imagem {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.video__quadro .video__play {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 56px;
-  height: 56px;
-  margin: -28px 0 0 -28px;
-}
-.video__play {
-  display: grid;
-  place-items: center;
-  flex: none;
-  width: 36px;
-  height: 36px;
-  padding-left: 3px;
-  border-radius: 50%;
-  background: var(--cor-marca);
-  color: var(--cor-texto-invertido);
-  transition: transform var(--rapido) ease;
-}
-.video:hover .video__play { transform: scale(1.06); }
-.video__texto {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 4px 10px;
-  padding: 12px 14px;
+  padding: 10px 14px;
+  border-radius: var(--raio-p);
+  box-shadow: var(--sombra-cartao);
+  color: var(--cor-tinta);
+  text-decoration: none;
 }
-.video__titulo {
-  font-weight: 700;
+.video:hover { background: var(--cor-superficie-2); }
+.video__play {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 24px;
+  height: 24px;
+  padding-left: 2px;
+  border-radius: 50%;
+  background: var(--cor-marca);
+  color: var(--cor-acento);
 }
+.video__titulo { font-weight: 600; font-size: var(--t-pequeno); }
 .video__link {
   margin-left: auto;
-  font-size: var(--t-pequeno);
+  font-size: var(--t-legenda);
   color: var(--cor-acento-texto);
 }
 
@@ -832,6 +805,23 @@
   }
 }
 
+/* Barra de marca no topo (celular); no computador a marca fica no menu lateral. */
+.app-aluno__topo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: min(100%, var(--largura-coluna));
+  margin: 0 auto;
+  padding: max(12px, env(safe-area-inset-top)) var(--espaco-4) var(--espaco-2);
+}
+.app-aluno__topo-nome {
+  font-family: var(--fonte-display);
+  font-size: 1.375rem;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 /* ------------------------------------------------------------ barra de abas do aluno */
 .nav-inferior {
   position: fixed;
@@ -846,7 +836,7 @@
 }
 .nav-inferior ul {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 4px;
   margin: 0;
   padding: 0;
@@ -858,15 +848,16 @@
   justify-items: center;
   gap: 2px;
   min-height: 56px;
-  padding: 9px 4px 6px;
+  padding: 9px 2px 6px;
   color: var(--cor-texto-suave);
-  font-size: var(--t-legenda);
+  font-size: 0.75rem;
+  white-space: nowrap;
   font-weight: 600;
   text-decoration: none;
   transition: color var(--rapido) ease;
 }
 .nav-inferior__item:hover { color: var(--cor-tinta); }
-.nav-inferior__item[aria-current='page'] { color: var(--cor-tinta); font-weight: 700; }
+.nav-inferior__item[aria-current='page'] { color: var(--cor-acento); font-weight: 700; }
 /* Aba atual: traço na borda de cima, na cor de ação. */
 .nav-inferior__item[aria-current='page']::before {
   content: '';
@@ -947,14 +938,14 @@
   font-weight: 600;
   font-size: var(--t-texto);
   font-variant-numeric: tabular-nums;
-  color: var(--cor-tinta);
-  background: var(--cor-papel);
+  color: var(--cor-texto-suave);
+  background: var(--cor-superficie-2);
 }
 .calendario__dia--vazio { background: transparent; }
 .calendario__dia--futuro { color: var(--cor-texto-suave); background: transparent; }
 .calendario__dia--feito {
-  background: var(--cor-marca);
-  color: var(--cor-texto-invertido);
+  background: var(--cor-acento);
+  color: var(--cor-sobre-acento);
   font-weight: 700;
 }
 .calendario__dia--hoje { box-shadow: inset 0 0 0 2px var(--cor-acento); }
@@ -1012,11 +1003,6 @@
   .nav-inferior__marca {
     display: block;
     margin: 4px 12px 24px;
-    font-family: var(--fonte-display);
-    font-weight: 700;
-    font-size: 1.5rem;
-    line-height: 1;
-    text-transform: uppercase;
   }
   .nav-inferior ul {
     grid-template-columns: 1fr;
@@ -1034,11 +1020,18 @@
   }
   .nav-inferior__item:hover { background: var(--cor-papel-escuro); }
   .nav-inferior__item[aria-current='page'] {
-    background: var(--cor-marca);
-    color: var(--cor-texto-invertido);
+    background: var(--cor-superficie-2);
+    color: var(--cor-acento);
   }
-  .nav-inferior__item[aria-current='page']::before { display: none; }
+  .nav-inferior__item[aria-current='page']::before {
+    top: 8px;
+    bottom: 8px;
+    left: 0;
+    width: 3px;
+    height: auto;
+  }
   .nav-inferior__espaco { display: none; }
+  .app-aluno__topo { display: none; }
 
   /* Agenda: lista à esquerda, aula aberta à direita. */
   .tela--agenda {

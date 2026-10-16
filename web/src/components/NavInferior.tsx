@@ -1,9 +1,11 @@
 import { NavLink } from 'react-router-dom'
+import { Logo } from './Logo'
 import { Icone, type NomeIcone } from './Icone'
 
 const ITENS: { para: string; rotulo: string; icone: NomeIcone; fim?: boolean }[] = [
   { para: '/', rotulo: 'Agenda', icone: 'calendario', fim: true },
   { para: '/minhas-aulas', rotulo: 'Minhas aulas', icone: 'prancheta' },
+  { para: '/notificacoes', rotulo: 'Avisos', icone: 'sino' },
   { para: '/perfil', rotulo: 'Perfil', icone: 'pessoa' },
 ]
 
@@ -12,7 +14,7 @@ export function NavInferior() {
   return (
     <nav className="nav-inferior" aria-label="Navegação principal">
       {/* Só aparece no menu lateral do computador. */}
-      <p className="nav-inferior__marca" aria-hidden="true">RA Funcional</p>
+      <div className="nav-inferior__marca" aria-hidden="true"><Logo altura={34} /></div>
       <ul>
         {ITENS.map((item) => (
           <li key={item.para}>
