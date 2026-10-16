@@ -836,7 +836,7 @@
 }
 .nav-inferior ul {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 4px;
   margin: 0;
   padding: 0;
@@ -1139,3 +1139,70 @@
   color: var(--cor-texto-suave);
 }
 .lembrete strong { color: var(--cor-tinta); }
+
+/* ------------------------------------------------------------ início do aluno */
+.tela--inicio { gap: var(--espaco-5); }
+.inicio__topo { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--espaco-3); }
+.inicio__titulo { font-size: var(--t-titulo); line-height: 1.05; }
+.inicio__data { font-size: var(--t-pequeno); color: var(--cor-texto-suave); }
+.inicio__avatar { display: inline-flex; border-radius: 50%; }
+.inicio__secao { font-size: var(--t-destaque); }
+.inicio__apoio { font-size: var(--t-pequeno); color: var(--cor-texto-suave); }
+.inicio__link { font-size: var(--t-pequeno); font-weight: 600; color: var(--cor-acento-texto); text-decoration: none; }
+.hero-aula {
+  position: relative;
+  display: grid;
+  gap: 6px;
+  padding: 16px 16px 14px 20px;
+  border-radius: var(--raio-g);
+  background: var(--cor-superficie-2);
+  box-shadow: inset 3px 0 0 var(--cor-acento), 0 0 0 1px var(--cor-linha);
+  color: var(--cor-tinta);
+  text-decoration: none;
+}
+.hero-aula--vazio { justify-items: start; }
+.hero-aula__estado { display: inline-flex; align-items: center; gap: 6px; width: fit-content; font-size: var(--t-legenda); font-weight: 700; color: var(--cor-sucesso-texto); }
+.hero-aula__estado--espera { color: var(--cor-aviso-texto); }
+.hero-aula__quando { font-family: var(--fonte-numeros); font-size: 2.5rem; line-height: 1; letter-spacing: 0.02em; text-transform: uppercase; }
+.hero-aula__nome { font-weight: 600; }
+.hero-aula__coach { font-size: var(--t-pequeno); color: var(--cor-texto-suave); }
+.hero-aula__vagas { font-size: var(--t-legenda); color: var(--cor-texto-suave); }
+.coach { display: inline-flex; align-items: center; gap: 8px; }
+.coach .avatar { width: 28px; height: 28px; font-size: 0.8rem; }
+.detalhe-aula__coach { font-size: var(--t-pequeno); color: var(--cor-texto-suave); }
+.metricas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.metrica { display: grid; align-content: start; gap: 2px; padding: 12px; border-radius: var(--raio-g); background: var(--cor-superficie); box-shadow: var(--sombra-cartao); }
+.metrica__rotulo { font-size: var(--t-legenda); font-weight: 600; color: var(--cor-texto-suave); }
+.metrica__numero { font-family: var(--fonte-numeros); font-size: 2.25rem; line-height: 1; }
+.metrica__apoio { font-size: var(--t-legenda); color: var(--cor-texto-suave); }
+.nivel--bronze { color: #d9965b; }
+.nivel--prata { color: #c5c9ce; }
+.nivel--ouro { color: #ffd24a; }
+.nivel { font-weight: 700; }
+.treino-hoje { display: grid; gap: 8px; padding: 14px 16px; border-radius: var(--raio-g); background: var(--cor-superficie); box-shadow: var(--sombra-cartao); }
+.treino-hoje__bloco { font-size: var(--t-pequeno); color: var(--cor-texto-suave); }
+.treino-hoje__bloco strong { color: var(--cor-tinta); }
+.nota-coach { display: flex; gap: 12px; padding: 14px 16px; border-radius: var(--raio-g); background: var(--cor-superficie); box-shadow: var(--sombra-cartao); }
+.nota-coach__titulo { font-size: var(--t-destaque); }
+.nota-coach__texto { margin-top: 2px; }
+.nota-coach__data { margin-top: 4px; font-size: var(--t-legenda); color: var(--cor-texto-suave); }
+.quem-vai { display: grid; gap: 8px; }
+.quem-vai__lista { display: flex; flex-wrap: wrap; gap: 8px 14px; }
+.quem-vai__item { display: inline-flex; align-items: center; gap: 8px; font-size: var(--t-pequeno); }
+.quem-vai__item .avatar { width: 32px; height: 32px; font-size: 0.85rem; }
+.desempenho { display: grid; gap: 14px; padding: 16px; border-radius: var(--raio-g); background: var(--cor-superficie); box-shadow: var(--sombra-cartao); }
+.desempenho__titulo { font-size: var(--t-destaque); }
+.desempenho__mes { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.desempenho__numero { font-family: var(--fonte-numeros); font-size: 3rem; line-height: 1; color: var(--cor-acento); }
+.desempenho__numero span { font-size: var(--t-destaque); color: var(--cor-tinta); }
+.desempenho__apoio { font-size: var(--t-legenda); color: var(--cor-texto-suave); }
+.desempenho__meta { display: grid; gap: 6px; padding-top: 12px; border-top: 1px solid var(--cor-linha); }
+.desempenho__meta-linha { display: flex; justify-content: space-between; gap: 12px; font-size: var(--t-pequeno); }
+.anel { width: 84px; height: 84px; flex: none; }
+.anel__fundo { fill: none; stroke: var(--cor-marca); stroke-width: 8; }
+.anel__valor { fill: none; stroke: var(--cor-acento); stroke-width: 8; stroke-linecap: round; }
+.anel__texto { fill: var(--cor-tinta); font-family: var(--fonte-numeros); font-size: 22px; }
+@media (min-width: 900px) {
+  .tela--inicio { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+  .tela--inicio > .inicio__topo, .tela--inicio > .metricas { grid-column: 1 / -1; }
+}

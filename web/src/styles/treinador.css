@@ -164,7 +164,7 @@
 }
 .lateral__papel { font-size: var(--t-legenda); color: var(--cor-texto-suave); }
 .lateral__nav { grid-column: 1 / -1; }
-.lateral__nav ul { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.lateral__nav ul { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); }
 .lateral__item {
   position: relative;
   display: grid;
@@ -791,4 +791,29 @@
   .lista-sessao__item { flex-wrap: wrap; padding-block: 8px; }
   .presenca { width: 100%; }
   .presenca__opcao { flex: 1; }
+}
+
+/* ------------------------------------------------------------ início do treinador */
+.inicio-treinador__ola { display: flex; align-items: center; gap: 14px; }
+.metricas--quatro { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.metricas--quatro .metrica__numero span { font-family: var(--fonte-texto); font-size: var(--t-pequeno); color: var(--cor-texto-suave); }
+.inicio-treinador__grade { display: grid; gap: var(--espaco-4); }
+.inicio-treinador__lado { display: grid; gap: var(--espaco-4); align-content: start; }
+.turmas-hoje { display: grid; }
+.turmas-hoje__item { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 12px 0; border-bottom: 1px solid var(--cor-linha); }
+.turmas-hoje__item:last-child { border-bottom: 0; }
+.turmas-hoje__hora { width: 4.25rem; font-family: var(--fonte-numeros); font-size: var(--t-numero); line-height: 1; font-variant-numeric: tabular-nums; }
+.turmas-hoje__texto { flex: 1 1 140px; min-width: 0; display: grid; }
+.turmas-hoje__nome { font-weight: 600; }
+.turmas-hoje__meta { font-size: var(--t-legenda); color: var(--cor-texto-suave); }
+.semana-barras { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; align-items: end; }
+.semana-barras__dia { display: grid; justify-items: center; gap: 6px; }
+.semana-barras__valor { font-size: var(--t-legenda); color: var(--cor-texto-suave); }
+.semana-barras__coluna { display: flex; align-items: flex-end; width: 100%; max-width: 56px; height: 120px; border-radius: var(--raio-p); background: var(--cor-marca); overflow: hidden; }
+.semana-barras__preenchido { display: block; width: 100%; background: var(--cor-acento); }
+.semana-barras__rotulo { font-size: var(--t-legenda); font-weight: 600; color: var(--cor-texto-suave); }
+.semana-barras__dia--hoje .semana-barras__rotulo { color: var(--cor-acento-texto); }
+@media (min-width: 900px) {
+  .metricas--quatro { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .inicio-treinador__grade { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: start; }
 }

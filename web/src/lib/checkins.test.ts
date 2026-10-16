@@ -20,7 +20,7 @@ describe('agruparCheckins', () => {
     const s1 = grupos.get('s1')!
     expect(s1.confirmados.map((a) => a.nome)).toEqual(['Ângela', 'Bruno', 'Zeca'])
     expect(s1.espera.map((a) => [a.nome, a.posicao])).toEqual([['Xavier', 1], ['Quinto', 2]])
-    expect(grupos.get('s2')!.confirmados).toEqual([{ alunoId: 'd', nome: 'Davi', posicao: null, presenca: null }])
+    expect(grupos.get('s2')!.confirmados).toEqual([{ alunoId: 'd', nome: 'Davi', foto: null, posicao: null, presenca: null }])
   })
 
   it('aceita o embed como lista e perfil ausente', () => {

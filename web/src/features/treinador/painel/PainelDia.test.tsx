@@ -23,7 +23,7 @@ const CHECKINS = [
 ]
 
 function montar(dia = '2030-09-26') {
-  render(<MemoryRouter initialEntries={[`/treinador?dia=${dia}`]}><PainelDia /></MemoryRouter>)
+  render(<MemoryRouter initialEntries={[`/treinador/chamada?dia=${dia}`]}><PainelDia /></MemoryRouter>)
 }
 
 describe('PainelDia', () => {
@@ -52,7 +52,7 @@ describe('PainelDia', () => {
     expect(agenda.args('lt')).toEqual(['inicia_em', '2030-09-27T03:00:00.000Z'])
     const checkins = h.estado.chamadas.filter((x) => x.tabela === 'checkins')
     expect(checkins).toHaveLength(1)
-    expect(checkins[0]!.args('select')![0]).toContain('perfis(nome)')
+    expect(checkins[0]!.args('select')![0]).toContain('perfis(nome, foto_url)')
     expect(checkins[0]!.args('in')).toEqual(['sessao_id', ['s1']])
   })
 

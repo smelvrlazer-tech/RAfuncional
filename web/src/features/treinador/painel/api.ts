@@ -46,7 +46,7 @@ export async function buscarListas(sessaoIds: string[]): Promise<Map<string, Lis
   if (!sessaoIds.length) return new Map()
   const { data, error } = await supabase
     .from('checkins')
-    .select('sessao_id, aluno_id, status, posicao_fila, presenca, perfis(nome)')
+    .select('sessao_id, aluno_id, status, posicao_fila, presenca, perfis(nome, foto_url)')
     .in('sessao_id', sessaoIds)
     .in('status', ['confirmado', 'espera'])
   if (error) throw error

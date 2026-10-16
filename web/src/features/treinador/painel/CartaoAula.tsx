@@ -65,7 +65,7 @@ export function CartaoAula({ aula, lista, agora, limiteMin }: Props) {
               <ul className="chamada">
                 {lista.confirmados.map((a) => (
                   <li key={a.alunoId} className="chamada__item">
-                    <Avatar nome={a.nome} className="avatar--mini" />
+                    <Avatar nome={a.nome} foto={a.foto} className="avatar--mini" />
                     <span className="chamada__nome">{a.nome}</span>
                     <Icone nome="check" tamanho={18} className="chamada__ok" />
                   </li>

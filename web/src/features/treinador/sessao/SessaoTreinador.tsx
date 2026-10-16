@@ -34,7 +34,7 @@ function ListaAlunos({ titulo, alunos, fila, onRemover, podeRemover, onPresenca 
         <Tag className="lista-sessao__itens">
           {alunos.map((a, i) => (
             <li key={a.alunoId} className="lista-sessao__item">
-              {fila ? <span className="chamada__pos">{i + 1}º</span> : <Avatar nome={a.nome} className="avatar--mini" />}
+              {fila ? <span className="chamada__pos">{i + 1}º</span> : <Avatar nome={a.nome} foto={a.foto} className="avatar--mini" />}
               <span className="lista-sessao__nome">{a.nome}</span>
               {onPresenca && (
                 <span className="presenca" role="group" aria-label={`Presença de ${a.nome}`}>
@@ -71,7 +71,7 @@ export function SessaoTreinador() {
   const aula = dados?.aula
   const lista = dados?.lista ?? LISTA_VAZIA
   const estado = aula ? estadoAula(aula, agora, limiteMin) : null
-  const voltar = aula ? `/treinador?dia=${chaveDiaSP(aula.inicia_em)}` : '/treinador'
+  const voltar = aula ? `/treinador/chamada?dia=${chaveDiaSP(aula.inicia_em)}` : '/treinador/chamada'
 
   function fechar() { setAlvo(null); setCancelando(false); setErroDialogo(null) }
 
@@ -126,7 +126,7 @@ export function SessaoTreinador() {
         textoCarregando="Carregando a aula…"
         tituloErro="Não foi possível carregar a aula"
         tituloVazio="Aula não encontrada"
-        textoVazio={<Link to="/treinador" className="botao botao--contorno">Ir para o painel</Link>}
+        textoVazio={<Link to="/treinador/chamada" className="botao botao--contorno">Ir para o painel</Link>}
         onTentar={() => void recarregar()}
       >
         {aula && estado && (

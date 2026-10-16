@@ -6,12 +6,14 @@ import { VisaoDispositivo } from './components/VisaoDispositivo'
 import { Convite } from './features/acesso/Convite'
 import { Entrar } from './features/acesso/Entrar'
 import { Agenda } from './features/agenda/Agenda'
+import { InicioAluno } from './features/inicio/InicioAluno'
 import { LayoutAluno } from './features/LayoutAluno'
 import { MinhasAulas } from './features/minhas-aulas/MinhasAulas'
 import { Notificacoes } from './features/notificacoes/Notificacoes'
 import { Perfil } from './features/perfil/Perfil'
 import { DetalheSessao } from './features/sessao/DetalheSessao'
 import { Alunos } from './features/treinador/alunos/Alunos'
+import { InicioTreinador } from './features/treinador/inicio/InicioTreinador'
 import { PainelDia } from './features/treinador/painel/PainelDia'
 import { SessaoTreinador } from './features/treinador/sessao/SessaoTreinador'
 import { ShellTreinador } from './features/treinador/ShellTreinador'
@@ -37,7 +39,8 @@ export function Rotas() {
       <Route path="/convite" element={<Convite />} />
       <Route path="/convite/:codigo" element={<Convite />} />
       <Route path="/treinador" element={<ExigeTreinador><ShellTreinador /></ExigeTreinador>}>
-        <Route index element={<PainelDia />} />
+        <Route index element={<InicioTreinador />} />
+        <Route path="chamada" element={<PainelDia />} />
         <Route path="sessao/:id" element={<SessaoTreinador />} />
         <Route path="turmas" element={<Turmas />} />
         <Route path="treinos" element={<Treinos />} />
@@ -46,7 +49,8 @@ export function Rotas() {
       </Route>
       <Route element={<ExigeAluno />}>
         <Route element={<LayoutAluno />}>
-          <Route index element={<Agenda />} />
+          <Route index element={<InicioAluno />} />
+          <Route path="/agenda" element={<Agenda />} />
           <Route path="/minhas-aulas" element={<MinhasAulas />} />
           <Route path="/notificacoes" element={<Notificacoes />} />
           <Route path="/perfil" element={<Perfil />} />

@@ -5,7 +5,7 @@ import type { Convite, Perfil } from '../../../lib/tipos'
 export async function listarAlunos(): Promise<Perfil[]> {
   const { data, error } = await supabase
     .from('perfis')
-    .select('id, nome, telefone, papel, ativo, plano_aulas_semana')
+    .select('id, nome, telefone, papel, ativo, plano_aulas_semana, foto_url')
     .eq('papel', 'aluno')
     .order('nome', { ascending: true })
   if (error) throw error

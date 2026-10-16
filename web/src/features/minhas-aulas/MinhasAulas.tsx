@@ -9,6 +9,9 @@ import { CartaoSessao } from '../agenda/CartaoSessao'
 import { useAgenda, useLimiteBloqueio } from '../agenda/useAgenda'
 import { Frequencia } from './Frequencia'
 import { Historico } from './Historico'
+import { useMeuPainel } from '../../lib/useInicio'
+import { chaveDiaSP } from '../../lib/datetime'
+import { Desempenho } from './Desempenho'
 import { PlanoSemana } from './PlanoSemana'
 
 /** Aba "Minhas aulas": o que a pessoa reservou (confirmado ou fila) e a frequência do mês. */
@@ -17,6 +20,7 @@ export function MinhasAulas() {
   const { agora, linhas, erro, recarregar } = useAgenda()
   const limiteMin = useLimiteBloqueio()
   const ativo = perfil?.ativo ?? true
+  const painel = useMeuPainel()
   const resumo = useMemo(() => minhasAulas(linhas ?? [], agora), [linhas, agora])
   const [aba, setAba] = useState<'proximas' | 'fila' | 'historico'>('proximas')
   const gruposAba = useMemo(
@@ -61,7 +65,7 @@ export function MinhasAulas() {
           <div className="vazio">
             <p className="vazio__titulo">{aba === 'fila' ? 'Você não está em nenhuma lista de espera' : 'Você ainda não reservou nenhuma aula'}</p>
             <p className="vazio__texto">{aba === 'fila' ? 'Quando uma aula estiver lotada, você pode entrar na fila e é chamado automaticamente.' : 'Escolha um horário na agenda e garanta seu lugar.'}</p>
-            <Link to="/" className="botao botao--primario">Ver a agenda</Link>
+            <Link to="/agenda" className="botao botao--primario">Ver a agenda</Link>
           </div>
         ) : (
           gruposAba.map((grupo) => (
@@ -86,6 +90,8 @@ export function MinhasAulas() {
           ))
         )}
       </div>
+
+      {painel && <Desempenho painel={painel} hoje={chaveDiaSP(agora)} />}
 
       <Frequencia agora={agora} />
 

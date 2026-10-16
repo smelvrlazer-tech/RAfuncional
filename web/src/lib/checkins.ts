@@ -11,12 +11,13 @@ export interface LinhaCheckin {
   status: StatusCheckin
   posicao_fila: number | null
   presenca?: Presenca | null
-  perfis: { nome: string } | { nome: string }[] | null
+  perfis: { nome: string; foto_url?: string | null } | { nome: string; foto_url?: string | null }[] | null
 }
 
 export interface AlunoNaSessao {
   alunoId: string
   nome: string
+  foto?: string | null
   /** Posição na fila (só para quem está em espera). */
   posicao: number | null
   presenca: Presenca | null
@@ -40,7 +41,7 @@ export function agruparCheckins(linhas: LinhaCheckin[]): Map<string, ListaSessao
   for (const l of linhas) {
     if (l.status === 'cancelado') continue
     const g = grupos.get(l.sessao_id) ?? { confirmados: [], espera: [] }
-    const aluno = { alunoId: l.aluno_id, nome: nomeDe(l.perfis), posicao: l.status === 'espera' ? l.posicao_fila : null, presenca: l.presenca ?? null }
+    const aluno = { alunoId: l.aluno_id, nome: nomeDe(l.perfis), foto: Array.isArray(l.perfis) ? l.perfis[0]?.foto_url ?? null : l.perfis?.foto_url ?? null, posicao: l.status === 'espera' ? l.posicao_fila : null, presenca: l.presenca ?? null }
     ;(l.status === 'confirmado' ? g.confirmados : g.espera).push(aluno)
     grupos.set(l.sessao_id, g)
   }

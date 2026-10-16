@@ -3,6 +3,7 @@ import { useAuth } from '../../auth/AuthContext'
 import { Aviso, Avatar, Botao, Campo } from '../../components/Basicos'
 import { Icone } from '../../components/Icone'
 import { mensagemErro } from '../../lib/erros'
+import { enviarFotoPerfil, removerFotoPerfil } from '../../lib/foto'
 import { supabase } from '../../lib/supabase'
 import { useInstalacao } from '../../pwa'
 import { CartaoAvisos } from './CartaoAvisos'
@@ -14,6 +15,7 @@ export function Perfil() {
   const [salvando, setSalvando] = useState(false)
   const [retorno, setRetorno] = useState<{ tom: 'sucesso' | 'erro'; texto: string } | null>(null)
   const [saindo, setSaindo] = useState(false)
+  const [fotoOcupada, setFotoOcupada] = useState(false)
   const instalacao = useInstalacao()
 
   async function salvar(e: FormEvent) {
@@ -38,6 +40,34 @@ export function Perfil() {
     }
   }
 
+  async function trocarFoto(arquivo: File | undefined) {
+    if (!arquivo || !perfil) return
+    setFotoOcupada(true)
+    setRetorno(null)
+    try {
+      await enviarFotoPerfil(perfil.id, arquivo)
+      await recarregarPerfil()
+      setRetorno({ tom: 'sucesso', texto: 'Foto atualizada.' })
+    } catch (e) {
+      setRetorno({ tom: 'erro', texto: e instanceof Error && e.message === 'foto_invalida' ? 'Não consegui ler essa imagem. Tente outra foto.' : mensagemErro(e) })
+    } finally {
+      setFotoOcupada(false)
+    }
+  }
+
+  async function tirarFoto() {
+    if (!perfil) return
+    setFotoOcupada(true)
+    try {
+      await removerFotoPerfil(perfil.id)
+      await recarregarPerfil()
+    } catch (e) {
+      setRetorno({ tom: 'erro', texto: mensagemErro(e) })
+    } finally {
+      setFotoOcupada(false)
+    }
+  }
+
   async function sairDaConta() {
     setSaindo(true)
     await sair()
@@ -51,10 +81,18 @@ export function Perfil() {
 
       <section className="cartao perfil-cartao">
         <div className="perfil-cartao__topo">
-          <Avatar nome={perfil?.nome ?? ''} className="avatar--grande" />
+          <Avatar nome={perfil?.nome ?? ''} foto={perfil?.foto_url} className="avatar--grande" />
           <div>
             <p className="perfil-cartao__nome">{perfil?.nome}</p>
             <p className="perfil-cartao__email">{sessao?.user.email}</p>
+            <div className="perfil-cartao__foto">
+              <label className="botao botao--texto botao--pequeno">
+                {fotoOcupada ? 'Enviando…' : perfil?.foto_url ? 'Trocar foto' : 'Adicionar foto'}
+                <input type="file" accept="image/*" className="sr-only" disabled={fotoOcupada}
+                  onChange={(e) => { void trocarFoto(e.target.files?.[0]); e.target.value = '' }} />
+              </label>
+              {perfil?.foto_url && <Botao variante="texto" onClick={() => void tirarFoto()} disabled={fotoOcupada}>Remover</Botao>}
+            </div>
           </div>
         </div>
         {perfil && !perfil.ativo && (

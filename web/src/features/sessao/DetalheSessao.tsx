@@ -14,7 +14,9 @@ import { enderecoNoPainel } from '../../lib/rotas'
 import { useAoFocar } from '../../lib/useFoco'
 import { buscarAgenda, buscarSessao } from '../agenda/api'
 import { DIAS_AGENDA, useAgora, useLimiteBloqueio } from '../agenda/useAgenda'
+import { Coach } from '../../components/Coach'
 import { AcoesSessao } from './AcoesSessao'
+import { QuemVai } from './QuemVai'
 
 /** Vídeo do treino: o treino é presencial, então a demonstração é só um link discreto. */
 function BlocoVideo({ url }: { url: string }) {
@@ -73,7 +75,7 @@ export function DetalheSessao({ id: idProp, embutido = false, aoMudar }: PropsDe
     return () => { vivo = false }
   }, [lotadaSemMim, inicioAula])
 
-  const voltar = sessao ? `/?dia=${chaveDiaSP(sessao.inicia_em)}` : '/'
+  const voltar = sessao ? `/agenda?dia=${chaveDiaSP(sessao.inicia_em)}` : '/agenda'
   const barra = embutido ? null : <BarraTopo titulo="Aula" />
   const atualizar = async () => {
     await recarregar()
@@ -94,7 +96,7 @@ export function DetalheSessao({ id: idProp, embutido = false, aoMudar }: PropsDe
         ) : (
           <div className="vazio">
             <p className="vazio__titulo">Aula não encontrada</p>
-            <Link className="botao botao--contorno" to="/">Voltar para a agenda</Link>
+            <Link className="botao botao--contorno" to="/agenda">Voltar para a agenda</Link>
           </div>
         )}
       </div>
@@ -116,6 +118,7 @@ export function DetalheSessao({ id: idProp, embutido = false, aoMudar }: PropsDe
 
       <header className={`detalhe-aula detalhe-aula--${estado.tom}`}>
         <h2 className="detalhe-aula__titulo">{sessao.turma_nome}</h2>
+        <p className="detalhe-aula__coach"><Coach /></p>
         <p className="detalhe-aula__meta">
           {formatarIntervalo(sessao.inicia_em, sessao.duracao_min)} · {sessao.duracao_min} min
         </p>
@@ -154,6 +157,8 @@ export function DetalheSessao({ id: idProp, embutido = false, aoMudar }: PropsDe
           </div>
         )}
       </section>
+
+      {!sessao.cancelada && <QuemVai sessaoId={sessao.id} versao={sessao.confirmados} />}
 
       {sugestao && (
         <Link className="sugestao" to={embutido ? enderecoNoPainel(sugestao) : `/sessao/${sugestao.id}`}>

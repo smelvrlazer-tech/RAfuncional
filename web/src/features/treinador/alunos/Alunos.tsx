@@ -109,7 +109,7 @@ export function Alunos() {
                   {visiveis.map((a) => (
                     <tr key={a.id} className={a.ativo ? '' : 'tabela__linha--inativa'}>
                       <th scope="row">
-                        <span className="tabela__nome"><Avatar nome={a.nome} className="avatar--mini" />{a.nome}</span>
+                        <span className="tabela__nome"><Avatar nome={a.nome} foto={a.foto_url} className="avatar--mini" />{a.nome}</span>
                         {a.telefone && <a className="tabela__tel-movel" href={`tel:${a.telefone.replace(/[^\d+]/g, '')}`}>{a.telefone}</a>}
                       </th>
                       <td className="tabela__tel">{a.telefone ? <a href={`tel:${a.telefone.replace(/[^\d+]/g, '')}`}>{a.telefone}</a> : <span className="tabela__vazio">—</span>}</td>

@@ -53,7 +53,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const carregarPerfil = useCallback(async (id: string) => {
     const { data, error } = await supabase
-      .from('perfis').select('id, nome, telefone, papel, ativo').eq('id', id).maybeSingle()
+      .from('perfis').select('id, nome, telefone, papel, ativo, foto_url').eq('id', id).maybeSingle()
     if (error) {
       setErroPerfil(error)
       setPerfil(null)

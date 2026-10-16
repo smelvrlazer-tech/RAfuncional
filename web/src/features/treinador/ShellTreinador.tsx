@@ -6,7 +6,8 @@ import { Icone, type NomeIcone } from '../../components/Icone'
 import { Logo } from '../../components/Logo'
 
 const ITENS: { para: string; rotulo: string; icone: NomeIcone; fim?: boolean }[] = [
-  { para: '/treinador', rotulo: 'Painel', icone: 'grade', fim: true },
+  { para: '/treinador', rotulo: 'Início', icone: 'grade', fim: true },
+  { para: '/treinador/chamada', rotulo: 'Chamada', icone: 'check' },
   { para: '/treinador/turmas', rotulo: 'Turmas', icone: 'calendario' },
   { para: '/treinador/treinos', rotulo: 'Treinos', icone: 'prancheta' },
   { para: '/treinador/alunos', rotulo: 'Alunos', icone: 'pessoas' },
@@ -36,9 +37,9 @@ export function ShellTreinador() {
                 <NavLink
                   to={i.para}
                   end={i.fim}
-                  // A visão da sessão é um detalhe do painel do dia: mantém "Painel" marcado.
+                  // A visão da sessão é um detalhe da chamada: mantém "Chamada" marcado.
                   className={({ isActive }) =>
-                    `lateral__item ${isActive || (i.fim && sessaoAberta) ? 'active' : ''}`}
+                    `lateral__item ${isActive || (i.para === '/treinador/chamada' && sessaoAberta) ? 'active' : ''}`}
                 >
                   <Icone nome={i.icone} tamanho={20} />
                   <span>{i.rotulo}</span>

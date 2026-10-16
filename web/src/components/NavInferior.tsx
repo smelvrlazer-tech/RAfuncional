@@ -3,8 +3,9 @@ import { Logo } from './Logo'
 import { Icone, type NomeIcone } from './Icone'
 
 const ITENS: { para: string; rotulo: string; icone: NomeIcone; fim?: boolean }[] = [
-  { para: '/', rotulo: 'Agenda', icone: 'calendario', fim: true },
-  { para: '/minhas-aulas', rotulo: 'Minhas aulas', icone: 'prancheta' },
+  { para: '/', rotulo: 'Início', icone: 'grade', fim: true },
+  { para: '/agenda', rotulo: 'Agenda', icone: 'calendario' },
+  { para: '/minhas-aulas', rotulo: 'Aulas', icone: 'prancheta' },
   { para: '/notificacoes', rotulo: 'Avisos', icone: 'sino' },
   { para: '/perfil', rotulo: 'Perfil', icone: 'pessoa' },
 ]

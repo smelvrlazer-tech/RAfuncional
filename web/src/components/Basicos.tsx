@@ -58,8 +58,13 @@ export function Campo({
   )
 }
 
-export function Avatar({ nome, className = '' }: { nome: string; className?: string }) {
-  return <span className={`avatar ${className}`} aria-hidden="true">{iniciais(nome)}</span>
+/** Foto da pessoa quando existe; senão as iniciais. */
+export function Avatar({ nome, foto, className = '' }: { nome: string; foto?: string | null; className?: string }) {
+  return (
+    <span className={`avatar ${className}`} aria-hidden="true">
+      {foto ? <img className="avatar__foto" src={foto} alt="" loading="lazy" /> : iniciais(nome)}
+    </span>
+  )
 }
 
 /** Cabeçalho das telas secundárias: voltar + título. */
