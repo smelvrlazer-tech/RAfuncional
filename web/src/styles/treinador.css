@@ -164,7 +164,7 @@
 }
 .lateral__papel { font-size: var(--t-legenda); color: var(--cor-texto-suave); }
 .lateral__nav { grid-column: 1 / -1; }
-.lateral__nav ul { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.lateral__nav ul { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); }
 .lateral__item {
   position: relative;
   display: grid;
@@ -816,4 +816,12 @@
 @media (min-width: 900px) {
   .metricas--quatro { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .inicio-treinador__grade { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: start; }
+}
+.inicio-treinador__grade .cartao { display: grid; gap: 12px; align-content: start; }
+
+/* Telefone embaixo do nome em telas até ~1600px: com a coluna Plano a tabela precisa do espaço. */
+@media (max-width: 1599px) {
+  .tabela .tabela__tel { display: none; }
+  .tabela a.tabela__tel-movel { display: block; min-height: 28px; line-height: 28px; white-space: nowrap; font-weight: 400; font-size: var(--t-pequeno); }
+  .tabela td { white-space: nowrap; }
 }

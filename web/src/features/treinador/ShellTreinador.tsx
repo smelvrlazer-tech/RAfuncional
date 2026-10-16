@@ -11,6 +11,7 @@ const ITENS: { para: string; rotulo: string; icone: NomeIcone; fim?: boolean }[]
   { para: '/treinador/turmas', rotulo: 'Turmas', icone: 'calendario' },
   { para: '/treinador/treinos', rotulo: 'Treinos', icone: 'prancheta' },
   { para: '/treinador/alunos', rotulo: 'Alunos', icone: 'pessoas' },
+  { para: '/treinador/perfil', rotulo: 'Perfil', icone: 'pessoa' },
 ]
 
 /** Casca do painel do treinador: barra lateral no computador, barra superior no celular. */

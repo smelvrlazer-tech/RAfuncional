@@ -45,6 +45,7 @@ export function Rotas() {
         <Route path="turmas" element={<Turmas />} />
         <Route path="treinos" element={<Treinos />} />
         <Route path="alunos" element={<Alunos />} />
+        <Route path="perfil" element={<Perfil />} />
         <Route path="*" element={<Navigate to="/treinador" replace />} />
       </Route>
       <Route element={<ExigeAluno />}>

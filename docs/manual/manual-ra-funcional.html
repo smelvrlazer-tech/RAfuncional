@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manual do RA Funcional</title>
+<style>
+  @font-face { font-family: 'Bebas Neue'; src: url(fonts/bebas-neue-latin-400-normal.woff2) format('woff2'); font-weight: 400; }
+  @font-face { font-family: 'Inter'; src: url(fonts/inter-latin-wght-normal.woff2) format('woff2'); font-weight: 100 900; }
+  :root {
+    --fundo: #0f1113; --chumbo: #2b2f33; --card: #171a1d; --card2: #1f2327;
+    --lima: #a3ff29; --texto: #f4f5f6; --suave: #9aa0a6; --linha: #2b2f33;
+    --ok: #34d399; --aviso: #fbbf24; --erro: #f87171;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--fundo); color: var(--texto); font: 16px/1.6 'Inter', system-ui, 'Segoe UI', Arial, sans-serif; }
+  h1, h2, h3 { font-family: 'Bebas Neue', 'Arial Narrow', Impact, sans-serif; font-weight: 400; letter-spacing: .04em; line-height: 1.05; margin: 0; }
+  h1 { font-size: clamp(2.6rem, 8vw, 4.5rem); }
+  h2 { font-size: clamp(2rem, 5vw, 2.8rem); color: var(--lima); margin-bottom: 8px; }
+  h3 { font-size: 1.6rem; margin: 28px 0 8px; }
+  a { color: var(--lima); }
+  .pagina { max-width: 980px; margin: 0 auto; padding: 0 20px; }
+  .capa { padding: 72px 0 48px; border-bottom: 1px solid var(--linha); }
+  .capa img { height: 84px; display: block; margin-bottom: 28px; }
+  .capa p { color: var(--suave); font-size: 1.15rem; max-width: 640px; }
+  .selo { display: inline-block; padding: 4px 12px; border-radius: 4px; background: var(--chumbo); color: var(--lima); font-weight: 700; font-size: .85rem; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 16px; }
+  nav.sumario { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 32px 0; }
+  nav.sumario a { display: block; padding: 14px 16px; border-radius: 8px; background: var(--card); box-shadow: 0 0 0 1px var(--linha); text-decoration: none; color: var(--texto); font-weight: 600; }
+  nav.sumario a span { display: block; color: var(--suave); font-weight: 400; font-size: .9rem; }
+  section { padding: 56px 0 8px; border-bottom: 1px solid var(--linha); }
+  section:last-of-type { border-bottom: 0; }
+  .lead { color: var(--suave); font-size: 1.1rem; max-width: 720px; }
+  .missao { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 28px; align-items: start; margin: 28px 0; padding: 22px; border-radius: 12px; background: var(--card); box-shadow: 0 0 0 1px var(--linha); }
+  .missao.larga { grid-template-columns: 1fr; }
+  .missao .num { display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--lima); color: #0f1113; font-weight: 800; margin-right: 10px; }
+  .missao h3 { margin-top: 0; display: flex; align-items: center; }
+  .missao ol, .missao ul { padding-left: 22px; margin: 10px 0; }
+  .missao li { margin: 6px 0; }
+  figure { margin: 0; text-align: center; }
+  figure img { max-width: 100%; border-radius: 12px; box-shadow: 0 0 0 1px var(--linha), 0 12px 32px -12px #000; }
+  .tela img { max-height: 560px; object-fit: cover; object-position: top; width: 100%; }
+  .tela-larga img { width: 100%; max-height: none; }
+  figcaption { color: var(--suave); font-size: .85rem; margin-top: 8px; }
+  .dica, .atencao, .regra { margin: 16px 0; padding: 12px 16px; border-radius: 8px; background: var(--card2); box-shadow: inset 3px 0 0 var(--lima); }
+  .atencao { box-shadow: inset 3px 0 0 var(--aviso); }
+  .dica b, .regra b { color: var(--lima); }
+  .atencao b { color: var(--aviso); }
+  .cartoes { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin: 20px 0; }
+  .cartao { padding: 18px; border-radius: 12px; background: var(--card); box-shadow: 0 0 0 1px var(--linha); }
+  .cartao h4 { margin: 0 0 6px; font-size: 1.05rem; }
+  .cartao p { margin: 0; color: var(--suave); font-size: .95rem; }
+  .nivel { display: inline-block; padding: 2px 10px; border-radius: 4px; font-weight: 700; background: var(--chumbo); }
+  .bronze { color: #d9965b; } .prata { color: #c5c9ce; } .ouro { color: #ffd24a; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--linha); vertical-align: top; }
+  th { color: var(--suave); font-weight: 600; font-size: .9rem; }
+  details { margin: 10px 0; padding: 14px 16px; border-radius: 8px; background: var(--card); box-shadow: 0 0 0 1px var(--linha); }
+  summary { cursor: pointer; font-weight: 700; }
+  details p { margin: 10px 0 0; color: var(--suave); }
+  footer { padding: 40px 0 64px; color: var(--suave); text-align: center; font-size: .9rem; }
+  @media (max-width: 760px) { .missao { grid-template-columns: 1fr; } .tela img { max-height: 480px; } }
+  @media print {
+    body { background: #0f1113; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    section { break-before: page; }
+    .missao, figure, .cartao, details { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="pagina">
+
+<header class="capa">
+  <img src="img/logo-horizontal.png" alt="Rafael Alvarenga Educação Física Funcional">
+  <span class="selo">Manual oficial</span>
+  <h1>Seu lugar na turma, reservado.</h1>
+  <p>Um guia rápido, passo a passo e sem complicação para quem treina e para quem comanda as aulas. Leia como quem escolhe o próximo treino: uma missão de cada vez.</p>
+  <nav class="sumario" aria-label="Sumário">
+    <a href="#bem-vindo">1. Bem-vindo<span>Como o app funciona em 1 minuto</span></a>
+    <a href="#aluno">2. Para o aluno<span>Reservar, cancelar, fila, metas</span></a>
+    <a href="#professor">3. Para o professor<span>Início, chamada, turmas, treinos</span></a>
+    <a href="#regras">4. Regras de ouro<span>O que vale para todo mundo</span></a>
+    <a href="#duvidas">5. Dúvidas comuns<span>E o que fazer quando algo trava</span></a>
+  </nav>
+</header>
+
+<section id="bem-vindo">
+  <h2>1. Bem-vindo ao RA Funcional</h2>
+  <p class="lead">As aulas são <b>presenciais</b>, com o professor. O app existe para uma coisa: garantir o seu lugar na turma em dois toques, avisar quando abrir vaga e mostrar ao professor quem vem.</p>
+  <div class="cartoes">
+    <div class="cartao"><h4>Reservou, tem vaga</h4><p>Cada aula tem número limitado de vagas. Quem reserva primeiro garante o lugar.</p></div>
+    <div class="cartao"><h4>Lotou? Entre na fila</h4><p>Se alguém cancelar, o primeiro da fila é confirmado sozinho, e você recebe um aviso.</p></div>
+    <div class="cartao"><h4>Fecha 1 hora antes</h4><p>Reservar e cancelar ficam abertos até 1 hora antes da aula. Depois, só falando com o professor.</p></div>
+    <div class="cartao"><h4>Treino da semana no ar</h4><p>Todo sábado de manhã o Rafael publica o treino da semana seguinte. O app avisa você.</p></div>
+  </div>
+  <div class="dica"><b>Instale o app no celular.</b> No Android (Chrome): menu ⋮ → <i>Instalar app</i>. No iPhone (Safari): <i>Compartilhar</i> → <i>Adicionar à Tela de Início</i>. Ele abre em tela cheia, como qualquer aplicativo.</div>
+</section>
+
+<section id="aluno">
+  <h2>2. Para o aluno</h2>
+  <p class="lead">Seis missões: entrar, reservar, treinar, acompanhar, personalizar e cuidar dos avisos.</p>
+
+  <div class="missao">
+    <div>
+      <h3><span class="num">1</span>Entrar no app</h3>
+      <p>O professor te envia um <b>link de convite</b> (pelo WhatsApp). Toque nele, crie sua senha e pronto. Nas próximas vezes, entre com seu e-mail e senha.</p>
+      <ul>
+        <li>O convite vale por <b>30 dias</b>. Se vencer, peça outro ao professor.</li>
+        <li>Já tem um código? Na tela de entrada, toque em <i>Use seu código</i>.</li>
+      </ul>
+    </div>
+    <figure class="tela"><img src="img/aluno-01-entrar.png" alt="Tela de entrada"><figcaption>Tela de entrada</figcaption></figure>
+  </div>
+
+  <div class="missao">
+    <div>
+      <h3><span class="num">2</span>Conhecer o Início</h3>
+      <p>É a primeira tela que você vê. Tudo o que importa hoje, em uma rolagem:</p>
+      <ul>
+        <li><b>Sua próxima aula</b>, com o coach, quantas vagas estão ocupadas e até que horas dá para cancelar.</li>
+        <li><b>Seus números:</b> aulas no mês, semanas seguidas sem faltar e a meta do trimestre.</li>
+        <li><b>Treino de hoje</b> e <b>horários de hoje</b>, com o botão de reservar direto na linha.</li>
+        <li><b>Recado do coach</b>, quando o professor manda um aviso para a turma.</li>
+      </ul>
+    </div>
+    <figure class="tela"><img src="img/aluno-02-inicio.png" alt="Tela de início do aluno"><figcaption>Início do aluno</figcaption></figure>
+  </div>
+
+  <div class="missao">
+    <div>
+      <h3><span class="num">3</span>Reservar sua vaga</h3>
+      <ol>
+        <li>Abra a aba <b>Agenda</b>.</li>
+        <li>Escolha o dia na faixa de 14 dias. Um ponto no dia mostra que você já tem aula marcada.</li>
+        <li>Toque em <b>Reservar</b> na aula desejada. Pronto: aparece <i>Confirmado</i>.</li>
+      </ol>
+      <div class="dica"><b>Toque na linha da aula</b> para ver o detalhe: treino do dia, vagas e quem vai treinar com você.</div>
+    </div>
+    <figure class="tela"><img src="img/aluno-03-agenda.png" alt="Agenda do aluno"><figcaption>Agenda com a faixa de 14 dias</figcaption></figure>
+  </div>
+
+  <div class="missao">
+    <div>
+      <h3><span class="num">4</span>Ver o detalhe da aula e quem vai</h3>
+      <p>Na página da aula você encontra o horário, o coach, a barra de vagas e o <b>treino do dia</b>. Se houver vídeo de demonstração, ele aparece como um link discreto: o treino acontece presencialmente, o vídeo é só uma ajuda.</p>
+      <p>Mais abaixo, <b>Quem vai nessa aula</b> mostra os colegas confirmados. Treinar em turma motiva.</p>
+      <p>Para <b>cancelar</b>, toque em <i>Cancelar</i>; o app pede uma confirmação para evitar toque sem querer. Cancele com antecedência: assim a vaga vai para quem está na fila.</p>
+    </div>
+    <figure class="tela"><img src="img/aluno-04-aula-confirmada.png" alt="Detalhe da aula confirmada"><figcaption>Aula confirmada, com “Quem vai”</figcaption></figure>
+  </div>
+
+  <div class="missao">
+    <div>
+      <h3><span class="num">5</span>Aula lotada? Entre na fila</h3>
+      <p>Toque em <b>Entrar na fila</b>. Você recebe um número (Nº1, Nº2…). Se alguém cancelar, o Nº1 é <b>confirmado automaticamente</b> e recebe uma notificação. Você pode sair da fila quando quiser.</p>
+      <div class="atencao"><b>Fila fecha junto com a aula.</b> A promoção automática só acontece até 1 hora antes do início.</div>
+    </div>
+    <figure class="tela"><img src="img/aluno-05-aula-lotada.png" alt="Aula lotada com fila"><figcaption>Aula lotada: você na fila</figcaption></figure>
+  </div>
+
+  <div class="missao">
+    <div>
+      <h3><span class="num">6</span>Acompanhar sua evolução</h3>
+      <p>Em <b>Aulas</b> ficam suas reservas em três abas: <i>Próximas</i>, <i>Lista de espera</i> e <i>Histórico</i>. Mais abaixo, a <b>frequência do mês</b>.</p>
+      <ul>
+        <li><b>Plano:</b> se o professor definiu um plano (ex.: 3 aulas por semana), você vê quanto já usou na semana. É só um aviso, a reserva continua valendo.</li>
+        <li><b>Constância:</b> o anel mostra quantas das aulas que você reservou você realmente fez no mês.</li>
+        <li><b>Meta do trimestre:</b> aulas feitas em relação à meta. Veja os níveis abaixo.</li>
+      </ul>
+      <p>
+        <span class="nivel bronze">Bronze</span> metade da meta &nbsp;
+        <span class="nivel prata">Prata</span> três quartos &nbsp;
+        <span class="nivel ouro">Ouro</span> meta cumprida
+      </p>
+      <div class="regra"><b>Como a presença é contada:</b> depois da aula, o <b>professor marca</b> “Compareceu” ou “Faltou”. Reserva sem marcação, com a aula já encerrada, conta como falta até ele marcar. No histórico ela aparece como <i>Sem marcação</i>.</div>
+    </div>
+    <figure class="tela"><img src="img/aluno-06-minhas-aulas.png" alt="Minhas aulas e frequência"><figcaption>Aulas, plano, constância e meta</figcaption></figure>
+  </div>
+
+  <div class="missao">
+    <div>
+      <h3>Histórico de aulas</h3>
+      <p>A aba <b>Histórico</b> lista as aulas que já terminaram e se você compareceu. Boa para conferir a própria constância.</p>
+    </div>
+    <figure class="tela"><img src="img/aluno-07-historico.png" alt="Histórico"><figcaption>Histórico</figcaption></figure>
+  </div>
+
+  <div class="missao">
+    <div>
+      <h3>Avisos e perfil</h3>
+      <p><b>Avisos:</b> vaga liberada, aula cancelada, treinos da semana e recados do professor. Use os filtros <i>Todas</i>, <i>Vagas liberadas</i> e <i>Avisos</i>. O ponto verde marca o que ainda não foi lido.</p>
+      <p><b>Perfil:</b> troque sua <b>foto</b>, ajuste nome e telefone, ative as notificações no celular e instale o app.</p>
+      <div class="dica"><b>Ative as notificações.</b> É assim que você descobre na hora que abriu uma vaga na fila.</div>
+    </div>
+    <div>
+      <figure class="tela"><img src="img/aluno-08-avisos.png" alt="Avisos"><figcaption>Avisos</figcaption></figure>
+    </div>
+  </div>
+  <div class="missao larga">
+    <figure class="tela" style="max-width:300px;margin:auto"><img src="img/aluno-09-perfil.png" alt="Perfil do aluno"><figcaption>Perfil: foto, dados e notificações</figcaption></figure>
+  </div>
+
+  <h3>No computador</h3>
+  <p>O app também se adapta ao computador: menu lateral à esquerda e, na Agenda, a lista do dia ao lado do detalhe da aula.</p>
+  <figure class="tela-larga"><img src="img/aluno-11-computador-agenda.png" alt="Agenda no computador"><figcaption>Agenda no computador</figcaption></figure>
+</section>
+
+<section id="professor">
+  <h2>3. Para o professor</h2>
+  <p class="lead">Você comanda o dia pelo celular ou pelo computador. São seis áreas no menu: <b>Início, Chamada, Turmas, Treinos, Alunos e Perfil</b>.</p>
+
+  <div class="missao larga">
+    <div>
+      <h3><span class="num">1</span>Início: o estúdio num olhar</h3>
+      <p>Logo ao entrar você vê os números de hoje:</p>
+      <ul>
+        <li><b>Alunos esperados hoje</b> e a ocupação das vagas.</li>
+        <li><b>Presenças marcadas</b> em relação aos confirmados.</li>
+        <li><b>Fila de espera</b> e qual aula tem a maior fila.</li>
+        <li><b>Frequência do mês:</b> presenças sobre aulas reservadas, e quantas aulas ainda estão sem marcação.</li>
+      </ul>
+      <p>Abaixo: <b>turmas de hoje</b> (com atalho para a chamada), o <b>treino de hoje</b>, o <b>gráfico de ocupação da semana</b> e o <b>Aviso aos alunos</b>.</p>
+    </div>
+    <figure class="tela-larga"><img src="img/prof-01-inicio.png" alt="Início do professor"><figcaption>Início do professor</figcaption></figure>
+  </div>
+
+  <div class="missao larga">
+    <div>
+      <h3><span class="num">2</span>Chamada: ver e marcar presença</h3>
+      <p>A aba <b>Chamada</b> mostra as aulas do dia (use <i>Ontem / Hoje / Amanhã</i> e as setas para trocar de dia). Toque na aula para abrir a lista.</p>
+      <ul>
+        <li><b>Confirmados</b> em ordem alfabética, com foto, e a <b>lista de espera</b> na ordem da fila.</li>
+        <li>Quando a aula começa, aparecem os botões <b>Compareceu</b> e <b>Faltou</b> ao lado de cada nome. Toque de novo no botão marcado para desfazer.</li>
+        <li><b>Remover</b> tira o aluno da aula a qualquer momento. Se a aula ainda não fechou, o primeiro da fila entra no lugar.</li>
+        <li><b>Cancelar esta aula</b> pede o motivo e avisa todos os confirmados e a fila.</li>
+      </ul>
+      <div class="atencao"><b>Marque a presença de verdade.</b> É ela que alimenta a constância, as metas (Bronze, Prata, Ouro) e o relatório de faltas. Sem marcação, a aula conta como falta.</div>
+    </div>
+    <figure class="tela-larga"><img src="img/prof-03-aula-presenca.png" alt="Chamada com presença"><figcaption>Marcando presença na aula</figcaption></figure>
+  </div>
+
+  <div class="missao larga">
+    <div>
+      <h3><span class="num">3</span>Turmas: a grade semanal</h3>
+      <p>As aulas nascem das <b>turmas semanais</b>. Cada turma tem nome, dia da semana, horário, duração e vagas. O sistema gera as aulas das próximas 4 semanas sozinho.</p>
+      <ul>
+        <li><b>Nova turma:</b> preencha o formulário e salve.</li>
+        <li><b>Editar:</b> muda nome, dia, horário, duração e vagas. As mudanças valem para as aulas futuras que ainda não têm reservas; aulas que já têm gente confirmada ou na fila ficam como estão.</li>
+        <li><b>Desativar:</b> a turma deixa de gerar aulas novas. As aulas já criadas continuam.</li>
+      </ul>
+    </div>
+    <figure class="tela-larga"><img src="img/prof-04-turmas.png" alt="Turmas"><figcaption>Grade de turmas</figcaption></figure>
+  </div>
+
+  <div class="missao larga">
+    <div>
+      <h3><span class="num">4</span>Treinos: publicar a semana</h3>
+      <p>Em <b>Treinos</b> você vê a semana em sete cartões. Em cada dia, cadastre o <b>título</b>, a <b>descrição</b> (blocos como <i>Aquecimento: …</i> viram seções) e, se quiser, um <b>link de vídeo</b>.</p>
+      <ul>
+        <li><b>Salvar rascunho:</b> só você vê.</li>
+        <li><b>Publicar agora:</b> os alunos passam a ver.</li>
+        <li>Treinos da <b>semana seguinte</b> são publicados automaticamente no <b>sábado às 8h</b>; o app avisa os alunos.</li>
+      </ul>
+    </div>
+    <figure class="tela-larga"><img src="img/prof-05-treinos.png" alt="Treinos"><figcaption>Treinos da semana</figcaption></figure>
+  </div>
+
+  <div class="missao larga">
+    <div>
+      <h3><span class="num">5</span>Alunos: convites, planos e relatório</h3>
+      <ul>
+        <li><b>Convidar:</b> digite o nome (opcional) e toque em <i>Gerar link de convite</i>. Depois <i>Copiar link</i> ou <i>Enviar no WhatsApp</i>. O convite vale 30 dias.</li>
+        <li><b>Plano:</b> em cada aluno escolha quantas aulas por semana ele tem (1x a 7x). O aluno vê o uso na semana. É só aviso, não bloqueia.</li>
+        <li><b>Desativar / Reativar:</b> aluno desativado não faz reserva nova, mas continua vendo a agenda. As reservas já feitas não são canceladas sozinhas.</li>
+        <li><b>Relatório do mês:</b> por aluno, reservas, compareceu, faltou, sem marcação e <b>no-show</b> (faltas + sem marcação). Use as setas para trocar o mês.</li>
+      </ul>
+    </div>
+    <figure class="tela-larga"><img src="img/prof-06-alunos.png" alt="Alunos e relatório"><figcaption>Alunos, plano e relatório do mês</figcaption></figure>
+  </div>
+
+  <div class="missao">
+    <div>
+      <h3><span class="num">6</span>Aviso aos alunos</h3>
+      <p>No Início, escreva uma mensagem curta (até 300 caracteres) e toque em <b>Enviar a todos os alunos</b>. Cada aluno ativo recebe a notificação, e o último recado aparece no Início dele como <i>Recado do coach</i>.</p>
+      <div class="dica"><b>Ideias:</b> mudança de horário, foco do treino, “cheguem 10 minutos antes”, lembrete de levar garrafa.</div>
+    </div>
+    <figure class="tela"><img src="img/prof-07-celular-inicio.png" alt="Início do professor no celular"><figcaption>Início no celular</figcaption></figure>
+  </div>
+
+  <div class="missao">
+    <div>
+      <h3>Sua foto e seus dados</h3>
+      <p>Toque em <b>Perfil</b> no menu (ou na sua foto no Início). Lá você troca a <b>foto</b>, o nome e o telefone. A sua foto e o seu nome aparecem para os alunos como <i>Coach</i> no detalhe das aulas e no Início.</p>
+      <p>A foto é recortada em quadrado e reduzida automaticamente. Use uma imagem com o rosto bem centralizado.</p>
+    </div>
+    <figure class="tela-larga"><img src="img/prof-09-perfil.png" alt="Perfil do professor"><figcaption>Perfil do professor</figcaption></figure>
+  </div>
+</section>
+
+<section id="regras">
+  <h2>4. Regras de ouro</h2>
+  <table>
+    <tr><th>Regra</th><th>Como funciona</th></tr>
+    <tr><td>Vagas</td><td>Cada aula tem um limite. Reservou, está dentro; lotou, vai para a fila.</td></tr>
+    <tr><td>Fecha 1 hora antes</td><td>Reservar e cancelar só até 1 hora antes do início. O professor pode remover alguém a qualquer momento.</td></tr>
+    <tr><td>Fila</td><td>Primeiro a entrar, primeiro a ser chamado. Se alguém cancelar até 1 h antes, o Nº1 é confirmado automaticamente e avisado.</td></tr>
+    <tr><td>Treinos da semana</td><td>Publicados no sábado às 8h para a semana seguinte.</td></tr>
+    <tr><td>Convite</td><td>Só entra quem foi convidado. O link vale 30 dias.</td></tr>
+    <tr><td>Presença</td><td>Marcada pelo professor depois da aula. Sem marcação = falta.</td></tr>
+    <tr><td>Plano</td><td>Aulas por semana definidas pelo professor. Só informa, não bloqueia.</td></tr>
+    <tr><td>Meta do trimestre</td><td>13 vezes o plano semanal (39 aulas se não houver plano). Bronze: 50%, Prata: 75%, Ouro: 100%.</td></tr>
+    <tr><td>Semanas seguidas</td><td>Semanas com pelo menos uma presença e nenhuma falta marcada. Semana atual em andamento não quebra a sequência.</td></tr>
+  </table>
+</section>
+
+<section id="duvidas">
+  <h2>5. Dúvidas comuns</h2>
+  <details><summary>Não consigo reservar a aula.</summary><p>Confira se faltam mais de 1 hora para o início, se a aula tem vaga e se sua conta está ativa. Se a conta estiver desativada, fale com o professor.</p></details>
+  <details><summary>Cancelei tarde demais. E agora?</summary><p>Depois que o prazo de 1 hora fecha, só o professor consegue remover sua reserva. Avise-o pelo WhatsApp.</p></details>
+  <details><summary>Entrei na fila, mas ninguém me chamou.</summary><p>A fila só anda se alguém cancelar até 1 hora antes. Ative as notificações no Perfil para ser avisado na hora.</p></details>
+  <details><summary>Esqueci minha senha.</summary><p>O app ainda não tem a tela de recuperação de senha. Avise o professor: ele pede ao responsável técnico para redefinir o seu acesso.</p></details>
+  <details><summary>Minha constância está baixa, mas eu fui às aulas.</summary><p>Ela só conta aulas com presença marcada pelo professor. Se faltou marcar, peça a ele para ajustar na Chamada.</p></details>
+  <details><summary>(Professor) Marquei “Compareceu” errado.</summary><p>Toque novamente no botão marcado para limpar, ou toque no outro botão para trocar.</p></details>
+  <details><summary>(Professor) O aluno não aparece na lista.</summary><p>Ele pode ainda não ter aceitado o convite ou estar desativado. Veja em Alunos e em Convites.</p></details>
+  <details><summary>O app não atualiza.</summary><p>Feche e abra o app. Se estiver sem internet, ele avisa no topo e volta ao normal quando a conexão voltar.</p></details>
+</section>
+
+<footer>
+  RA Funcional · Rafael Alvarenga Educação Física Funcional<br>
+  Disciplina · Movimento · Resultado
+</footer>
+</div>
+</body>
+</html>
