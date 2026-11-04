@@ -152,3 +152,19 @@ ul, ol {
     scroll-behavior: auto !important;
   }
 }
+
+/* Barra de rolagem discreta: invisível, fina e translúcida; aparece perto da borda ou ao passar o mouse na área que rola
+   (a página usa html.barra-visivel, ligado em lib/barraRolagem.ts). */
+html, body *, body {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+html.barra-visivel,
+body *:hover {
+  scrollbar-color: rgba(244, 245, 246, 0.32) transparent;
+}
+/* Navegadores sem scrollbar-color (Safari antigo). */
+::-webkit-scrollbar { width: 8px; height: 8px; background: transparent; }
+::-webkit-scrollbar-thumb { background: transparent; border-radius: 8px; }
+html.barra-visivel::-webkit-scrollbar-thumb,
+*:hover::-webkit-scrollbar-thumb { background: rgba(244, 245, 246, 0.32); }

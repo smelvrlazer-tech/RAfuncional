@@ -9,9 +9,11 @@ import './styles/componentes.css'
 import './styles/telas.css'
 import './styles/treinador.css'
 import { App } from './App'
+import { ativarBarraDiscreta } from './lib/barraRolagem'
 import { registrarPwa } from './pwa'
 
 registrarPwa()
+ativarBarraDiscreta()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
