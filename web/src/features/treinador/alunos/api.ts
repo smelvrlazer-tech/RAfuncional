@@ -18,6 +18,15 @@ export async function definirAlunoAtivo(perfilId: string, ativo: boolean): Promi
   if (error) throw error
 }
 
+/** Gera uma senha provisória para o aluno (aparece uma única vez) e o obriga a trocá-la no próximo acesso. */
+export async function redefinirSenha(perfilId: string): Promise<string> {
+  const { data, error } = await supabase.rpc('treinador_redefinir_senha', { p_aluno_id: perfilId })
+  if (error) throw error
+  const senha = (data as { senha_provisoria?: string } | null)?.senha_provisoria
+  if (!senha) throw new Error('senha_sem_retorno')
+  return senha
+}
+
 /** Plano em aulas por semana (1 a 14); null remove o plano. */
 export async function definirPlano(perfilId: string, aulas: number | null): Promise<void> {
   const { error } = await supabase.rpc('treinador_definir_plano', { p_perfil_id: perfilId, p_aulas: aulas })

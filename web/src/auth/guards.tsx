@@ -3,6 +3,7 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import { Aviso, Botao, Carregando } from '../components/Basicos'
 import { mensagemErro } from '../lib/erros'
 import { Convite } from '../features/acesso/Convite'
+import { TrocarSenhaObrigatoria } from '../features/perfil/TrocarSenha'
 import { NotificacoesProvider } from '../features/notificacoes/NotificacoesContext'
 import { useAuth } from './AuthContext'
 
@@ -36,6 +37,7 @@ export function ExigeAluno() {
   if (erroPerfil) return <ErroPerfil />
   if (!perfil) return <Convite semPerfil />
   if (perfil.papel === 'treinador') return <Navigate to="/treinador" replace />
+  if (perfil.trocar_senha) return <TrocarSenhaObrigatoria />
   return (
     <NotificacoesProvider>
       <Outlet />

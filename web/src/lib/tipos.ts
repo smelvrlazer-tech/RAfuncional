@@ -33,6 +33,8 @@ export interface Perfil {
   /** Aulas por semana do plano do aluno; null = sem plano definido. */
   plano_aulas_semana?: number | null
   foto_url?: string | null
+  /** true depois que o professor gerou uma senha provisória: o aluno precisa criar a própria. */
+  trocar_senha?: boolean
 }
 
 export interface Notificacao {

@@ -485,3 +485,17 @@
 .avatar__foto { width: 100%; height: 100%; object-fit: cover; display: block; }
 .perfil-cartao__foto { display: flex; gap: 8px; margin-top: 4px; }
 .perfil-cartao__foto .botao { min-height: 36px; padding-inline: 0; font-size: var(--t-pequeno); cursor: pointer; }
+
+/* Senha provisória mostrada ao professor: grande, em fonte de largura fixa, fácil de ditar. */
+.senha-provisoria {
+  margin: 12px 0;
+  padding: 14px;
+  border-radius: var(--raio-p);
+  background: var(--cor-superficie-2);
+  box-shadow: inset 0 0 0 1px var(--cor-linha);
+  font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  font-size: 1.75rem;
+  letter-spacing: 0.12em;
+  text-align: center;
+  user-select: all;
+}

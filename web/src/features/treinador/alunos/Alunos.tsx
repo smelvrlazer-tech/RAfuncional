@@ -12,6 +12,7 @@ import { Anuncio, Controle, EstadoLista, type Retorno } from '../comum'
 import { useCarga } from '../useCarga'
 import { contarAulasNoPeriodo, definirAlunoAtivo, definirPlano, listarAlunos, listarConvites } from './api'
 import { ListaConvites } from './ListaConvites'
+import { NovaSenhaAluno } from './NovaSenhaAluno'
 import { NovoConvite } from './NovoConvite'
 import { RelatorioMensal } from './RelatorioMensal'
 
@@ -20,6 +21,7 @@ export function Alunos() {
   const alunos = useCarga(listarAlunos, 'alunos')
   const convites = useCarga(listarConvites, 'convites')
   const [alvo, setAlvo] = useState<Perfil | null>(null)
+  const [alvoSenha, setAlvoSenha] = useState<Perfil | null>(null)
   const [enviando, setEnviando] = useState(false)
   const [erroDialogo, setErroDialogo] = useState<string | null>(null)
   const [retorno, setRetorno] = useState<Retorno>(null)
@@ -123,6 +125,9 @@ export function Alunos() {
                       </td>
                       <td>{a.ativo ? <span className="situacao-ativo">Ativo</span> : <Chip tom="cancelada">Inativo</Chip>}</td>
                       <td className="tabela__acao">
+                        <Botao variante="texto" onClick={() => setAlvoSenha(a)} aria-label={`Nova senha para ${a.nome}`}>
+                          Nova senha
+                        </Botao>
                         <Botao variante="texto" onClick={() => { setErroDialogo(null); setAlvo(a) }}
                           aria-label={`${a.ativo ? 'Desativar' : 'Reativar'} ${a.nome}`}>
                           {a.ativo ? 'Desativar' : 'Reativar'}
@@ -143,6 +148,8 @@ export function Alunos() {
       </div>
 
       <RelatorioMensal hoje={hoje} />
+
+      <NovaSenhaAluno aluno={alvoSenha} onFechar={() => setAlvoSenha(null)} />
 
       <Dialogo
         aberto={alvo !== null}
