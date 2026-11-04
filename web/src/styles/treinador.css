@@ -825,3 +825,8 @@
   .tabela a.tabela__tel-movel { display: block; min-height: 28px; line-height: 28px; white-space: nowrap; font-weight: 400; font-size: var(--t-pequeno); }
   .tabela td { white-space: nowrap; }
 }
+
+/* Itens de grid precisam de min-width: 0 para a tabela rolar dentro do cartão em vez de alargar a página. */
+.alunos-grade > *, .alunos-grade__lado > *, .inicio-treinador__grade > *, .inicio-treinador__lado > * { min-width: 0; }
+/* Os textos sr-only (position: absolute) dentro da tabela ficavam fora da área rolável e alargavam a página. */
+.tabela-rolagem { position: relative; }
