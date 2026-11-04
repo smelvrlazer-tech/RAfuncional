@@ -1,54 +1,52 @@
-# RA Funcional — o que foi feito, o que falta (atualizado em 09/10/2026)
+# RA Funcional — o que foi feito, o que falta (atualizado em 04/11/2026)
 
 ## O produto
-PWA para o treinador Rafael Alvarenga: alunos fazem check-in/cancelam em aulas, com **bloqueio 1h antes**, **lista de espera FIFO**, treinos da semana liberados no sábado, **cadastro só por convite** e painel do treinador. Custo zero. Especificação completa: `docs/superpowers/specs/2026-07-31-ra-funcional-app-design.md`. Plano do backend: `docs/superpowers/plans/`.
+PWA para o treinador Rafael Alvarenga: alunos reservam vaga ("check-in") e cancelam em aulas presenciais, com **bloqueio 1h antes**, **lista de espera FIFO**, treinos da semana liberados no sábado, **cadastro só por convite** e painel do treinador. Custo zero. Especificação original: `docs/superpowers/specs/2026-07-31-ra-funcional-app-design.md`. Plano do backend: `docs/superpowers/plans/`. Manual de uso (aluno e professor): `docs/manual/` (HTML + PDF).
 
 ## Stack
 - `web/`: Vite + React + TypeScript, react-router, CSS puro com tokens, vite-plugin-pwa, Vitest + Testing Library.
-- Backend: Supabase na nuvem (projeto DEV): Postgres, RLS, RPCs `SECURITY DEFINER`, pg_cron. Migrations 0001–0011 aplicadas.
-- Regras de negócio nas RPCs: `fazer_checkin`, `cancelar_checkin`, `promover_da_espera`, `aceitar_convite`, `criar_convite`, `treinador_*`, `treinador_atualizar_turma`; view `v_agenda`.
+- Backend: Supabase na nuvem (projeto DEV): Postgres, RLS, RPCs `SECURITY DEFINER`, pg_cron, Storage (bucket `avatares`). **Migrations 0001–0016 aplicadas no DEV.**
+- Regras de negócio nas RPCs: `fazer_checkin`, `cancelar_checkin`, `promover_da_espera`, `aceitar_convite`, `criar_convite`, `treinador_*` (remover aluno, cancelar aula, turmas, presença, plano, aviso, senha provisória, relatório mensal), `meu_historico`, `meu_plano`, `meu_painel`, `quem_vai`, `info_estudio`, `ultimo_aviso`, `concluir_troca_senha`; view `v_agenda`.
 
 ## Já feito
-- Backend completo com testes (pasta `tests/`).
-- Área do aluno: agenda semanal, detalhe da aula, check-in/cancelamento com lista de espera, abas **Agenda / Minhas aulas / Perfil** (barra inferior), treino da semana.
-- Cadastro por convite (`/convite/:codigo`) e login.
-- Painel do treinador: Painel do dia, Sessão (confirmados, fila, remover aluno, cancelar aula), Turmas (criar/editar/desativar), Treinos (rascunho/publicar), Alunos (convidar, ativar/desativar).
-- Visual **v3** (verde-petróleo + coral, Bricolage Grotesque + Archivo) aplicado; responsivo mobile/tablet/desktop.
-- Seletor **"Ver como Celular / Computador"** em telas largas (`web/src/components/VisaoDispositivo.tsx`).
-- Duas rodadas de refinamento de hierarquia: sinalizar só a exceção (ex.: só "Inativa"/"Rascunho" viram chip), uma ação principal por tela, formulários com nota curta, Sessão com cancelamento discreto.
-- Repositório privado no GitHub (`smelvrlazer-tech/RAfuncional`).
-- **Refino visual concluído (09/10/2026)**, já na máquina nova:
-  - Telas do treinador conferidas em 375 px (Painel, Turmas, Treinos, Alunos, Sessão populada, diálogos e formulários): sem overflow horizontal.
-  - Corrigido o cabeçalho do Painel que deslizava ao clicar em Ontem/Amanhã (`overflow: clip` nos cartões com círculos decorativos).
-  - Perfil: o cartão de instalar o app só aparece quando o app ainda não está instalado; título "Instalar o app".
-  - Página da aula: relógio do prazo ("Check-in fecha em 1h20" + barra) nas 3 h finais, e atalho "Próxima aula com vaga" quando a aula está lotada (`tempoParaFechar` e `proximaComVaga` em `web/src/lib/estadoSessao.ts`).
-- **Notificações push implementadas, ativadas e testadas no Supabase DEV (09/10/2026)** (ver `docs/PUSH.md`):
-  - Banco: `inscricoes_push` (RLS: o cliente só lê as próprias), RPCs `registrar_push` / `remover_push`, `marcar_push_enviado` e `disparar_envio_push` (só service_role), job `enviar-push` a cada minuto via `pg_net`; URL e segredo no Vault.
-  - Edge Function `enviar-push` (Web Push/VAPID): decide em `logica.ts` (reenvio só em falha passageira, apaga inscrição expirada, ignora notificação com mais de 6 h).
-  - App: `src/sw.ts` próprio (injectManifest) com `push` e `notificationclick`; hook `useAvisos`; cartão no Perfil que só aparece quando há o que fazer (some se o navegador não suporta, e no iPhone orienta a instalar o app primeiro).
-  - Verificado: build gera o `sw.js` com push e pré-cache; no Chrome real o service worker registra e o cartão aparece; `tests/push.test.ts`, `autorizacao` e `agendamentos` passam contra o DEV (90 testes). **Verificado de ponta a ponta no Chrome**: inscrição pelo cartão do Perfil, job do cron acionando a Edge Function, envio pelo FCM e notificação exibida pelo service worker. **Não verificado**: celular real (Android/iPhone), clique na notificação com o app fechado e a função em Deno localmente (sem Deno nesta máquina; a lógica é testada à parte).
-  - Lição: nesta rede as portas de banco (5432/6543) são bloqueadas, então `supabase db push` não funciona aqui; ver o plano B no `docs/PUSH.md`.
-- Máquina nova configurada em 09/10/2026: repositório clonado, chaves restauradas, dependências instaladas, `tsc` limpo e testes passando (front: 27 arquivos / 248 testes; mais 25 testes puros em `tests/enviar-push.test.ts`).
+- Backend completo com testes (pasta `tests/`, rodam contra o DEV).
+- **Visual atual (16/10/2026):** design do Google Stitch com a identidade oficial do Rafael: tema escuro, verde-lima `#A3FF29`, Bebas Neue + Inter, logo oficial e ícones do PWA gerados por `web/scripts/processar-logo.mjs`. Ver regra no `CLAUDE.md`.
+- **Aluno** (abas Início / Agenda / Aulas / Avisos / Perfil):
+  - Início: próxima aula com coach e prazo de cancelamento, números do mês (aulas, semanas seguidas, meta do trimestre com nível Bronze/Prata/Ouro), treino e horários de hoje, recado do coach.
+  - Agenda de 14 dias, detalhe da aula (treino, vídeo como link discreto, **Quem vai**), reserva/cancelamento com fila.
+  - Aulas: abas Próximas / Lista de espera / Histórico, plano da semana, constância do mês (anel) e frequência.
+  - Perfil: foto, dados, avisos push, instalar app, trocar senha.
+  - Troca obrigatória de senha quando entra com senha provisória.
+- **Professor** (menu Início / Chamada / Turmas / Treinos / Alunos / Perfil):
+  - Início com números do dia, turmas de hoje, treino, gráfico de ocupação da semana e **aviso a todos os alunos**.
+  - Chamada (painel do dia e aula): confirmados, fila, **Compareceu/Faltou**, remover aluno, cancelar aula.
+  - Turmas, Treinos, Alunos (convite, plano por semana, ativar/desativar, **Nova senha**, **relatório mensal com no-show**), Perfil (foto).
+- **Regras decididas em 16/10/2026:** "confirmado" é só a reserva; o professor marca a presença depois da aula; reserva encerrada sem marcação conta como falta (no-show). Plano = aulas por semana, só avisa (não bloqueia). Meta do trimestre = 13 × plano (39 sem plano); Bronze 50%, Prata 75%, Ouro 100%. Regras de 1h antes e promoção automática da fila não mudaram.
+- **Push** implementado e testado no DEV (`docs/PUSH.md`); o aviso do professor usa o mesmo caminho (tabela `notificacoes`).
+- Manual completo com capturas do visual novo em `docs/manual/` (gerado a partir das telas reais; imagens em `docs/manual/img/`).
+- Repositório privado no GitHub (`smelvrlazer-tech/RAfuncional`). Suíte: front 33 arquivos / 299 testes; backend em `tests/`.
+- DEV deixado só com Rafael, Ana e Bruno (`scripts/limpar-dev-manter-tres.mjs`).
 
 ## Falta fazer
-1. **Push em produção.** No Supabase DEV está **ativado e testado de ponta a ponta (09/10/2026)**: migration `0012` aplicada, job `enviar-push` a cada minuto, 4 secrets, função publicada e 2 segredos no Vault; no Chrome (build de produção) a Ana ativou os avisos, uma notificação inserida no banco foi enviada em ~40 s e chegou com o link certo. Falta repetir em produção com chaves VAPID e `PUSH_SEGREDO` novos (`docs/PUSH.md`) e testar num celular real (Android e iPhone com o app instalado). Também falta testar o clique na notificação com o app fechado.
-2. **Publicar online** (Netlify, plano grátis) e criar o Supabase de **produção**; aplicar as migrations lá.
-3. **Contas no e-mail do Rafael** e transferência de GitHub / Supabase / Netlify.
-4. `scripts/limpar-maquina.ps1`: limpeza de Docker/`node_modules` com checklist que aborta se algo falhar. **Não existe ainda.** Só roda por confirmação explícita.
-5. Seed (`web/scripts/seed-dev.mjs`) ainda não é idempotente para turmas.
-6. Página de vendas (bônus): projeto separado, não iniciado.
-7. Fora de escopo no v1: pagamentos.
+1. **Publicar online** (Netlify, plano grátis) e criar o Supabase de **produção**; aplicar as migrations 0001–0016 lá (a 0014 cria o bucket de fotos; precisa de permissão no schema `storage`).
+2. **Push em produção** com chaves VAPID e `PUSH_SEGREDO` novos (`docs/PUSH.md`), `VAPID_SUBJECT` com e-mail real, teste em celular real (Android e iPhone com o app instalado) e clique na notificação com o app fechado.
+3. **Contas no e-mail do Rafael** e transferência de GitHub / Supabase / Netlify (confirmar o e-mail antes de criar qualquer conta).
+4. **Segurança:** revogar a chave de API do Stitch e trocar a senha do GitHub, que foram coladas em conversa.
+5. Testar de ponta a ponta pela tela (só a regra foi testada no banco): envio de foto pelo celular e troca obrigatória de senha; conferir o Início do professor no celular.
+6. Não existe "esqueci minha senha" automático por e-mail: hoje só o professor gera senha provisória (exigiria configurar e-mail transacional).
+7. `scripts/limpar-maquina.ps1` (limpeza com checklist) **não existe ainda**; só roda com confirmação explícita.
+8. Página de vendas (bônus): projeto separado, não iniciado. Fora de escopo no v1: pagamentos.
 
 ## Lições e armadilhas
-- Não confiar em relato de verificação: o Pedro cobrou prova visual. Detalhes em `CLAUDE.md`.
-- A queixa "amador" era "sem cor, sem vida", não o layout quebrado; o caminho foi o Claude Design, não mais CSS solto.
-- Testes de banco acumulam usuários `@teste.local`; rodar `scripts/limpar-usuarios-teste.mjs` quando ficarem lentos.
+- Não confiar em relato de verificação: o Pedro cobra prova visual (ver `CLAUDE.md`).
+- **Os testes de banco apagam os dados do DEV** (turmas, sessões, check-ins). Depois de rodar, refaça com `npm run seed:dev` (em `web/`). Usuários `@teste.local` acumulam: `node scripts/limpar-usuarios-teste.mjs`; para voltar a só Rafael/Ana/Bruno: `node scripts/limpar-dev-manter-tres.mjs`.
+- Migrations remotas aplicadas pelo SQL Editor do Supabase (a rede bloqueia `db push`). Tentar aplicar de novo uma migration já aplicada dá erro "already exists": significa que ela já estava no banco.
 - O `vitest.config.ts` da raiz só inclui `tests/**/*.test.ts` (senão pega os testes de `web/` e quebra em jsdom).
-- Cor coral `#E86A3A` só em texto grande; botão pequeno usa `--cor-acento-forte` (`#C94F1C`) por contraste.
-- Comandos longos em segundo plano morrem no limite de tempo (o dev server já parou sozinho); reinicie se precisar.
-- Cartões com círculos decorativos (`.controle`, `.cabecalho`, `.acesso__topo`) usam `overflow: clip`, não `hidden`: com `hidden` o navegador rola o cartão por dentro ao focar um botão perto da borda e o texto desliza.
-- Na máquina de 09/10/2026 o PowerShell bloqueia `npm.ps1` (política de execução): use `npm.cmd` / `npx.cmd`. Sem admin não dá para instalar o 7-Zip: o `7zr.exe` portátil (https://www.7-zip.org/a/7zr.exe) abre o `segredos.7z` (`7zr x segredos.7z -o<pasta> -p<senha>`), e os três arquivos vão para os destinos listados em `scripts/restaurar-segredos.ps1`.
-- A primeira rodada do Vitest numa máquina fria pode dar 1 erro e menos testes; rodar de novo costuma passar.
+- Comandos longos em segundo plano morrem no limite de tempo; reinicie o dev server se precisar (`npm run dev -- --host 127.0.0.1 --port 5173` em `web/`).
+- No PowerShell desta máquina, `npm.ps1` pode ser bloqueado: use `npm.cmd` / `npx.cmd`. O `7zr.exe` portátil abre o `segredos.7z` sem admin.
+- A primeira rodada do Vitest numa máquina fria pode dar 1 erro por timeout; rodar de novo costuma passar.
+- Para scripts que editam arquivos com CRLF, normalize as quebras de linha antes de procurar trechos.
+- Capturas para o manual: `puppeteer-core` com o Chrome instalado (não precisa baixar navegador); ocultar `.visao` ("Ver como") e tornar a barra inferior estática nas capturas de página inteira.
 
 ## Notas de memória
 Copiadas em `docs/memoria/` (contas do cliente, fonte do design, limpeza da máquina, repositório). Se quiser restaurá-las como memória do Claude Code na máquina nova, copie os arquivos `ra-funcional-*.md` e o `MEMORY.md` para a pasta de memória do projeto (`~/.claude/projects/<pasta-do-projeto>/memory/`).

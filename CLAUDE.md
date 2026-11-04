@@ -8,7 +8,7 @@ App PWA de check-in em aulas para o treinador **Rafael Alvarenga**. Desenvolvedo
 - **Custo zero** para o cliente: criação, hospedagem e operação (Supabase free, Netlify free; Vercel descartada).
 - Contas de serviço (GitHub, Supabase, Netlify) devem acabar no **e-mail do Rafael**. Hoje estão na conta do Pedro (ver `docs/memoria/ra-funcional-contas-cliente.md`). Confirmar o e-mail antes de criar qualquer conta.
 - **Regras de negócio vivem no Postgres** (RPCs `SECURITY DEFINER` + RLS), não no front. Mudou regra? Mexa em `supabase/migrations/`, não no React.
-- **Migrations remotas:** o Pedro roda `npx supabase db push`. Não aplique migrations no banco remoto sem ele pedir.
+- **Migrations remotas:** nesta rede o `db push` não funciona; o Pedro cola o SQL no SQL Editor do Supabase. Não aplique migrations no banco remoto sem ele pedir. Estado: 0001–0016 aplicadas no DEV (ver `docs/PROJETO.md`).
 - **Push:** `docs/PUSH.md` (como funciona e como ativar). Chave VAPID privada e `PUSH_SEGREDO` ficam em `supabase/functions/.env` (fora do Git) e nunca no app nem em tabela; a URL/segredo que o cron usa ficam no Vault. Secrets do Supabase são só de escrita: guarde o `.env` no `segredos.7z`.
 - **Visual:** desde 16/10/2026 a fonte da verdade é o design do Google Stitch (`docs/stitch/`, "Atlético técnico") com a **identidade oficial do Rafael**: tema escuro, grafite #0F1113, chumbo #2B2F33, branco e verde-lima #A3FF29 como única cor de ação (`web/src/styles/tokens.css`). Títulos e números em Bebas Neue, texto em Inter (fontes locais @fontsource). Raios 4/8px, filetes de 1px no lugar de sombra, sem enfeites; status por texto + ícone. Logo oficial em `web/public/` (gerada por `web/scripts/processar-logo.mjs` a partir da arte do Rafael). Direção A (azul) e v3 (creme/coral) estão superadas.
 - **Limpeza da máquina** só no fim e só com checklist de segurança, nunca automática (`docs/memoria/ra-funcional-limpeza-maquina.md`).
@@ -19,10 +19,10 @@ App PWA de check-in em aulas para o treinador **Rafael Alvarenga**. Desenvolvedo
 # app (a partir de web/)
 npm install
 npm run dev -- --host 127.0.0.1 --port 5173
-npx tsc --noEmit && npx vitest run   # 27 arquivos / 248 testes (em 09/10/2026)
+npx tsc --noEmit && npx vitest run   # 33 arquivos / 299 testes (em 04/11/2026)
 npm run build
 ```
-- Testes de banco (raiz, `npm test`) rodam contra o projeto Supabase DEV na nuvem e precisam de `.env.test`. Acumulam usuários `@teste.local`: limpe com `node scripts/limpar-usuarios-teste.mjs`.
+- Testes de banco (raiz, `npm test`) rodam contra o projeto Supabase DEV na nuvem e precisam de `.env.test`. **Apagam os dados do DEV** (turmas, sessões, check-ins): depois rode `npm run seed:dev` em `web/`. Acumulam usuários `@teste.local`: limpe com `node scripts/limpar-usuarios-teste.mjs` (ou `scripts/limpar-dev-manter-tres.mjs` para deixar só Rafael, Ana e Bruno).
 - Segredos: estão em `segredos.7z` (criptografado com senha, que só o Pedro tem). Restaure com `powershell -ExecutionPolicy Bypass -File scripts/restaurar-segredos.ps1` (precisa do 7-Zip). Em texto puro **nunca** vão para o git: `.env.test`, `web/.env.local`, `web/.dev-credenciais.txt`. Ao mudar uma chave, refaça o `.7z`.
 - Supabase: `npx supabase login` e `npx supabase link` na máquina nova. Docker não é necessário (usamos o projeto DEV na nuvem).
 
