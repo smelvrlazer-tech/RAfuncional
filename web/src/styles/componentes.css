@@ -499,3 +499,34 @@
   text-align: center;
   user-select: all;
 }
+
+/* Alternador de identidade visual (só em desenvolvimento), no canto de baixo à esquerda. */
+.alternador-tema {
+  position: fixed;
+  z-index: 60;
+  left: 16px;
+  bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border-radius: var(--raio-pilula);
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-linha);
+  box-shadow: var(--sombra-elevada);
+}
+.alternador-tema__rotulo { padding: 0 8px; font-size: var(--t-legenda); font-weight: 700; color: var(--cor-texto-suave); }
+.alternador-tema__opcao {
+  min-height: 32px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: var(--raio-pilula);
+  background: transparent;
+  color: var(--cor-texto-suave);
+  font: inherit;
+  font-size: var(--t-pequeno);
+  font-weight: 600;
+  cursor: pointer;
+}
+.alternador-tema__opcao[aria-pressed='true'] { background: var(--cor-acento); color: var(--cor-sobre-acento); }
+@media (max-width: 899px) { .alternador-tema { bottom: 84px; } }

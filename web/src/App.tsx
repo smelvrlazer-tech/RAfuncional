@@ -2,6 +2,7 @@ import { Link, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { AuthProvider } from './auth/AuthContext'
 import { ExigeAluno, ExigeTreinador, SomenteDeslogado } from './auth/guards'
 import { AvisoOffline } from './components/AvisoOffline'
+import { AlternadorTema } from './components/AlternadorTema'
 import { VisaoDispositivo } from './components/VisaoDispositivo'
 import { Convite } from './features/acesso/Convite'
 import { Entrar } from './features/acesso/Entrar'
@@ -97,5 +98,5 @@ export function App() {
     </AuthProvider>
   )
   // "Ver como celular/computador" é ferramenta de desenvolvimento: não vai para o app publicado.
-  return import.meta.env.DEV ? <VisaoDispositivo>{app}</VisaoDispositivo> : app
+  return import.meta.env.DEV ? <><VisaoDispositivo>{app}</VisaoDispositivo><AlternadorTema /></> : app
 }

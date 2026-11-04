@@ -133,3 +133,21 @@
   --cor-esqueleto: #1f2327;
   --cor-esqueleto-brilho: #2b2f33;
 }
+
+/*
+ * Identidade alternativa "ciano" (logo preto, branco e ciano #58E0E8). Só troca a cor de ação e o que
+ * dependia do verde-lima; o resto do sistema é igual. Ativada por <html data-tema="ciano"> (lib/tema.ts).
+ */
+:root[data-tema='ciano'] {
+  --cor-papel: #07090a;
+  --cor-acento: #58e0e8;
+  --cor-acento-hover: #44cbd3;
+  --cor-acento-forte: #58e0e8;
+  --cor-acento-texto: #58e0e8;
+  --cor-acento-claro: #58e0e8;
+  --cor-sobre-acento: #04181a;
+  --cor-foco: #58e0e8;
+  --cor-info-fundo: #0b2a2e;
+  --brilho-foco: 0 0 0 3px rgba(88, 224, 232, 0.25), 0 0 0 1.5px var(--cor-acento);
+  --cor-tema: #050607;
+}

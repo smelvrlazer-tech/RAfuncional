@@ -10,8 +10,10 @@ import './styles/telas.css'
 import './styles/treinador.css'
 import { App } from './App'
 import { ativarBarraDiscreta } from './lib/barraRolagem'
+import { iniciarTema } from './lib/tema'
 import { registrarPwa } from './pwa'
 
+iniciarTema()
 registrarPwa()
 ativarBarraDiscreta()
 
