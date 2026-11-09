@@ -6,7 +6,7 @@ import { useTema } from '../lib/tema'
  */
 const FORMATOS = {
   lima: { monograma: ['/logo-monograma.png', 672 / 336], horizontal: ['/logo-horizontal.png', 1530 / 430] },
-  ciano: { monograma: ['/logo-ciano-emblema.png', 1], horizontal: ['/logo-ciano-completa.png', 380 / 430] },
+  ciano: { monograma: ['/logo-ciano-emblema.png', 368 / 358], horizontal: ['/logo-ciano-completa.png', 380 / 430] },
 } as const
 
 export function Logo({ variante = 'monograma', altura = 32 }: { variante?: 'monograma' | 'horizontal'; altura?: number }) {

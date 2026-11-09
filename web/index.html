@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#0f1113" />
+    <meta name="theme-color" content="#050607" />
     <meta name="description" content="Check-in das aulas de treinamento funcional." />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -13,6 +13,16 @@
     <title>RA Funcional</title>
   </head>
   <body>
+    <script>
+      // Tema antes da primeira pintura (evita piscar): ciano é o padrão; ?tema=lima mostra a alternativa.
+      (function () {
+        try {
+          var p = new URLSearchParams(location.search).get('tema');
+          var t = p === 'lima' || p === 'ciano' ? p : localStorage.getItem('ra.tema');
+          document.documentElement.setAttribute('data-tema', t === 'lima' ? 'lima' : 'ciano');
+        } catch (e) { document.documentElement.setAttribute('data-tema', 'ciano'); }
+      })();
+    </script>
     <div id="root"></div>
     <noscript>O RA Funcional precisa de JavaScript ativado.</noscript>
     <script type="module" src="/src/main.tsx"></script>

@@ -4,8 +4,8 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // Cores do manifest: manter em sincronia com src/styles/tokens.css
 // (--cor-tema e --cor-papel).
-const COR_TEMA = '#0f1113'
-const COR_FUNDO = '#0f1113'
+const COR_TEMA = '#050607'
+const COR_FUNDO = '#050607'
 
 export default defineConfig({
   plugins: [

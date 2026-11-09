@@ -1,6 +1,7 @@
 // Gera a logo oficial (PNG transparente) e os ícones do PWA a partir da arte enviada pelo Rafael.
 // Uso: node scripts/processar-logo.mjs "<png da logo horizontal em fundo preto>"
-// Saídas em public/: logo-horizontal.png, logo-monograma.png, favicon.png, icons/*.png
+// Saídas em public/: logo-horizontal.png, logo-monograma.png (identidade lima) e icons-lima/*.png, favicon-lima.png.
+// Os ícones do app instalado (icons/, favicon.png) são da identidade padrão (ciano): processar-logo-ciano.mjs.
 import sharp from 'sharp'
 import { mkdirSync } from 'node:fs'
 import { dirname, join } from 'node:path'
@@ -8,7 +9,7 @@ import { fileURLToPath } from 'node:url'
 
 const origem = process.argv[2]
 const pub = join(dirname(fileURLToPath(import.meta.url)), '..', 'public')
-mkdirSync(join(pub, 'icons'), { recursive: true })
+mkdirSync(join(pub, 'icons-lima'), { recursive: true })
 const FUNDO = { r: 0x0f, g: 0x11, b: 0x13, alpha: 1 }
 
 // preto vira transparência: alpha = brilho máximo do pixel, cor desmultiplicada
@@ -41,8 +42,8 @@ async function icone(arquivo, tamanho, proporcao, raio) {
   await base.composite(camadas).png().toFile(join(pub, arquivo))
   console.log('gerado', arquivo)
 }
-await icone('icons/icon-192.png', 192, 0.62, true)
-await icone('icons/icon-512.png', 512, 0.62, true)
-await icone('icons/icon-maskable-512.png', 512, 0.5, false)
-await icone('icons/apple-touch-icon.png', 180, 0.62, false)
-await icone('favicon.png', 64, 0.7, true)
+await icone('icons-lima/icon-192.png', 192, 0.62, true)
+await icone('icons-lima/icon-512.png', 512, 0.62, true)
+await icone('icons-lima/icon-maskable-512.png', 512, 0.5, false)
+await icone('icons-lima/apple-touch-icon.png', 180, 0.62, false)
+await icone('favicon-lima.png', 64, 0.7, true)

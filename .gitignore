@@ -9,3 +9,6 @@ supabase/.branches/
 *.log
 web/.dev-credenciais.txt
 dev-dist/
+
+.env.producao
+web/.env.production.local

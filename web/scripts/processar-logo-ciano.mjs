@@ -21,5 +21,25 @@ async function transparente(recorte, saida) {
   console.log('gerado', saida)
 }
 
-await transparente({ left: 60, top: 40, width: 380, height: 380 }, 'logo-ciano-emblema.png')
+await transparente({ left: 66, top: 46, width: 368, height: 358 }, 'logo-ciano-emblema.png')
 await transparente({ left: 60, top: 40, width: 380, height: 430 }, 'logo-ciano-completa.png')
+
+// ---------------------------------------------------------------- ícones do app instalado (identidade padrão)
+import { mkdirSync } from 'node:fs'
+mkdirSync(join(pub, 'icons'), { recursive: true })
+const emblema = await sharp(join(pub, 'logo-ciano-emblema.png')).toBuffer()
+async function icone(arquivo, tamanho, proporcao, arredondar) {
+  const lado = Math.round(tamanho * proporcao)
+  const m = await sharp(emblema).resize({ width: lado }).toBuffer()
+  const camadas = []
+  if (arredondar) camadas.push({ input: Buffer.from(`<svg width="${tamanho}" height="${tamanho}"><rect width="${tamanho}" height="${tamanho}" rx="${Math.round(tamanho * 0.22)}" fill="#050607"/></svg>`) })
+  camadas.push({ input: m, gravity: 'center' })
+  const base = sharp({ create: { width: tamanho, height: tamanho, channels: 4, background: arredondar ? { r: 0, g: 0, b: 0, alpha: 0 } : { r: 5, g: 6, b: 7, alpha: 1 } } })
+  await base.composite(camadas).png().toFile(join(pub, arquivo))
+  console.log('gerado', arquivo)
+}
+await icone('icons/icon-192.png', 192, 0.8, true)
+await icone('icons/icon-512.png', 512, 0.8, true)
+await icone('icons/icon-maskable-512.png', 512, 0.62, false)
+await icone('icons/apple-touch-icon.png', 180, 0.8, false)
+await icone('favicon.png', 64, 0.92, true)
