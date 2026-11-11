@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Auditoria de UI/UX: RA Funcional, rodada 2</title>
+<style>
+  :root { --tinta:#0f1414; --suave:#566066; --linha:#d5dadd; --papel:#f3f5f6; --cartao:#fff; --ciano:#0a6a73; --alto:#b3261e; --medio:#8a5a00; --baixo:#0b6a49; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--papel); color:var(--tinta); font:16px/1.6 Inter, system-ui, 'Segoe UI', Arial, sans-serif; }
+  .pg { max-width: 1040px; margin: 0 auto; padding: 0 24px 80px; }
+  header.capa { background:#0b0e10; color:#f4f5f6; padding:56px 0 40px; margin-bottom:32px; }
+  header.capa .pg { padding-bottom:0; }
+  .etq { display:inline-block; font-size:.8rem; font-weight:700; letter-spacing:.04em; padding:4px 10px; border-radius:999px; background:#2b2f33; color:#58e0e8; }
+  h1 { font-size: clamp(2rem, 5vw, 3rem); line-height:1.1; margin:14px 0 10px; letter-spacing:-.02em; }
+  h2 { font-size:1.6rem; margin:56px 0 12px; letter-spacing:-.015em; padding-top:8px; border-top:1px solid var(--linha); }
+  h3 { font-size:1.15rem; margin:28px 0 8px; }
+  p { margin:8px 0; max-width: 72ch; } .suave { color:var(--suave); }
+  header.capa p { color:#b9c0c5; max-width:64ch; }
+  .grade { display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); margin:16px 0; }
+  .cx { background:var(--cartao); border:1px solid var(--linha); border-radius:12px; padding:16px 18px; }
+  .cx h4 { margin:0 0 6px; font-size:1rem; }
+  .nota { font-size:2.4rem; font-weight:800; letter-spacing:-.03em; line-height:1; }
+  table { width:100%; border-collapse:collapse; background:var(--cartao); border:1px solid var(--linha); border-radius:12px; overflow:hidden; margin:14px 0; font-size:.93rem; }
+  th, td { text-align:left; padding:10px 12px; border-bottom:1px solid var(--linha); vertical-align:top; }
+  th { background:#eceff1; font-size:.8rem; letter-spacing:.02em; color:var(--suave); }
+  tr:last-child td { border-bottom:0; }
+  .sev { font-weight:700; font-size:.78rem; padding:2px 8px; border-radius:999px; white-space:nowrap; }
+  .sev.alto { background:#fde3e0; color:var(--alto); } .sev.medio { background:#fdeec9; color:var(--medio); } .sev.baixo { background:#d7f2e5; color:var(--baixo); }
+  .ok { color:var(--baixo); font-weight:700; }
+  figure { margin:0; } figure img { width:100%; border:1px solid var(--linha); border-radius:10px; display:block; background:#fff; }
+  figcaption { font-size:.82rem; color:var(--suave); margin-top:6px; }
+  .telas { display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); align-items:start; margin:16px 0; }
+  .telas.largas { grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); }
+  .telas.cel figure img { max-height:520px; object-fit:cover; object-position:top; }
+  .alerta { border-left:4px solid var(--ciano); background:#e6f4f5; padding:12px 16px; border-radius:8px; margin:14px 0; }
+  code { background:#e6eaec; padding:1px 6px; border-radius:6px; font-size:.88em; }
+  ul { padding-left:22px; } li { margin:4px 0; }
+  .fase { border:1px solid var(--linha); background:var(--cartao); border-radius:12px; padding:16px 18px; margin:12px 0; }
+  .fase b.t { display:inline-block; background:#0b0e10; color:#58e0e8; padding:2px 10px; border-radius:6px; margin-right:8px; }
+  .caixa { background:#0b0e10; color:#f4f5f6; border-radius:12px; padding:14px 16px; font:13px/1.5 ui-monospace, Consolas, monospace; white-space:pre; overflow:auto; }
+  @media print { body { background:#fff; } h2 { break-before:page; } .cx, figure, .fase, table { break-inside:avoid; } }
+</style>
+</head>
+<body>
+
+<header class="capa"><div class="pg">
+  <span class="etq">Auditoria de UI/UX, rodada 2</span>
+  <h1>RA Funcional: onde o app está, o que sobra e o que falta</h1>
+  <p>Leitura de 17 telas reais (celular de 390 px e computador de 1366 px), com métricas medidas na página, comparação com as práticas de design de aplicativos e um plano de simplificação com dashboards mais visuais. Versão atual no ar em 11/11/2026.</p>
+</div></header>
+
+<div class="pg">
+
+<h2 style="border-top:0;margin-top:0">1. Resumo para decidir</h2>
+<div class="grade">
+  <div class="cx"><h4>Nota geral</h4><div class="nota">3,4 / 5</div><p class="suave">Boa base visual e técnica. O que segura a nota é excesso de blocos e informação repetida.</p></div>
+  <div class="cx"><h4>O que já está forte</h4><p>Contraste (camada escura e clara), fotos de capa, identidade ciano/lima, botões de 48 px, foco visível, rotas e estados vazios.</p></div>
+  <div class="cx"><h4>O que mais pesa</h4><p>Mesma informação em 3 a 4 lugares, 8 a 11 tamanhos de letra por tela, até 10 blocos por tela e quase nenhum gráfico.</p></div>
+</div>
+
+<p><b>Veredito:</b> o aplicativo está funcionalmente completo e visualmente bem melhor que há uma semana, mas ainda <b>mostra tudo ao mesmo tempo</b>. O aluno quer saber três coisas ("quando é minha próxima aula, como estou indo, reservo outra?") e o professor outras três ("quem vem hoje, quem faltou, o que precisa de atenção?"). Hoje essas respostas ficam espalhadas por cartões do mesmo peso visual. A recomendação é <b>reduzir, hierarquizar e transformar números em gráficos</b>, sem tirar nenhuma função do sistema.</p>
+
+<h2>2. Como foi feita a avaliação</h2>
+<ul>
+  <li><b>Evidência:</b> 17 capturas de tela reais (aluno e professor, celular e computador) e medição automática em cada página: blocos visíveis, elementos clicáveis, tamanhos de fonte e altura total.</li>
+  <li><b>Critérios:</b> heurísticas de usabilidade, lista de verificação de aplicativos (contraste mínimo de 4,5:1, alvos de toque de 44 px, um botão principal por tela, espaçamento em escala, estados de carregamento e vazio) e disciplina de design (hierarquia, densidade, repetição, enfeites).</li>
+  <li><b>Leitura de design:</b> aplicativo de agendamento para alunos e treinador de estúdio boutique, linguagem atlética em duas camadas (estrutura escura, conteúdo claro). Parâmetros de referência: variação de layout 4, movimento 3, densidade visual 3 (calmo, escaneável, poucos blocos).</li>
+  <li><b>Limites:</b> usei dados de demonstração (poucas aulas e poucas presenças). Gráficos e comparações com dados reais só serão avaliáveis quando houver alguns meses de uso.</li>
+</ul>
+
+<h2>3. Placar por critério</h2>
+<table>
+<tr><th>Critério</th><th>Nota</th><th>Por quê</th></tr>
+<tr><td>Hierarquia visual</td><td><b>3</b></td><td>A capa escura destaca o "agora", mas abaixo dela 4 a 6 cartões brancos têm o mesmo peso. Não há "segundo plano" claro.</td></tr>
+<tr><td>Densidade e poluição</td><td><b>2,5</b></td><td>Início do aluno com 7 blocos e Início do professor com 10 (medido). Títulos e rótulos competem com o conteúdo.</td></tr>
+<tr><td>Redundância</td><td><b>2</b></td><td>Próxima aula, plano, meta, presença e treino aparecem em 3 a 4 telas diferentes (mapa na seção 5).</td></tr>
+<tr><td>Consistência</td><td><b>4</b></td><td>Duas fontes, raios, botões e chips padronizados por tokens. Falta padronizar a escala de tamanhos (seção 4).</td></tr>
+<tr><td>Contraste e acessibilidade</td><td><b>4</b></td><td>Texto principal acima de 15:1, apoio acima de 5,4:1, botões legíveis, foco visível, alvos de 44 px. Falta: rótulos em gráficos futuros, ordem de foco do menu lateral.</td></tr>
+<tr><td>Responsividade</td><td><b>4</b></td><td>Sem rolagem lateral entre 320 e 1024 px (medido). Computador usa menu lateral e duas colunas. Tablet usa a coluna do celular.</td></tr>
+<tr><td>Identidade visual</td><td><b>4</b></td><td>Logo, ciano e lima coerentes, fotos de capa aplicadas. Falta ilustração de estado vazio com a marca.</td></tr>
+<tr><td>Dashboards e dados</td><td><b>2</b></td><td>Só números soltos e um gráfico de barras (ocupação da semana). Sem tendência, sem comparação, sem destaque de exceções.</td></tr>
+<tr><td>Navegação e arquitetura</td><td><b>3</b></td><td>Aluno: 5 abas, três delas parecem "agenda" (Início, Agenda, Aulas). Professor: 6 itens, com Início e Chamada mostrando as mesmas aulas.</td></tr>
+<tr><td>Desempenho percebido</td><td><b>4</b></td><td>Esqueletos de carregamento, fotos leves (50 a 150 KB), publicação em rede de borda. Capas ainda sem pré-carga.</td></tr>
+</table>
+
+<h2>4. Métricas medidas em cada tela</h2>
+<p>"Blocos" são cartões, listas e destaques visíveis. "Clicáveis" são botões, links e campos visíveis. "Tamanhos de letra" é quantos tamanhos diferentes aparecem. Meta sugerida: no máximo 5 blocos, 6 tamanhos de letra e 8 clicáveis acima da dobra por tela.</p>
+<table>
+<tr><th>Tela</th><th>Blocos</th><th>Clicáveis</th><th>Tamanhos de letra</th><th>Altura (px)</th><th>Leitura</th></tr>
+<tr><td>Aluno, celular: Início</td><td>7</td><td>8</td><td>8</td><td>1183</td><td><span class="sev medio">Médio</span> Bloco demais para uma tela "de hoje".</td></tr>
+<tr><td>Aluno, celular: Agenda</td><td>2</td><td>19</td><td>7</td><td>844</td><td><span class="sev baixo">Baixo</span> Enxuta. Os 19 clicáveis são a faixa de 14 dias.</td></tr>
+<tr><td>Aluno, celular: Aulas</td><td>3</td><td>4</td><td>10</td><td>1541</td><td><span class="sev alto">Alto</span> 10 tamanhos de letra e três blocos de "frequência".</td></tr>
+<tr><td>Aluno, celular: Avisos</td><td>0</td><td>8</td><td>5</td><td>844</td><td><span class="sev baixo">Baixo</span> Simples e clara.</td></tr>
+<tr><td>Aluno, celular: Perfil</td><td>4</td><td>12</td><td>7</td><td>1581</td><td><span class="sev medio">Médio</span> 5 cartões empilhados; trocar senha e aparência pesam.</td></tr>
+<tr><td>Aluno, celular: detalhe da aula</td><td>1</td><td>3</td><td>6</td><td>844</td><td><span class="sev baixo">Baixo</span> Boa, mas a data aparece duas vezes (barra e capa).</td></tr>
+<tr><td>Aluno, computador: Início</td><td>7</td><td>8</td><td>8</td><td>820</td><td><span class="sev medio">Médio</span> Cabe numa tela, mas cheia.</td></tr>
+<tr><td>Aluno, computador: Agenda</td><td>3</td><td>20</td><td>11</td><td>820</td><td><span class="sev alto">Alto</span> 11 tamanhos de letra com a aula aberta ao lado.</td></tr>
+<tr><td>Professor, computador: Início</td><td>10</td><td>9</td><td>9</td><td>1135</td><td><span class="sev alto">Alto</span> Maior densidade do sistema.</td></tr>
+<tr><td>Professor, computador: Chamada</td><td>4</td><td>8</td><td>8</td><td>820</td><td><span class="sev medio">Médio</span> Repete as aulas do Início.</td></tr>
+<tr><td>Professor, computador: Turmas</td><td>0</td><td>31</td><td>6</td><td>820</td><td><span class="sev baixo">Baixo</span> Grade semanal clara, mas 31 botões "Editar/Desativar".</td></tr>
+<tr><td>Professor, computador: Treinos</td><td>0</td><td>11</td><td>5</td><td>820</td><td><span class="sev baixo">Baixo</span> Enxuta.</td></tr>
+<tr><td>Professor, computador: Alunos</td><td>4</td><td>17</td><td>8</td><td>1099</td><td><span class="sev medio">Médio</span> Tabela larga com plano, senha e desativar na mesma linha.</td></tr>
+<tr><td>Professor, celular: Início</td><td>10</td><td>9</td><td>9</td><td>1851</td><td><span class="sev alto">Alto</span> Duas telas e meia de rolagem para ver tudo.</td></tr>
+</table>
+
+<h2>5. Redundâncias: a mesma informação em vários lugares</h2>
+<table>
+<tr><th>Informação</th><th>Onde aparece hoje</th><th>Proposta</th></tr>
+<tr><td>Próxima aula</td><td>Início (destaque), Agenda (cartão), Aulas (lista), Avisos (notificação)</td><td>Destaque só no Início. Na Agenda vira uma linha marcada na lista. Aulas guarda a lista completa.</td></tr>
+<tr><td>Plano semanal</td><td>Etiqueta no Início, etiqueta na Agenda, cartão em Aulas, quadro do professor</td><td>Uma única barra "Esta semana: 2 de 5" dentro do cartão de desempenho. Sem etiquetas soltas.</td></tr>
+<tr><td>Presença e constância</td><td>Início (aulas no mês e constância), Aulas (anel), Aulas (calendário), Aulas (meta)</td><td>Um cartão "Seu mês": anel de presença, 8 semanas em barras, meta com Bronze, Prata e Ouro. Calendário vira detalhe opcional.</td></tr>
+<tr><td>Treino do dia</td><td>Início (resumo), detalhe da aula (completo)</td><td>No Início, só o título do treino com link. O conteúdo fica no detalhe da aula.</td></tr>
+<tr><td>Horários de hoje</td><td>Início e Agenda</td><td>Início mostra no máximo as próximas 2 aulas. Agenda é o lugar de todos os horários.</td></tr>
+<tr><td>Recado do professor</td><td>Início (cartão) e Avisos (lista)</td><td>Só o sino com contagem no topo; o recado novo aparece como faixa curta e some quando lido.</td></tr>
+<tr><td>Aulas do dia (professor)</td><td>Início ("Turmas de hoje"), botão "Painel do dia", aba Chamada</td><td>Uma só tela "Hoje" com a chamada dentro de cada aula. Trocar de dia fica na mesma tela.</td></tr>
+<tr><td>Ações por aluno (professor)</td><td>Plano, Nova senha e Desativar na mesma linha da tabela</td><td>Menu "mais ações" por linha; o plano é editado ao abrir o aluno.</td></tr>
+<tr><td>Título de bloco vs título de tela</td><td>"Frequência em novembro" aparece em dois cartões da mesma tela</td><td>Um cartão só (ver "Seu mês").</td></tr>
+</table>
+
+<h2>6. Achados por tela</h2>
+
+<h3>6.1 Aluno, celular</h3>
+<div class="telas cel">
+  <figure><img src="img/aluno-cel-inicio.png" alt="Início do aluno"><figcaption>Início</figcaption></figure>
+  <figure><img src="img/aluno-cel-agenda.png" alt="Agenda do aluno"><figcaption>Agenda</figcaption></figure>
+  <figure><img src="img/aluno-cel-aulas.png" alt="Minhas aulas"><figcaption>Aulas</figcaption></figure>
+  <figure><img src="img/aluno-cel-perfil.png" alt="Perfil"><figcaption>Perfil</figcaption></figure>
+</div>
+<table>
+<tr><th>Tela</th><th>Gravidade</th><th>Achado</th><th>Correção</th></tr>
+<tr><td>Início</td><td><span class="sev medio">Médio</span></td><td>Sete blocos de peso parecido (capa, 3 números, treino, horários, recado). O olho não sabe onde parar depois da capa.</td><td>Capa (próxima aula) + um cartão "Seu mês" com gráfico + lista curta de hoje. Treino e recado viram linhas de uma linha.</td></tr>
+<tr><td>Início</td><td><span class="sev medio">Médio</span></td><td>Os três números (aulas, semanas, meta) estão sem contexto: "0" e "0%" não dizem se é bom ou ruim.</td><td>Mostrar meta e direção: "7 de 12 aulas, 2 acima do mês passado" com mini barras de 8 semanas.</td></tr>
+<tr><td>Aulas</td><td><span class="sev alto">Alto</span></td><td>10 tamanhos de letra, três cartões de frequência (plano, desempenho, calendário) mais abas e lembrete. É a tela mais carregada do aluno.</td><td>Uma tela de lista (abas Próximas, Espera, Histórico) e um cartão "Seu mês" recolhível com o calendário dentro.</td></tr>
+<tr><td>Agenda</td><td><span class="sev baixo">Baixo</span></td><td>Enxuta e clara. Faixa de 14 dias ocupa bastante da capa no celular.</td><td>Reduzir a faixa para 7 dias visíveis com rolagem; manter a capa com foto.</td></tr>
+<tr><td>Perfil</td><td><span class="sev medio">Médio</span></td><td>Dados, aparência, avisos, senha e instalar app, todos com a mesma altura visual.</td><td>Agrupar em "Conta" e "Preferências" recolhíveis; "Instalar app" só quando fizer sentido.</td></tr>
+<tr><td>Detalhe da aula</td><td><span class="sev baixo">Baixo</span></td><td>Data repetida na barra e na capa; a linha divisória e o título "Treino do dia" disputam com o título do treino.</td><td>Barra só com seta de voltar; data dentro da capa; treino sem rótulo extra.</td></tr>
+</table>
+
+<h3>6.2 Aluno, computador</h3>
+<div class="telas largas">
+  <figure><img src="img/aluno-desk-inicio.png" alt="Início do aluno no computador"><figcaption>Início no computador</figcaption></figure>
+  <figure><img src="img/aluno-desk-agenda.png" alt="Agenda no computador"><figcaption>Agenda com a aula aberta ao lado</figcaption></figure>
+</div>
+<ul>
+  <li><span class="sev baixo">Baixo</span> O menu lateral escuro em altura total ficou profissional. O conteúdo claro tem boa leitura.</li>
+  <li><span class="sev medio">Médio</span> A Agenda com aula aberta tem 11 tamanhos de letra: o painel direito repete a capa do detalhe e a lista repete os horários. Sugestão: no computador a aula aberta mostra só treino e ação, sem repetir cabeçalho.</li>
+</ul>
+
+<h3>6.3 Professor, computador e celular</h3>
+<div class="telas largas">
+  <figure><img src="img/prof-desk-inicio.png" alt="Início do professor"><figcaption>Início do professor (computador)</figcaption></figure>
+  <figure><img src="img/prof-desk-alunos.png" alt="Alunos"><figcaption>Alunos</figcaption></figure>
+  <figure><img src="img/prof-desk-chamada.png" alt="Chamada"><figcaption>Chamada</figcaption></figure>
+  <figure><img src="img/prof-desk-turmas.png" alt="Turmas"><figcaption>Turmas</figcaption></figure>
+</div>
+<table>
+<tr><th>Tela</th><th>Gravidade</th><th>Achado</th><th>Correção</th></tr>
+<tr><td>Início</td><td><span class="sev alto">Alto</span></td><td>Dez blocos. Quatro quadros de números iguais, turmas, treino, aviso e gráfico: tudo com o mesmo peso. Com poucos dados, quatro zeros em fila parecem "app vazio".</td><td>Três faixas: (1) "Hoje" com as aulas e a chamada inline; (2) "Precisa de atenção" (sem marcação, fila grande, faltas seguidas); (3) tendências em gráficos.</td></tr>
+<tr><td>Início e Chamada</td><td><span class="sev medio">Médio</span></td><td>São duas portas para a mesma tarefa (marcar presença).</td><td>Fundir: Início vira "Hoje"; a aba Chamada deixa de existir como tela separada e o seletor de dia fica no Início.</td></tr>
+<tr><td>Alunos</td><td><span class="sev medio">Médio</span></td><td>Linha com nome, telefone, aulas, plano, situação, Nova senha e Desativar. Convite, lista de convites e relatório mensal na mesma página.</td><td>Lista simples (nome, plano, presença do mês em mini barra). Ações no menu da linha. Relatório vira aba "Relatório do mês".</td></tr>
+<tr><td>Turmas</td><td><span class="sev baixo">Baixo</span></td><td>Grade semanal clara. 31 botões iguais de Editar e Desativar poluem.</td><td>Clicar na célula abre o editor; "Desativar" dentro dele.</td></tr>
+<tr><td>Treinos</td><td><span class="sev baixo">Baixo</span></td><td>Enxuta e boa. Poderia mostrar a semana como linha do tempo com status (publicado, rascunho, vazio) em cores.</td><td>Manter; pequeno ajuste visual.</td></tr>
+</table>
+<div class="telas cel">
+  <figure><img src="img/prof-cel-inicio.png" alt="Início do professor no celular"><figcaption>Professor, celular: Início (1851 px de altura)</figcaption></figure>
+  <figure><img src="img/prof-cel-alunos.png" alt="Alunos no celular"><figcaption>Professor, celular: Alunos</figcaption></figure>
+</div>
+
+<h2>7. Tipografia e cor</h2>
+<ul>
+  <li><span class="sev medio">Médio</span> <b>Escala solta:</b> as telas usam de 5 a 11 tamanhos de letra (13, 14, 15, 16, 18, 20, 22, 24, 28, 30, 32, 34, 36, 40, 44, 48 px). A meta de 6 tamanhos deixa tudo mais calmo. Proposta: <code>12, 14, 16, 20, 28, 44</code> (rótulo, apoio, texto, título de cartão, número médio, título/número grande).</li>
+  <li><span class="sev baixo">Baixo</span> <b>Famílias:</b> duas (Bebas Neue e Inter), corretas. Bebas só em títulos de tela e números.</li>
+  <li><span class="sev baixo">Baixo</span> <b>Cor:</b> uma cor de ação por identidade, status por texto mais ícone, camada clara e escura bem separadas. O verde de "Confirmado" e o ciano de ação são parecidos para quem tem daltonismo; manter sempre o ícone de check.</li>
+  <li><span class="sev baixo">Baixo</span> <b>Pontos a vigiar:</b> texto suave sobre papel cinza (5,4:1) está no limite; evitar texto menor que 13 px nessa combinação.</li>
+</ul>
+
+<h2>8. Navegação e arquitetura</h2>
+<table>
+<tr><th></th><th>Hoje</th><th>Proposta</th></tr>
+<tr><td><b>Aluno</b></td><td>5 abas: Início, Agenda, Aulas, Avisos, Perfil</td><td><b>4 abas:</b> Início, Agenda, Minhas aulas, Perfil. Avisos viram o sino no topo com contagem. Reduz uma decisão e libera espaço na barra.</td></tr>
+<tr><td><b>Professor</b></td><td>6 itens: Início, Chamada, Turmas, Treinos, Alunos, Perfil</td><td><b>5 itens:</b> Hoje (com chamada), Turmas, Treinos, Alunos, Perfil. Relatório entra dentro de Alunos.</td></tr>
+</table>
+<div class="alerta">Mudar a quantidade de abas altera rótulos que os alunos já podem ter visto. Pela regra de redesign, isso só é feito com a sua aprovação (decisão 1 na seção 11).</div>
+
+<h2>9. Dashboards: o que falta e como ficaria</h2>
+<p>Hoje existem números isolados e um gráfico de barras. A proposta é criar poucos componentes visuais e reutilizá-los, sem biblioteca externa (gráficos em SVG próprio, leves e com texto alternativo).</p>
+<table>
+<tr><th>Componente</th><th>Onde usar</th><th>Dados</th></tr>
+<tr><td><b>Anel de presença</b> (já existe, refinar)</td><td>Aluno: Seu mês</td><td>Presenças sobre aulas reservadas do mês.</td></tr>
+<tr><td><b>Barras das últimas 8 semanas</b></td><td>Aluno: Seu mês. Professor: frequência geral</td><td>Presenças por semana. Nova consulta no banco (soma por semana).</td></tr>
+<tr><td><b>Meta com marcos</b> (Bronze, Prata, Ouro)</td><td>Aluno: Seu mês</td><td>Já existe (meta do trimestre); só muda o desenho: barra com três marcas.</td></tr>
+<tr><td><b>Mapa de calor por dia e horário</b></td><td>Professor: ocupação</td><td>Confirmados sobre vagas por turma e dia da semana (4 a 8 semanas).</td></tr>
+<tr><td><b>Linha de frequência</b> (12 semanas)</td><td>Professor: tendência</td><td>Presenças sobre reservas por semana.</td></tr>
+<tr><td><b>Lista "Precisa de atenção"</b></td><td>Professor: Hoje</td><td>Aulas sem presença marcada, filas grandes, alunos com 2 ou mais faltas seguidas.</td></tr>
+<tr><td><b>Mini barras por aluno</b></td><td>Professor: Alunos</td><td>Presença do mês de cada aluno ao lado do nome.</td></tr>
+</table>
+
+<h3>Esboço da nova tela inicial do aluno (celular)</h3>
+<div class="caixa">┌────────────────────────────────┐
+│ [logo]                    (sino 2) │  topo escuro
+│ Olá, Ana                           │
+│ ┌────────────────────────────────┐ │  capa com foto
+│ │ AMANHÃ 06:00  Funcional Manhã  │ │  próxima aula: o único destaque
+│ │ Coach Rafael · 8/12 vagas      │ │
+│ │ [ Cancelar reserva ]           │ │  uma ação principal
+│ └────────────────────────────────┘ │
+├────────────────────────────────────┤
+│ Seu mês                            │  um cartão com gráfico
+│ (anel 78%)  ▂▄▆▅▇▆▇█  8 semanas    │
+│ Meta do trimestre ●──●──○ Prata    │
+├────────────────────────────────────┤
+│ Hoje                               │  lista curta
+│ 18:30 Funcional Noite   [Reservar] │
+│ Treino: Potência e core  ›         │  uma linha
+└────────────────────────────────────┘
+ Início · Agenda · Minhas aulas · Perfil</div>
+
+<h3>Esboço da tela "Hoje" do professor (computador)</h3>
+<div class="caixa">┌ Hoje, quarta 11 nov     ‹ Ontem  Hoje  Amanhã ›   [Nova turma] ┐
+│ ┌ Precisa de atenção ─────────────┐ ┌ Ocupação da semana ────────┐ │
+│ │ 2 aulas sem presença marcada  › │ │ ░░▒▒▓▓  mapa de calor       │ │
+│ │ 18:30 com 3 na fila           › │ │ turmas x dias               │ │
+│ └─────────────────────────────────┘ └─────────────────────────────┘ │
+│ 06:00 Funcional Manhã   8/12   [Compareceu] [Faltou]  por aluno     │
+│ 07:00 Funcional Cedo    5/8    chamada aberta ao clicar             │
+│ ┌ Frequência (12 semanas) ────────┐ ┌ Alunos em queda ────────────┐ │
+│ │ ▁▃▅▆▆▇▇█                        │ │ nome · 2 faltas seguidas    │ │
+│ └─────────────────────────────────┘ └─────────────────────────────┘ │</div>
+
+<h2>10. Plano em fases</h2>
+<div class="fase"><b class="t">Fase A</b><b>Simplificar sem perder função</b> (esforço médio, risco baixo)<ul>
+  <li>Eliminar as repetições da seção 5 (plano, próxima aula, recado, treino, horários).</li>
+  <li>Uma escala de 6 tamanhos de letra em todo o app; no máximo 5 blocos por tela.</li>
+  <li>Perfil agrupado e recolhível; Turmas e Alunos com ações em menu.</li>
+  <li><b>Resultado esperado:</b> Início do aluno de 7 para 4 blocos; Início do professor de 10 para 5; menos 30% de rolagem.</li>
+</ul></div>
+<div class="fase"><b class="t">Fase B</b><b>Dashboards visuais</b> (esforço médio a alto, risco médio)<ul>
+  <li>Componentes de anel, barras, linha, mapa de calor e meta com marcos, com texto alternativo e cores por identidade.</li>
+  <li>Duas consultas novas no banco (série semanal do aluno e série semanal do estúdio). Exigem aplicar uma migration.</li>
+  <li><b>Resultado esperado:</b> "Seu mês" e "Frequência do estúdio" no lugar de seis números soltos.</li>
+</ul></div>
+<div class="fase"><b class="t">Fase C</b><b>Arquitetura</b> (esforço médio, risco médio: muda rótulos)<ul>
+  <li>Aluno com 4 abas (Avisos vira o sino) e professor com "Hoje" no lugar de Início mais Chamada.</li>
+  <li>Relatório do mês dentro de Alunos.</li>
+</ul></div>
+<div class="fase"><b class="t">Fase D</b><b>Acabamento</b> (esforço baixo)<ul>
+  <li>Ilustrações de estado vazio com a marca, pré-carga das capas, transições curtas entre telas, ordem de foco no menu lateral.</li>
+  <li>Refazer o manual com as capturas novas.</li>
+</ul></div>
+<p><b>Ordem recomendada:</b> A, depois B, depois C. A fase D pode correr junto. Cada fase termina com capturas, medição (blocos, tamanhos de letra, altura) e testes, para comparar com esta auditoria.</p>
+
+<h2>11. Decisões que preciso de você</h2>
+<table>
+<tr><th>#</th><th>Decisão</th><th>Minha recomendação</th></tr>
+<tr><td>1</td><td>Reduzir o aluno para 4 abas (Avisos vira o sino no topo)?</td><td>Sim.</td></tr>
+<tr><td>2</td><td>Fundir "Início" e "Chamada" do professor em uma tela "Hoje"?</td><td>Sim, mantendo o seletor de dia.</td></tr>
+<tr><td>3</td><td>Tirar "Treino de hoje" e "Horários de hoje" do Início do aluno, deixando só uma linha de cada?</td><td>Sim: o detalhe e a Agenda já cobrem.</td></tr>
+<tr><td>4</td><td>Relatório mensal e convites dentro de Alunos, em abas?</td><td>Sim.</td></tr>
+<tr><td>5</td><td>Gráficos sem biblioteca externa (SVG próprio)?</td><td>Sim: menor, mais rápido e fiel à identidade.</td></tr>
+<tr><td>6</td><td>Começo pela Fase A agora e deixo B e C para depois da sua avaliação?</td><td>Sim.</td></tr>
+</table>
+
+<h2>12. O que está bom e deve ser preservado</h2>
+<ul>
+  <li>Estrutura em duas camadas (escuro e claro), com contraste alto e identidade reconhecível.</li>
+  <li>Capas com foto e véu escuro; logo e ícones do aplicativo em ciano e lima.</li>
+  <li>Botões de 48 px, foco visível, rótulos acima dos campos, mensagens de erro junto ao campo.</li>
+  <li>Estados de carregamento, vazios e de erro em todas as listas; olho para mostrar a senha.</li>
+  <li>Sem rolagem lateral de 320 a 1024 px; barra de rolagem discreta.</li>
+  <li>Regras claras no texto (prazo de cancelamento, fila, presença) e no banco de dados.</li>
+</ul>
+
+<h2>13. Galeria completa</h2>
+<div class="telas cel">
+  <figure><img src="img/aluno-cel-avisos.png" alt="Avisos"><figcaption>Aluno: Avisos</figcaption></figure>
+  <figure><img src="img/aluno-cel-detalhe.png" alt="Detalhe da aula"><figcaption>Aluno: detalhe da aula</figcaption></figure>
+</div>
+<div class="telas largas">
+  <figure><img src="img/aluno-desk-aulas.png" alt="Aulas no computador"><figcaption>Aluno: Aulas (computador)</figcaption></figure>
+  <figure><img src="img/prof-desk-treinos.png" alt="Treinos"><figcaption>Professor: Treinos</figcaption></figure>
+  <figure><img src="img/prof-desk-perfil.png" alt="Perfil do professor"><figcaption>Professor: Perfil</figcaption></figure>
+</div>
+
+</div>
+</body>
+</html>

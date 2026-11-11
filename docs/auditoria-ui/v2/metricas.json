@@ -1,0 +1,446 @@
+{
+  "aluno-cel-inicio": {
+    "altura": 1183,
+    "largura": 390,
+    "blocos": 7,
+    "interativos": 8,
+    "tamanhosFonte": [
+      13,
+      14,
+      15,
+      16,
+      18,
+      22,
+      30,
+      40
+    ],
+    "familias": [
+      "Bebas Neue",
+      "Inter Variable"
+    ],
+    "coresTexto": 7,
+    "titulos": [
+      "Olá, Ana",
+      "Treino de hoje",
+      "Horários de hoje"
+    ]
+  },
+  "aluno-cel-agenda": {
+    "altura": 844,
+    "largura": 390,
+    "blocos": 2,
+    "interativos": 19,
+    "tamanhosFonte": [
+      12,
+      13,
+      14,
+      16,
+      28,
+      30,
+      34
+    ],
+    "familias": [
+      "Inter Variable",
+      "Bebas Neue"
+    ],
+    "coresTexto": 6,
+    "titulos": [
+      "Quarta-feira, 11 de novembro"
+    ]
+  },
+  "aluno-cel-aulas": {
+    "altura": 1541,
+    "largura": 390,
+    "blocos": 3,
+    "interativos": 4,
+    "tamanhosFonte": [
+      13,
+      14,
+      15,
+      16,
+      18,
+      22,
+      24,
+      32,
+      40,
+      48
+    ],
+    "familias": [
+      "Bebas Neue",
+      "Inter Variable"
+    ],
+    "coresTexto": 5,
+    "titulos": [
+      "Minhas aulas",
+      "Plano de 5 aulas por semana",
+      "Seu desempenho em novembro",
+      "Frequência em novembro"
+    ]
+  },
+  "aluno-cel-avisos": {
+    "altura": 844,
+    "largura": 390,
+    "blocos": 0,
+    "interativos": 8,
+    "tamanhosFonte": [
+      13,
+      14,
+      15,
+      16,
+      24
+    ],
+    "familias": [
+      "Inter Variable",
+      "Bebas Neue"
+    ],
+    "coresTexto": 4,
+    "titulos": [
+      "Notificações"
+    ]
+  },
+  "aluno-cel-perfil": {
+    "altura": 1581,
+    "largura": 390,
+    "blocos": 4,
+    "interativos": 12,
+    "tamanhosFonte": [
+      13,
+      14,
+      15,
+      16,
+      18,
+      24,
+      40
+    ],
+    "familias": [
+      "Bebas Neue",
+      "Inter Variable"
+    ],
+    "coresTexto": 5,
+    "titulos": [
+      "Perfil",
+      "Aparência",
+      "Trocar senha",
+      "Instalar o app"
+    ]
+  },
+  "aluno-cel-detalhe": {
+    "altura": 844,
+    "largura": 390,
+    "blocos": 1,
+    "interativos": 3,
+    "tamanhosFonte": [
+      13,
+      14,
+      16,
+      20,
+      24,
+      44
+    ],
+    "familias": [
+      "Inter Variable",
+      "Bebas Neue"
+    ],
+    "coresTexto": 6,
+    "titulos": [
+      "Quarta-feira, 11 de novembro",
+      "Funcional Manhã",
+      "Treino do dia"
+    ]
+  },
+  "aluno-desk-inicio": {
+    "altura": 820,
+    "largura": 1366,
+    "blocos": 7,
+    "interativos": 8,
+    "tamanhosFonte": [
+      13,
+      14,
+      15,
+      16,
+      18,
+      22,
+      30,
+      40
+    ],
+    "familias": [
+      "Bebas Neue",
+      "Inter Variable"
+    ],
+    "coresTexto": 7,
+    "titulos": [
+      "Olá, Ana",
+      "Treino de hoje",
+      "Horários de hoje"
+    ]
+  },
+  "aluno-desk-agenda": {
+    "altura": 820,
+    "largura": 1366,
+    "blocos": 3,
+    "interativos": 20,
+    "tamanhosFonte": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      20,
+      24,
+      28,
+      30,
+      34,
+      44
+    ],
+    "familias": [
+      "Inter Variable",
+      "Bebas Neue"
+    ],
+    "coresTexto": 8,
+    "titulos": [
+      "Quarta-feira, 11 de novembro",
+      "Funcional Noite",
+      "Treino do dia"
+    ]
+  },
+  "aluno-desk-aulas": {
+    "altura": 1189,
+    "largura": 1366,
+    "blocos": 3,
+    "interativos": 4,
+    "tamanhosFonte": [
+      13,
+      14,
+      15,
+      16,
+      18,
+      22,
+      24,
+      32,
+      40,
+      48
+    ],
+    "familias": [
+      "Bebas Neue",
+      "Inter Variable"
+    ],
+    "coresTexto": 5,
+    "titulos": [
+      "Minhas aulas",
+      "Plano de 5 aulas por semana",
+      "Seu desempenho em novembro",
+      "Frequência em novembro"
+    ]
+  },
+  "prof-desk-inicio": {
+    "altura": 1135,
+    "largura": 1366,
+    "blocos": 10,
+    "interativos": 9,
+    "tamanhosFonte": [
+      13,
+      14,
+      15,
+      16,
+      18,
+      20,
+      24,
+      32,
+      40
+    ],
+    "familias": [
+      "Bebas Neue",
+      "Inter Variable"
+    ],
+    "coresTexto": 8,
+    "titulos": [
+      "Olá, Rafael",
+      "Turmas de hoje",
+      "Treino de hoje",
+      "Aviso aos alunos",
+      "Ocupação da semana"
+    ]
+  },
+  "prof-desk-chamada": {
+    "altura": 820,
+    "largura": 1366,
+    "blocos": 4,
+    "interativos": 8,
+    "tamanhosFonte": [
+      13,
+      14,
+      16,
+      18,
+      24,
+      32,
+      36,
+      40
+    ],
+    "familias": [
+      "Inter Variable",
+      "Bebas Neue"
+    ],
+    "coresTexto": 3,
+    "titulos": [
+      "Quarta-feira, 11 de novembro",
+      "Aulas de Quarta-feira, 11 de novembro",
+      "Funcional Manhã",
+      "Funcional Cedo",
+      "Funcional Noite"
+    ]
+  },
+  "prof-desk-turmas": {
+    "altura": 820,
+    "largura": 1366,
+    "blocos": 0,
+    "interativos": 31,
+    "tamanhosFonte": [
+      13,
+      14,
+      15,
+      16,
+      32,
+      40
+    ],
+    "familias": [
+      "Bebas Neue",
+      "Inter Variable"
+    ],
+    "coresTexto": 4,
+    "titulos": [
+      "Turmas"
+    ]
+  },
+  "prof-desk-treinos": {
+    "altura": 820,
+    "largura": 1366,
+    "blocos": 0,
+    "interativos": 11,
+    "tamanhosFonte": [
+      13,
+      14,
+      16,
+      32,
+      40
+    ],
+    "familias": [
+      "Bebas Neue",
+      "Inter Variable"
+    ],
+    "coresTexto": 4,
+    "titulos": [
+      "Treinos"
+    ]
+  },
+  "prof-desk-alunos": {
+    "altura": 1099,
+    "largura": 1366,
+    "blocos": 4,
+    "interativos": 17,
+    "tamanhosFonte": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      18,
+      24,
+      40
+    ],
+    "familias": [
+      "Bebas Neue",
+      "Inter Variable"
+    ],
+    "coresTexto": 7,
+    "titulos": [
+      "Alunos",
+      "Lista de alunos",
+      "Convidar aluno",
+      "Convites",
+      "Relatório de novembro de 2026"
+    ]
+  },
+  "prof-desk-perfil": {
+    "altura": 1349,
+    "largura": 1366,
+    "blocos": 4,
+    "interativos": 12,
+    "tamanhosFonte": [
+      13,
+      14,
+      15,
+      16,
+      18,
+      24,
+      40
+    ],
+    "familias": [
+      "Bebas Neue",
+      "Inter Variable"
+    ],
+    "coresTexto": 5,
+    "titulos": [
+      "Perfil",
+      "Aparência",
+      "Trocar senha",
+      "Instalar o app"
+    ]
+  },
+  "prof-cel-inicio": {
+    "altura": 1851,
+    "largura": 390,
+    "blocos": 10,
+    "interativos": 9,
+    "tamanhosFonte": [
+      13,
+      14,
+      15,
+      16,
+      18,
+      20,
+      24,
+      32,
+      40
+    ],
+    "familias": [
+      "Bebas Neue",
+      "Inter Variable"
+    ],
+    "coresTexto": 8,
+    "titulos": [
+      "Olá, Rafael",
+      "Turmas de hoje",
+      "Treino de hoje",
+      "Aviso aos alunos",
+      "Ocupação da semana"
+    ]
+  },
+  "prof-cel-alunos": {
+    "altura": 1626,
+    "largura": 390,
+    "blocos": 4,
+    "interativos": 17,
+    "tamanhosFonte": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      18,
+      24,
+      40
+    ],
+    "familias": [
+      "Bebas Neue",
+      "Inter Variable"
+    ],
+    "coresTexto": 7,
+    "titulos": [
+      "Alunos",
+      "Lista de alunos",
+      "Convidar aluno",
+      "Convites",
+      "Relatório de novembro de 2026"
+    ]
+  }
+}
