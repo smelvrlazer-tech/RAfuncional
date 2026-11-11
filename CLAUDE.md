@@ -22,7 +22,7 @@ npm run dev -- --host 127.0.0.1 --port 5173
 npx tsc --noEmit && npx vitest run   # 33 arquivos / 299 testes (em 04/11/2026)
 npm run build
 ```
-- Testes de banco (raiz, `npm test`) rodam contra o projeto Supabase DEV na nuvem e precisam de `.env.test`. **Apagam os dados do DEV** (turmas, sessões, check-ins): depois rode `npm run seed:dev` em `web/`. Acumulam usuários `@teste.local`: limpe com `node scripts/limpar-usuarios-teste.mjs` (ou `scripts/limpar-dev-manter-tres.mjs` para deixar só Rafael, Ana e Bruno).
+- **ATENÇÃO (11/11/2026): o projeto Supabase `ra-funcional-dev` agora é o banco de PRODUÇÃO** (site em https://rafuncional.netlify.app). Os testes de banco e o `seed:dev` estão desativados de propósito (`.env.test` foi renomeado para `.env.producao`) porque apagam dados. **Nunca** recrie o `.env.test` apontando para esse projeto; crie um projeto de desenvolvimento novo primeiro. Histórico: os testes de banco (raiz, `npm test`) rodavam contra o DEV e precisavam de `.env.test`. **Apagam os dados do DEV** (turmas, sessões, check-ins): depois rode `npm run seed:dev` em `web/`. Acumulam usuários `@teste.local`: limpe com `node scripts/limpar-usuarios-teste.mjs` (ou `scripts/limpar-dev-manter-tres.mjs` para deixar só Rafael, Ana e Bruno).
 - Segredos: estão em `segredos.7z` (criptografado com senha, que só o Pedro tem). Restaure com `powershell -ExecutionPolicy Bypass -File scripts/restaurar-segredos.ps1` (precisa do 7-Zip). Em texto puro **nunca** vão para o git: `.env.test`, `web/.env.local`, `web/.dev-credenciais.txt`. Ao mudar uma chave, refaça o `.7z`.
 - Supabase: `npx supabase login` e `npx supabase link` na máquina nova. Docker não é necessário (usamos o projeto DEV na nuvem).
 
