@@ -27,6 +27,8 @@ const CAMINHOS = {
   telefone: 'M8 3h8v18H8zM11 18h2',
   monitor: 'M3 5h18v11H3zM8 20h8M12 16v4',
   pessoa:'M12 12a3.5 3.5 0 100-7 3.5 3.5 0 000 7zM5 20a7 7 0 0114 0',
+  olho: 'M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12zM12 15a3 3 0 100-6 3 3 0 000 6z',
+  olhoRiscado: 'M3 3l18 18M10.6 6.1A9.6 9.6 0 0112 5.5C18.5 5.5 22 12 22 12a16 16 0 01-3.2 3.9M6.4 7.4C3.7 9.2 2 12 2 12s3.5 6.5 10 6.5c1.4 0 2.7-.3 3.8-.8M9.9 9.9a3 3 0 004.2 4.2',
 } as const
 
 export type NomeIcone = keyof typeof CAMINHOS

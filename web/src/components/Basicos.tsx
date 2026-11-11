@@ -1,5 +1,5 @@
 import type { ButtonHTMLAttributes, InputHTMLAttributes, ReactNode } from 'react'
-import { useId } from 'react'
+import { useId, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Icone, type NomeIcone } from './Icone'
 import { iniciais } from '../lib/texto'
@@ -42,14 +42,24 @@ export function Campo({
   rotulo, dica, erro, icone, ...input
 }: InputHTMLAttributes<HTMLInputElement> & { rotulo: string; dica?: string; erro?: string | null; icone?: NomeIcone }) {
   const id = useId()
+  // Campo de senha: botão do olho mostra/oculta o que foi digitado (para conferir antes de entrar).
+  const ehSenha = input.type === 'password'
+  const [senhaVisivel, setSenhaVisivel] = useState(false)
   const idDica = `${id}-dica`
   const idErro = `${id}-erro`
   const descr = [dica ? idDica : null, erro ? idErro : null].filter(Boolean).join(' ') || undefined
   return (
     <div className="campo">
       <label className="campo__rotulo" htmlFor={id}>{rotulo}</label>
-      <div className={icone ? 'campo--com-icone' : undefined}>
-        <input id={id} className="campo__entrada" aria-invalid={erro ? true : undefined} aria-describedby={descr} {...input} />
+      <div className={[icone ? 'campo--com-icone' : '', ehSenha ? 'campo--com-olho' : ''].filter(Boolean).join(' ') || undefined}>
+        <input id={id} className="campo__entrada" aria-invalid={erro ? true : undefined} aria-describedby={descr} {...input}
+          type={ehSenha && senhaVisivel ? 'text' : input.type} />
+        {ehSenha && (
+          <button type="button" className="campo__olho" aria-pressed={senhaVisivel} aria-label={senhaVisivel ? 'Ocultar senha' : 'Mostrar senha'}
+            onClick={() => setSenhaVisivel((v) => !v)}>
+            <Icone nome={senhaVisivel ? 'olhoRiscado' : 'olho'} tamanho={20} />
+          </button>
+        )}
         {icone && <Icone nome={icone} tamanho={18} className="campo__icone" />}
       </div>
       {dica && <p className="campo__dica" id={idDica}>{dica}</p>}

@@ -530,3 +530,25 @@
 }
 .alternador-tema__opcao[aria-pressed='true'] { background: var(--cor-acento); color: var(--cor-sobre-acento); }
 @media (max-width: 899px) { .alternador-tema { bottom: 84px; } }
+
+/* Botão do olho no campo de senha (mostrar/ocultar). */
+.campo--com-olho { position: relative; }
+.campo--com-olho .campo__entrada { padding-right: 48px; }
+.campo__olho {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: var(--raio-p);
+  background: transparent;
+  color: var(--cor-texto-suave);
+  cursor: pointer;
+}
+.campo__olho:hover, .campo__olho[aria-pressed='true'] { color: var(--cor-acento-texto); }
+
+/* O Edge mostra o próprio olho em campos de senha; já temos o nosso. */
+input::-ms-reveal, input::-ms-clear { display: none; }
