@@ -23,7 +23,7 @@ export function ShellTreinador() {
 
   return (
     <div className="painel">
-      <header className="lateral">
+      <header className="lateral sup-escura">
         <div className="lateral__marca">
           <Logo altura={28} />
           <div>

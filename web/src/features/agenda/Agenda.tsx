@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../../auth/AuthContext'
 import { Aviso, Botao, EsqueletoLista } from '../../components/Basicos'
+import { Capa } from '../../components/Capa'
 import { Icone } from '../../components/Icone'
 import { Sino } from '../../components/Sino'
 import { chaveDiaSP, formatarHora, rotuloDiaLongo, semanaSeguinte } from '../../lib/datetime'
@@ -74,6 +75,7 @@ export function Agenda() {
     <div className="tela tela--agenda">
       <div className="agenda__lista">
         {/* Uma linha: quem é e qual dia está aberto. O dia escolhido é o título da tela. */}
+        <Capa className="agenda__capa">
         <header className="topo-agenda">
           <div className="topo-agenda__texto">
             <p className="topo-agenda__ola">{primeiroNome ? `Olá, ${primeiroNome}` : 'RA Funcional'}</p>
@@ -82,9 +84,17 @@ export function Agenda() {
           </div>
           <Sino />
         </header>
+        <SeletorDias
+          dias={dias}
+          selecionado={selecionado}
+          onSelecionar={(d) => setParams({ dia: d }, { replace: true })}
+          marcados={marcados}
+          comAula={comAula}
+        />
+        </Capa>
 
         {proxima && (
-          <Link to={largo ? enderecoNoPainel(proxima) : `/sessao/${proxima.id}`} className={`proxima ${proxima.meu_status === 'espera' ? 'proxima--espera' : ''}`}>
+          <Link to={largo ? enderecoNoPainel(proxima) : `/sessao/${proxima.id}`} className={`proxima sup-escura ${proxima.meu_status === 'espera' ? 'proxima--espera' : ''}`}>
             <span className="proxima__rotulo">
               {proxima.meu_status === 'espera'
                 ? `Você está na fila${proxima.minha_posicao ? ` · Nº${proxima.minha_posicao}` : ''}`
@@ -117,13 +127,6 @@ export function Agenda() {
           </div>
         )}
 
-        <SeletorDias
-          dias={dias}
-          selecionado={selecionado}
-          onSelecionar={(d) => setParams({ dia: d }, { replace: true })}
-          marcados={marcados}
-          comAula={comAula}
-        />
 
         <section className="dia-agenda" aria-labelledby="rotulo-dia" aria-busy={carregando}>
           {erro != null && (

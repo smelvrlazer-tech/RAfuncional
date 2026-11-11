@@ -1,69 +1,67 @@
 /*
- * RA Funcional — design tokens. Identidade oficial do Rafael (logo enviada em 16/10/2026) aplicada
- * sobre o design "Atlético técnico" feito no Google Stitch: tema escuro, grafite #0F1113,
- * chumbo #2B2F33, branco e verde-lima #A3FF29 como única cor de ação.
- * Para ajustar a paleta, mude só os VALORES abaixo; os nomes são semânticos e o resto do CSS
- * não tem cor literal.
+ * RA Funcional: design tokens. Sistema em DUAS CAMADAS (refino de 11/11/2026, a partir do quadro de
+ * identidade do Rafael): estrutura escura (topo, menu, destaques com foto) e conteúdo em superfícies
+ * claras de alto contraste. Cores, fontes, raios e sombras só aqui; o resto do CSS usa os nomes abaixo.
  *
- * Regras do sistema:
- *   - uma cor de ação (--cor-acento, o verde-lima), usada só em ação primária e no que está ativo;
- *   - estado da aula por texto + ícone, com a cor de estado como apoio (nunca só a cor);
- *   - raios de 4px (controles) e 8px (superfícies); pílula só em ponto de presença e avatar;
- *   - superfícies separadas por filete de 1px, não por sombra;
- *   - Bebas Neue para títulos, horários e números; Inter para o texto.
+ *   :root          camada CLARA (padrão): fundo de página, cartões, listas, formulários, tabelas.
+ *   .sup-escura    camada ESCURA: topo, menu lateral, abas, capas com foto e cartões de destaque.
+ *                  Qualquer filho dela usa automaticamente os valores escuros.
  *
- * Contrastes (WCAG 2.x), texto pequeno precisa de 4,5:1:
- *   --cor-tinta (#f4f5f6) sobre papel / superfície ........ 17,6 / 15,9
- *   --cor-texto-suave (#9aa0a6) sobre papel / superfície .. 7,3 / 6,6
- *   --cor-sobre-acento (#0f1113) sobre --cor-acento ....... 15,2
- *   --cor-acento sobre papel / superfície ................. 15,2 / 13,7
- *   --cor-sucesso-texto sobre fundo de sucesso ............ 8,9
- *   --cor-aviso-texto sobre fundo de aviso ................ 9,3
- *   --cor-perigo-texto sobre fundo de perigo .............. 6,6
+ * Identidades (lib/tema.ts, <html data-tema="...">): "ciano" (padrão, escolhida pelo Rafael) e "lima".
+ * Elas só trocam a cor de AÇÃO (--cor-acento*), o texto de ação sobre fundo claro (--cor-acento-texto)
+ * e o fundo de destaque (--cor-info-fundo). O resto é igual nas duas.
+ *
+ * Regras: uma cor de ação por tela; status por texto + ícone (nunca só cor); 2 raios (4 e 8px);
+ * superfícies separadas por filete, não por sombra; escala tipográfica de 6 tamanhos (--t-*).
+ *
+ * Contrastes (WCAG 2.x, texto pequeno precisa de 4,5:1):
+ *   camada clara: --cor-tinta sobre branco 18,5 / sobre o papel 15,9; --cor-texto-suave sobre branco 6,4 / papel 5,4
+ *   camada escura: --cor-tinta sobre papel 17,6; --cor-texto-suave 7,3
+ *   --cor-sobre-acento sobre --cor-acento (lima 15,2; ciano 11,6); --cor-acento-texto sobre branco: lima 7,6, ciano 6,0
  */
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
-  /* Marca e superfícies */
-  --cor-marca: #2b2f33;
-  --cor-marca-2: #353a40;
-  --cor-papel: #0f1113;
-  --cor-papel-escuro: #171a1d;
-  --cor-superficie: #171a1d;
-  --cor-superficie-2: #1f2327;
-  --cor-linha: #2b2f33;
-  --cor-linha-forte: #4a5057;
+  /* Marca e superfícies (camada clara) */
+  --cor-marca: #1d2326;
+  --cor-marca-2: #2a3135;
+  --cor-papel: #e8ebed;
+  --cor-papel-escuro: #dde1e4;
+  --cor-superficie: #ffffff;
+  --cor-superficie-2: #f4f6f7;
+  --cor-linha: #d5dadd;
+  --cor-linha-forte: #8c969c;
 
   /* Texto */
-  --cor-tinta: #f4f5f6;
-  --cor-texto-suave: #9aa0a6;
+  --cor-tinta: #0f1414;
+  --cor-texto-suave: #566066;
   --cor-texto-invertido: #ffffff;
-  --cor-texto-invertido-suave: #9aa0a6;
+  --cor-texto-invertido-suave: #b9c0c5;
 
-  /* Ação (verde-lima da logo) */
+  /* Ação: identidade lima (padrão do CSS; o ciano sobrescreve abaixo) */
   --cor-acento: #a3ff29;
   --cor-acento-hover: #8ee61c;
   --cor-acento-forte: #a3ff29;
-  --cor-acento-texto: #a3ff29;
   --cor-acento-claro: #a3ff29;
-  --cor-sobre-acento: #0f1113;
-  --cor-foco: #a3ff29;
+  --cor-sobre-acento: #0f1414;
+  --cor-acento-texto: #3d6400; /* texto de ação sobre fundo claro */
+  --cor-foco: #0f1414;
 
   /* Estados: sólido / texto / fundo */
-  --cor-sucesso: #10b981;
-  --cor-sucesso-texto: #34d399;
-  --cor-sucesso-fundo: #0f2a21;
-  --cor-aviso: #f59e0b;
-  --cor-aviso-texto: #fbbf24;
-  --cor-aviso-fundo: #2d2108;
-  --cor-bloqueio: #4b5563;
-  --cor-bloqueio-texto: #9aa0a6;
-  --cor-bloqueio-fundo: #1f2327;
-  --cor-perigo: #ef4444;
-  --cor-perigo-texto: #f87171;
-  --cor-perigo-fundo: #301517;
-  /* Novidade (ex.: "treinos da semana no ar"): lima apagado, não cor de alerta */
-  --cor-info-fundo: #1b2a0d;
+  --cor-sucesso: #12805a;
+  --cor-sucesso-texto: #0b6a49;
+  --cor-sucesso-fundo: #d7f2e5;
+  --cor-aviso: #d98a00;
+  --cor-aviso-texto: #8a5a00;
+  --cor-aviso-fundo: #fdeec9;
+  --cor-bloqueio: #7b858c;
+  --cor-bloqueio-texto: #4a545b;
+  --cor-bloqueio-fundo: #e4e8ea;
+  --cor-perigo: #c62828;
+  --cor-perigo-texto: #b3261e;
+  --cor-perigo-fundo: #fde3e0;
+  /* Destaque suave (ex.: aula aberta no painel, "treinos da semana no ar") */
+  --cor-info-fundo: #eef9d2;
 
   /* Tipografia: Bebas Neue para títulos e números, Inter para o texto corrido */
   --fonte-display: 'Bebas Neue', 'Arial Narrow', Impact, system-ui, sans-serif;
@@ -93,7 +91,7 @@
 
   /* Sombras: superfícies usam filete; sombra real só no que flutua */
   --sombra-cartao: 0 0 0 1px var(--cor-linha);
-  --sombra-elevada: 0 16px 40px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px var(--cor-linha);
+  --sombra-elevada: 0 16px 40px -12px rgba(15, 20, 20, 0.28), 0 0 0 1px var(--cor-linha);
   --sombra-botao: none;
   --sombra-campo: none;
 
@@ -111,14 +109,15 @@
   --sombra-furo: transparent;
   --anel-play: rgba(255, 255, 255, 0.28);
   --listra-video: transparent;
-  --cor-veu: rgba(0, 0, 0, 0.7);
+  --cor-veu: rgba(8, 10, 10, 0.6);
+  --cor-barra: rgba(15, 20, 20, 0.32);
 
   /* Painel do treinador (desktop-first) */
   --largura-painel: 1360px;
-  --largura-lateral: 236px;
+  --largura-lateral: 248px;
 
   /* PWA (manter em sincronia com o manifest em vite.config.ts) */
-  --cor-tema: #0f1113;
+  --cor-tema: #050607;
 
   /* Movimento */
   --curva-saida: cubic-bezier(0.2, 0.7, 0.2, 1);
@@ -127,27 +126,68 @@
   --medio: 220ms;
 
   /* Foco */
-  --brilho-foco: 0 0 0 3px rgba(163, 255, 41, 0.25), 0 0 0 1.5px var(--cor-acento);
+  --brilho-foco: 0 0 0 3px rgba(15, 20, 20, 0.16), 0 0 0 1.5px #0f1414;
 
   /* Esqueleto de carregamento */
+  --cor-esqueleto: #e1e5e8;
+  --cor-esqueleto-brilho: #f2f4f5;
+}
+
+/* ------------------------------------------------------------------ camada ESCURA */
+.sup-escura {
+  color-scheme: dark;
+  color: var(--cor-tinta);
+
+  --cor-marca: #2b2f33;
+  --cor-marca-2: #353a40;
+  --cor-papel: #0b0e10;
+  --cor-papel-escuro: #14181b;
+  --cor-superficie: #14181b;
+  --cor-superficie-2: #1d2226;
+  --cor-linha: #2b2f33;
+  --cor-linha-forte: #4a5057;
+
+  --cor-tinta: #f4f5f6;
+  --cor-texto-suave: #9aa0a6;
+  --cor-texto-invertido: #ffffff;
+  --cor-texto-invertido-suave: #9aa0a6;
+
+  --cor-acento-texto: var(--cor-acento);
+  --cor-foco: var(--cor-acento);
+
+  --cor-sucesso-texto: #34d399;
+  --cor-sucesso-fundo: #0f2a21;
+  --cor-aviso-texto: #fbbf24;
+  --cor-aviso-fundo: #2d2108;
+  --cor-bloqueio: #4b5563;
+  --cor-bloqueio-texto: #9aa0a6;
+  --cor-bloqueio-fundo: #1f2327;
+  --cor-perigo: #ef4444;
+  --cor-perigo-texto: #f87171;
+  --cor-perigo-fundo: #301517;
+  --cor-info-fundo: #1b2a0d;
+
+  --sombra-elevada: 0 16px 40px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px var(--cor-linha);
+  --cor-barra: rgba(244, 245, 246, 0.32);
+  --brilho-foco: 0 0 0 3px rgba(163, 255, 41, 0.25), 0 0 0 1.5px var(--cor-acento);
   --cor-esqueleto: #1f2327;
   --cor-esqueleto-brilho: #2b2f33;
 }
 
 /*
- * Identidade alternativa "ciano" (logo preto, branco e ciano #58E0E8). Só troca a cor de ação e o que
- * dependia do verde-lima; o resto do sistema é igual. Ativada por <html data-tema="ciano"> (lib/tema.ts).
+ * Identidade "ciano" (logo preto, branco e ciano #58E0E8): troca só a cor de ação e o que depende dela.
+ * Ativada por <html data-tema="ciano"> (lib/tema.ts); sem o atributo vale a lima acima.
  */
 :root[data-tema='ciano'] {
-  --cor-papel: #07090a;
   --cor-acento: #58e0e8;
   --cor-acento-hover: #44cbd3;
   --cor-acento-forte: #58e0e8;
-  --cor-acento-texto: #58e0e8;
   --cor-acento-claro: #58e0e8;
   --cor-sobre-acento: #04181a;
-  --cor-foco: #58e0e8;
+  --cor-acento-texto: #0a6a73;
+  --cor-info-fundo: #d9f4f6;
+}
+:root[data-tema='ciano'] .sup-escura {
   --cor-info-fundo: #0b2a2e;
   --brilho-foco: 0 0 0 3px rgba(88, 224, 232, 0.25), 0 0 0 1.5px var(--cor-acento);
-  --cor-tema: #050607;
 }

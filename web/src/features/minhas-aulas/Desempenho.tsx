@@ -21,7 +21,7 @@ export function Desempenho({ painel, hoje }: { painel: MeuPainel; hoje: string }
   const meta = resumoDaMeta(painel.compareceu_trimestre, painel.meta_trimestre)
   return (
     <section className="desempenho" aria-labelledby="titulo-desempenho">
-      <h2 className="desempenho__titulo" id="titulo-desempenho">Frequência em {nomeDoMes(hoje)}</h2>
+      <h2 className="desempenho__titulo" id="titulo-desempenho">Seu desempenho em {nomeDoMes(hoje)}</h2>
       <div className="desempenho__mes">
         <div>
           <p className="desempenho__numero">{painel.compareceu_mes} <span>{painel.compareceu_mes === 1 ? 'aula' : 'aulas'}</span></p>

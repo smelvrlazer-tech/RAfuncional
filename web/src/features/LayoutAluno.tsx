@@ -10,7 +10,7 @@ import { EspacoNavInferior, NavInferior } from '../components/NavInferior'
 export function LayoutAluno() {
   return (
     <div className="app-aluno">
-      <div className="app-aluno__topo" aria-hidden="true">
+      <div className="app-aluno__topo sup-escura" aria-hidden="true">
         <Logo altura={26} />
         <span className="app-aluno__topo-nome">RA Funcional</span>
       </div>

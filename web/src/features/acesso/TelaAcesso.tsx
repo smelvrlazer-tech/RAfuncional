@@ -15,7 +15,7 @@ export function TelaAcesso({ titulo, subtitulo, faixa, children }: {
 }) {
   return (
     <main className="acesso">
-      <div className="acesso__marca">
+      <div className="acesso__marca sup-escura">
         <h2 className="sr-only">RA Funcional</h2>
         <Logo variante="horizontal" altura={72} />
         <p className="acesso__lema">Seu lugar na turma, reservado.</p>

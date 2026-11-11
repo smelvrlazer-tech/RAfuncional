@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../auth/AuthContext'
 import { Aviso, Avatar, Botao, EsqueletoLista } from '../../components/Basicos'
+import { Capa } from '../../components/Capa'
 import { Coach } from '../../components/Coach'
 import { Icone } from '../../components/Icone'
 import { chaveDiaSP, formatarHora, formatarIntervalo, rotuloDiaLongo } from '../../lib/datetime'
@@ -32,6 +33,7 @@ export function InicioAluno() {
 
   return (
     <div className="tela tela--inicio">
+      <Capa className="inicio__capa">
       <header className="inicio__topo">
         <div className="inicio__texto">
           <h1 className="inicio__titulo">Olá, {primeiroNome || 'bem-vindo'}</h1>
@@ -42,17 +44,6 @@ export function InicioAluno() {
           <Avatar nome={perfil?.nome ?? ''} foto={perfil?.foto_url} />
         </Link>
       </header>
-
-      {erro != null && (
-        <Aviso tom="erro" role="alert" titulo="Não foi possível carregar suas aulas">
-          {mensagemErro(erro)} <Botao variante="texto" onClick={() => void recarregar()}>Tentar de novo</Botao>
-        </Aviso>
-      )}
-      {!ativo && (
-        <Aviso tom="alerta" titulo="Conta desativada">
-          Você pode ver a agenda e os treinos, mas não pode fazer check-in. Fale com o seu treinador para reativar.
-        </Aviso>
-      )}
 
       {linhas === null && !erro ? (
         <EsqueletoLista texto="Carregando…" itens={2} />
@@ -82,6 +73,19 @@ export function InicioAluno() {
           <p className="hero-aula__nome">Você não tem aula reservada</p>
           <Link to="/agenda" className="botao botao--primario">Reservar uma aula</Link>
         </div>
+      )}
+
+      </Capa>
+
+      {erro != null && (
+        <Aviso tom="erro" role="alert" titulo="Não foi possível carregar suas aulas">
+          {mensagemErro(erro)} <Botao variante="texto" onClick={() => void recarregar()}>Tentar de novo</Botao>
+        </Aviso>
+      )}
+      {!ativo && (
+        <Aviso tom="alerta" titulo="Conta desativada">
+          Você pode ver a agenda e os treinos, mas não pode fazer check-in. Fale com o seu treinador para reativar.
+        </Aviso>
       )}
 
       <section className="metricas" aria-label="Seus números">

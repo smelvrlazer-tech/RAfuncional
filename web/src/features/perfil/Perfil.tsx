@@ -6,7 +6,9 @@ import { mensagemErro } from '../../lib/erros'
 import { enviarFotoPerfil, removerFotoPerfil } from '../../lib/foto'
 import { supabase } from '../../lib/supabase'
 import { useInstalacao } from '../../pwa'
+import { CartaoAparencia } from './CartaoAparencia'
 import { CartaoAvisos } from './CartaoAvisos'
+import { CartaoCapa } from './CartaoCapa'
 import { CartaoTrocarSenha } from './TrocarSenha'
 
 export function Perfil() {
@@ -118,6 +120,10 @@ export function Perfil() {
           </p>
         </form>
       </section>
+
+      {perfil?.papel === 'treinador' && <CartaoCapa />}
+
+      <CartaoAparencia />
 
       <CartaoAvisos />
 

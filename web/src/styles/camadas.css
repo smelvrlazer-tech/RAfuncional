@@ -1,0 +1,226 @@
+/*
+ * Sistema de duas camadas (refino de 11/11/2026). Carregado por último: ajusta a estrutura das telas
+ * ao desenho do Rafael (topo, menu e destaques escuros; conteúdo claro) e corrige o que dependia do
+ * tema escuro. As cores vêm de tokens.css (:root = camada clara, .sup-escura = camada escura).
+ *
+ * Hierarquia de cada tela, de cima para baixo:
+ *   1. capa escura (quem é você / o que vem agora)   2. números do mês   3. o que fazer hoje
+ *   4. conteúdo de apoio. Uma ação principal (cor de ação cheia) por tela.
+ */
+
+/* ------------------------------------------------------------ capa (destaque escuro com foto) */
+.capa {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  gap: var(--espaco-4);
+  padding: var(--espaco-5) var(--espaco-4);
+  border-radius: var(--raio-g);
+  background: var(--cor-papel);
+  color: var(--cor-tinta);
+}
+.capa::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(90% 130% at 100% 0%, color-mix(in srgb, var(--cor-acento) 20%, transparent), transparent 62%),
+    linear-gradient(135deg, #0b0e10 0%, #151a1d 100%);
+}
+.capa--com-foto::before { background: var(--capa-foto) center / cover no-repeat; }
+.capa--com-foto::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(8, 10, 10, 0.5) 0%, rgba(8, 10, 10, 0.9) 100%);
+}
+
+/* ------------------------------------------------------------ celular: topo escuro colado na capa */
+.app-aluno__topo {
+  width: auto;
+  margin: calc(-1 * max(var(--espaco-4), env(safe-area-inset-top))) calc(-1 * var(--espaco-4)) 0;
+  padding: max(14px, env(safe-area-inset-top)) var(--espaco-4) 14px;
+  background: var(--cor-papel);
+}
+.app-aluno__conteudo { padding-top: var(--espaco-4); }
+.tela--inicio > .inicio__capa:first-child {
+  margin: calc(-1 * var(--espaco-4)) calc(-1 * var(--espaco-4)) 0;
+  padding: var(--espaco-2) var(--espaco-4) var(--espaco-5);
+  border-radius: 0 0 var(--raio-g) var(--raio-g);
+}
+.nav-inferior { background: var(--cor-papel); border-top: 1px solid var(--cor-linha); }
+.nav-inferior__item { color: var(--cor-texto-suave); }
+
+/* ------------------------------------------------------------ início do aluno */
+.tela--inicio { gap: var(--espaco-5); }
+.inicio__topo { display: flex; align-items: center; justify-content: space-between; gap: var(--espaco-3); }
+.inicio__titulo { font-size: var(--t-titulo); line-height: 1; color: var(--cor-tinta); }
+.inicio__data { font-size: var(--t-pequeno); color: var(--cor-texto-suave); }
+.hero-aula {
+  gap: var(--espaco-1);
+  padding: var(--espaco-4);
+  border-radius: var(--raio-g);
+  background: color-mix(in srgb, var(--cor-superficie-2) 86%, transparent);
+  box-shadow: inset 3px 0 0 var(--cor-acento), 0 0 0 1px var(--cor-linha);
+  backdrop-filter: blur(6px);
+}
+.hero-aula__quando { font-size: 2.75rem; color: var(--cor-tinta); }
+.hero-aula__nome { font-size: var(--t-texto); color: var(--cor-tinta); }
+.hero-aula__estado { color: var(--cor-sucesso-texto); }
+.hero-aula .barra-vagas--larga { margin-top: var(--espaco-2); }
+.hero-aula--vazio { gap: var(--espaco-3); }
+.inicio__secao { font-size: var(--t-destaque); color: var(--cor-tinta); }
+.metrica, .treino-hoje, .nota-coach, .plano, .desempenho {
+  background: var(--cor-superficie);
+  box-shadow: var(--sombra-cartao);
+}
+.metrica__numero { color: var(--cor-tinta); }
+.nivel--bronze { color: #a8652a; }
+.nivel--prata { color: #5b6872; }
+.nivel--ouro { color: #8a6500; }
+.sup-escura .nivel--bronze { color: #d9965b; }
+.sup-escura .nivel--prata { color: #c5c9ce; }
+.sup-escura .nivel--ouro { color: #ffd24a; }
+.desempenho__numero { color: var(--cor-acento-texto); }
+.anel__texto { fill: var(--cor-tinta); }
+
+/* ------------------------------------------------------------ progresso: escuro e legível no claro, cor de ação no escuro */
+.barra-vagas { background: var(--cor-papel-escuro); }
+.barra-vagas .barra-vagas__preenchido { background: var(--cor-acento-texto); }
+.sup-escura .barra-vagas { background: rgba(255, 255, 255, 0.14); }
+.sup-escura .barra-vagas .barra-vagas__preenchido { background: var(--cor-acento); }
+.plano--passou .barra-vagas .barra-vagas__preenchido { background: var(--cor-aviso); }
+
+/* ------------------------------------------------------------ botões e controles na camada clara */
+.botao--primario { box-shadow: inset 0 0 0 1px rgba(15, 20, 20, 0.16); }
+.sup-escura .botao--primario { box-shadow: none; }
+.nivel { font-weight: 700; }
+
+/* ------------------------------------------------------------ detalhe da aula: capa */
+.detalhe-aula.capa { padding: var(--espaco-5) var(--espaco-4); gap: var(--espaco-2); }
+.detalhe-aula__titulo { color: var(--cor-tinta); }
+.detalhe-aula__coach, .detalhe-aula__vagas { color: var(--cor-texto-suave); }
+.detalhe-aula--cancelada .detalhe-aula__titulo { color: var(--cor-texto-suave); }
+.tela--detalhe .detalhe-aula.capa {
+  margin: calc(-1 * var(--espaco-4)) calc(-1 * var(--espaco-4)) 0;
+  border-radius: 0 0 var(--raio-g) var(--raio-g);
+}
+.tela--detalhe-embutido .detalhe-aula.capa { margin: 0; border-radius: var(--raio-g); }
+
+/* ------------------------------------------------------------ aparência e capa (Perfil) */
+.cartao__apoio { font-size: var(--t-pequeno); color: var(--cor-texto-suave); }
+.aparencia { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--espaco-3); margin-top: var(--espaco-3); }
+.aparencia__opcao {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+  min-height: 56px;
+  padding: var(--espaco-3);
+  border: 0;
+  border-radius: var(--raio-g);
+  background: var(--cor-superficie-2);
+  box-shadow: inset 0 0 0 1px var(--cor-linha);
+  color: var(--cor-tinta);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.aparencia__opcao[aria-checked='true'] { box-shadow: inset 0 0 0 2px var(--cor-tinta); background: var(--cor-superficie); }
+.aparencia__amostra { flex: none; width: 28px; height: 28px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(15, 20, 20, 0.2); }
+.aparencia__texto { display: grid; }
+.aparencia__nome { font-weight: 700; }
+.aparencia__detalhe { font-size: var(--t-legenda); color: var(--cor-texto-suave); }
+.previa-capa {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  align-items: end;
+  aspect-ratio: 16 / 7;
+  margin-top: var(--espaco-3);
+  padding: var(--espaco-3);
+  border-radius: var(--raio-g);
+  background: #0b0e10;
+  color: var(--cor-tinta);
+}
+.previa-capa::before { content: ''; position: absolute; inset: 0; z-index: -1; background: radial-gradient(90% 130% at 100% 0%, color-mix(in srgb, var(--cor-acento) 20%, transparent), transparent 62%), #0b0e10; }
+.previa-capa.capa--com-foto::before { background: var(--capa-foto) center / cover no-repeat; }
+.previa-capa__texto { font-size: var(--t-legenda); font-weight: 600; color: var(--cor-texto-invertido-suave); }
+.linha-botoes--inicio { justify-content: flex-start; margin-top: var(--espaco-3); }
+
+/* ------------------------------------------------------------ computador (>= 900px): menu escuro à esquerda, conteúdo claro */
+@media (min-width: 900px) {
+  .coluna:not(.coluna--larga):not(.coluna--acesso), .coluna.coluna--larga { max-width: none; padding: 0; }
+  .tela--inicio > .inicio__capa { grid-column: 1 / -1; }
+
+  /* Aluno */
+  .app-aluno { grid-template-columns: var(--largura-lateral) minmax(0, 1fr); column-gap: 0; align-items: stretch; min-height: 100dvh; }
+  .app-aluno > .nav-inferior {
+    position: sticky;
+    top: 0;
+    height: 100dvh;
+    padding: var(--espaco-5) var(--espaco-4);
+    background: var(--cor-papel);
+    border: 0;
+  }
+  .app-aluno > .nav-inferior .nav-inferior__marca { margin: 0 var(--espaco-3) var(--espaco-5); }
+  .app-aluno__conteudo { max-width: 1320px; padding: var(--espaco-6) 40px 56px; }
+  .tela--inicio > .inicio__capa:first-child { margin: 0; padding: var(--espaco-5); border-radius: var(--raio-g); }
+  .tela--detalhe .detalhe-aula.capa { margin: 0; border-radius: var(--raio-g); }
+  .nav-inferior__item:hover { background: var(--cor-superficie-2); color: var(--cor-tinta); }
+  .nav-inferior__item[aria-current='page'] { background: var(--cor-superficie-2); color: var(--cor-acento); }
+
+  /* Professor */
+  .painel { grid-template-columns: var(--largura-lateral) minmax(0, 1fr); gap: 0; align-items: stretch; min-height: 100dvh; }
+  .lateral {
+    top: 0;
+    height: 100dvh;
+    min-height: 0;
+    padding: var(--espaco-5) var(--espaco-4);
+    background: var(--cor-papel);
+    border: 0;
+  }
+  .lateral__item:hover { background: var(--cor-superficie-2); color: var(--cor-tinta); }
+  .painel__conteudo { max-width: var(--largura-painel); padding: var(--espaco-6) 40px 56px; }
+}
+@media (min-width: 1280px) {
+  .app-aluno__conteudo, .painel__conteudo { padding-inline: 56px; }
+}
+
+/* ------------------------------------------------------------ larguras de leitura e listas (computador) */
+@media (min-width: 900px) {
+  .app-aluno__conteudo > .tela.tela--inicio { max-width: none; width: 100%; }
+}
+/* Alunos: a lista ocupa a largura toda; convites ficam embaixo, lado a lado, até haver espaço para duas colunas. */
+@media (min-width: 900px) and (max-width: 1599px) {
+  .alunos-grade { grid-template-columns: minmax(0, 1fr); }
+  .alunos-grade__lado { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+}
+.plano-select { min-width: 9.5rem; }
+
+/* ------------------------------------------------------------ agenda e painel: capas */
+.agenda__capa { gap: var(--espaco-3); padding: var(--espaco-4); }
+.agenda__capa .topo-agenda__ola, .agenda__capa .topo-agenda__titulo { color: var(--cor-tinta); }
+.agenda__capa .topo-agenda__ola { color: var(--cor-texto-suave); }
+.agenda__capa .seletor-dias { margin-inline: calc(-1 * var(--espaco-4)); }
+.agenda__capa .seletor-dias__lista { padding-inline: var(--espaco-4); }
+.agenda__capa .sino { background: var(--cor-superficie-2); box-shadow: inset 0 0 0 1px var(--cor-linha); }
+.tela--agenda .agenda__lista > .agenda__capa:first-child,
+.tela--agenda > .agenda__lista > .agenda__capa { margin: calc(-1 * var(--espaco-4)) calc(-1 * var(--espaco-4)) 0; padding: var(--espaco-2) var(--espaco-4) var(--espaco-4); border-radius: 0 0 var(--raio-g) var(--raio-g); }
+.tela-inicio-treinador > .inicio-treinador__capa { margin: calc(-1 * var(--espaco-4)) calc(-1 * var(--espaco-4)) 0; padding: var(--espaco-4); border-radius: 0 0 var(--raio-g) var(--raio-g); }
+.inicio-treinador__capa .controle__sobre, .inicio-treinador__capa .controle__subtitulo { color: var(--cor-texto-suave); }
+.inicio-treinador__capa .controle__titulo { color: var(--cor-tinta); }
+.semana-barras__coluna { background: var(--cor-papel-escuro); }
+.semana-barras__preenchido { background: var(--cor-acento-texto); }
+@media (max-width: 599px) {
+  .lateral__item { font-size: 0.75rem; padding-inline: 2px; white-space: nowrap; }
+}
+@media (min-width: 900px) {
+  .tela--agenda .agenda__lista > .agenda__capa,
+  .tela-inicio-treinador > .inicio-treinador__capa { margin: 0; border-radius: var(--raio-g); padding: var(--espaco-5); }
+  .agenda__capa .seletor-dias { margin-inline: 0; }
+  .agenda__capa .seletor-dias__lista { padding-inline: 0; }
+}

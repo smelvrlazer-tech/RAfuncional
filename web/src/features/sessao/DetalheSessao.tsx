@@ -14,6 +14,7 @@ import { enderecoNoPainel } from '../../lib/rotas'
 import { useAoFocar } from '../../lib/useFoco'
 import { buscarAgenda, buscarSessao } from '../agenda/api'
 import { DIAS_AGENDA, useAgora, useLimiteBloqueio } from '../agenda/useAgenda'
+import { Capa } from '../../components/Capa'
 import { Coach } from '../../components/Coach'
 import { AcoesSessao } from './AcoesSessao'
 import { QuemVai } from './QuemVai'
@@ -116,7 +117,7 @@ export function DetalheSessao({ id: idProp, embutido = false, aoMudar }: PropsDe
     <div className={`tela ${embutido ? 'tela--detalhe-embutido' : 'tela--detalhe'}`}>
       {!embutido && <BarraTopo titulo={rotuloDiaLongo(chaveDiaSP(sessao.inicia_em))} voltarPara={voltar} />}
 
-      <header className={`detalhe-aula detalhe-aula--${estado.tom}`}>
+      <Capa como="header" className={`detalhe-aula detalhe-aula--${estado.tom}`}>
         <h2 className="detalhe-aula__titulo">{sessao.turma_nome}</h2>
         <p className="detalhe-aula__coach"><Coach /></p>
         <p className="detalhe-aula__meta">
@@ -131,7 +132,7 @@ export function DetalheSessao({ id: idProp, embutido = false, aoMudar }: PropsDe
             </span>
           </div>
         )}
-      </header>
+      </Capa>
 
       <section className="treino" aria-labelledby="treino-titulo">
         <h3 className="treino__sobre" id="treino-titulo">Treino do dia</h3>

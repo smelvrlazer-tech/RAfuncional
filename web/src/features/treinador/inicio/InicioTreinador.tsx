@@ -2,6 +2,7 @@ import { useMemo, useState, type FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../../auth/AuthContext'
 import { Aviso, Avatar, Botao } from '../../../components/Basicos'
+import { Capa } from '../../../components/Capa'
 import { Chip } from '../../../components/Chip'
 import { chaveDiaSP, formatarHora, rotuloDiaLongo } from '../../../lib/datetime'
 import { mensagemErro } from '../../../lib/erros'
@@ -86,7 +87,7 @@ export function InicioTreinador() {
 
   return (
     <div className="tela-treinador tela-inicio-treinador">
-      <header className="controle">
+      <Capa como="header" className="controle inicio-treinador__capa">
         <div className="controle__texto inicio-treinador__ola">
           <Link to="/treinador/perfil" className="inicio__avatar" aria-label="Abrir meu perfil e trocar a foto">
             <Avatar nome={perfil?.nome ?? ''} foto={perfil?.foto_url} className="avatar--grande" />
@@ -101,7 +102,7 @@ export function InicioTreinador() {
           <Link to="/treinador/chamada" className="botao botao--contorno">Painel do dia</Link>
           <Link to="/treinador/turmas" className="botao botao--primario">Nova turma</Link>
         </div>
-      </header>
+      </Capa>
 
       <EstadoLista carregando={carregando} erro={erro} vazio={false} textoCarregando="Carregando o estúdio…"
         tituloErro="Não foi possível carregar a visão geral" tituloVazio="" onTentar={() => void recarregar()}>

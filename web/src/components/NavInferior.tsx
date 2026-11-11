@@ -13,7 +13,7 @@ const ITENS: { para: string; rotulo: string; icone: NomeIcone; fim?: boolean }[]
 /** Barra de abas do app do aluno (fixa no rodapé da coluna). */
 export function NavInferior() {
   return (
-    <nav className="nav-inferior" aria-label="Navegação principal">
+    <nav className="nav-inferior sup-escura" aria-label="Navegação principal">
       {/* Só aparece no menu lateral do computador. */}
       <div className="nav-inferior__marca" aria-hidden="true"><Logo altura={34} /></div>
       <ul>
