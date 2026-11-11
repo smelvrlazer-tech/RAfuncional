@@ -163,11 +163,11 @@ export function Alunos() {
       >
         {alvo?.ativo ? (
           <p>
-            {alvo.nome} não poderá mais fazer check-in, mas continua vendo a agenda e o histórico. Os check-ins que já
-            estiverem feitos em aulas futuras <strong>não</strong> são cancelados automaticamente.
+            {alvo.nome} <strong>não conseguirá mais entrar no app</strong> e será desconectado(a) dos aparelhos. Os check-ins que já
+            estiverem feitos em aulas futuras <strong>não</strong> são cancelados automaticamente; remova-os na Chamada, se quiser.
           </p>
         ) : (
-          <p>{alvo?.nome} volta a poder fazer check-in nas aulas.</p>
+          <p>{alvo?.nome} volta a poder entrar no app e fazer check-in nas aulas.</p>
         )}
       </Dialogo>
     </div>

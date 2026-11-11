@@ -41,6 +41,7 @@ const AUTH: Record<string, string> = {
   validation_failed: 'Confira os dados informados.',
   signup_disabled: 'O cadastro está temporariamente fechado. Fale com o seu treinador.',
   session_not_found: 'Sua sessão expirou. Entre novamente.',
+  user_banned: 'Sua conta está desativada. Fale com o seu treinador.',
 }
 
 const AUTH_POR_MENSAGEM: [RegExp, string][] = [
@@ -49,6 +50,7 @@ const AUTH_POR_MENSAGEM: [RegExp, string][] = [
   [/email not confirmed/i, 'email_not_confirmed'],
   [/password should be at least/i, 'weak_password'],
   [/rate limit/i, 'over_request_rate_limit'],
+  [/user is banned|banned/i, 'user_banned'],
 ]
 
 const GENERICA = 'Algo deu errado. Tente de novo em instantes.'
