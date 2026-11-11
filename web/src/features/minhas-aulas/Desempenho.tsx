@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { constanciaDoMes, resumoDaMeta, type MeuPainel } from '../../lib/inicio'
 import { nomeDoMes } from '../../lib/frequencia'
 
@@ -16,7 +17,7 @@ export function AnelConstancia({ percentual }: { percentual: number }) {
 }
 
 /** Constância do mês e meta do trimestre com o nível (Bronze, Prata, Ouro). */
-export function Desempenho({ painel, hoje }: { painel: MeuPainel; hoje: string }) {
+export function Desempenho({ painel, hoje, children }: { painel: MeuPainel; hoje: string; children?: ReactNode }) {
   const constancia = constanciaDoMes(painel.compareceu_mes, painel.reservas_mes)
   const meta = resumoDaMeta(painel.compareceu_trimestre, painel.meta_trimestre)
   return (
@@ -42,6 +43,7 @@ export function Desempenho({ painel, hoje }: { painel: MeuPainel; hoje: string }
           {meta.nivel === 'ouro' ? ' · Meta cumprida!' : ` · faltam ${meta.faltamParaOuro} para o Ouro`}
         </p>
       </div>
+      {children}
     </section>
   )
 }

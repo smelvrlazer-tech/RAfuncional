@@ -37,8 +37,6 @@ export function MinhasAulas() {
         <p className="titulo-aba__resumo">{linhas ? textoResumoMinhasAulas(resumo) : 'Carregando…'}</p>
       </header>
 
-      <PlanoSemana versao={linhas?.length ?? 0} />
-
       <div className="segmentado" role="group" aria-label="Mostrar">
         <button type="button" className="segmentado__opcao" aria-pressed={aba === 'proximas'} onClick={() => setAba('proximas')}>
           Próximas <span className="segmentado__num">{resumo.confirmadas}</span>
@@ -91,9 +89,18 @@ export function MinhasAulas() {
         )}
       </div>
 
-      {painel && <Desempenho painel={painel} hoje={chaveDiaSP(agora)} />}
+      {painel ? (
+        <Desempenho painel={painel} hoje={chaveDiaSP(agora)}>
+          <PlanoSemana versao={linhas?.length ?? 0} />
+        </Desempenho>
+      ) : (
+        <div className="desempenho desempenho--carregando" aria-hidden="true" />
+      )}
 
-      <Frequencia agora={agora} />
+      <details className="calendario-detalhe">
+        <summary>Calendário de presença do mês</summary>
+        <Frequencia agora={agora} />
+      </details>
 
       <p className="lembrete">
         <strong>Lembrete:</strong> se não puder ir, cancele com pelo menos {formatarPrazoExtenso(limiteMin)} de antecedência.

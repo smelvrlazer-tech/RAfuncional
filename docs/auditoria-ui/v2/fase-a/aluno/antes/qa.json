@@ -1,0 +1,378 @@
+{
+  "rotulo": "antes",
+  "papel": "aluno",
+  "telas": {
+    "375-inicio": {
+      "altura": 1183,
+      "blocos": 7,
+      "interativos": 8,
+      "tamanhosFonte": [
+        13,
+        14,
+        15,
+        16,
+        18,
+        22,
+        30,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": [
+        {
+          "id": "label-content-name-mismatch",
+          "impacto": "serious",
+          "ajuda": "Elements must have their visible text as part of their accessible name",
+          "nos": 1,
+          "exemplo": ".inicio__avatar"
+        }
+      ]
+    },
+    "375-agenda": {
+      "altura": 812,
+      "blocos": 2,
+      "interativos": 19,
+      "tamanhosFonte": [
+        12,
+        13,
+        14,
+        16,
+        28,
+        30,
+        34
+      ],
+      "rolagemLateral": false,
+      "axe": [
+        {
+          "id": "label-content-name-mismatch",
+          "impacto": "serious",
+          "ajuda": "Elements must have their visible text as part of their accessible name",
+          "nos": 6,
+          "exemplo": ".dia--ativo"
+        }
+      ]
+    },
+    "375-aulas": {
+      "altura": 1567,
+      "blocos": 3,
+      "interativos": 4,
+      "tamanhosFonte": [
+        13,
+        14,
+        15,
+        16,
+        18,
+        22,
+        24,
+        32,
+        40,
+        48
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "375-avisos": {
+      "altura": 812,
+      "blocos": 0,
+      "interativos": 8,
+      "tamanhosFonte": [
+        13,
+        14,
+        15,
+        16,
+        24
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "375-perfil": {
+      "altura": 1832,
+      "blocos": 5,
+      "interativos": 13,
+      "tamanhosFonte": [
+        13,
+        14,
+        15,
+        16,
+        18,
+        24,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "375-detalhe": {
+      "altura": 812,
+      "blocos": 3,
+      "interativos": 3,
+      "tamanhosFonte": [
+        13,
+        14,
+        15,
+        16,
+        20,
+        24,
+        44
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "768-inicio": {
+      "altura": 1187,
+      "blocos": 7,
+      "interativos": 8,
+      "tamanhosFonte": [
+        13,
+        14,
+        15,
+        16,
+        18,
+        22,
+        30,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": [
+        {
+          "id": "label-content-name-mismatch",
+          "impacto": "serious",
+          "ajuda": "Elements must have their visible text as part of their accessible name",
+          "nos": 1,
+          "exemplo": ".inicio__avatar"
+        }
+      ]
+    },
+    "768-agenda": {
+      "altura": 1024,
+      "blocos": 2,
+      "interativos": 19,
+      "tamanhosFonte": [
+        12,
+        13,
+        14,
+        16,
+        28,
+        30,
+        34
+      ],
+      "rolagemLateral": false,
+      "axe": [
+        {
+          "id": "label-content-name-mismatch",
+          "impacto": "serious",
+          "ajuda": "Elements must have their visible text as part of their accessible name",
+          "nos": 8,
+          "exemplo": ".dia--ativo"
+        }
+      ]
+    },
+    "768-aulas": {
+      "altura": 1587,
+      "blocos": 3,
+      "interativos": 4,
+      "tamanhosFonte": [
+        13,
+        14,
+        15,
+        16,
+        18,
+        22,
+        24,
+        32,
+        40,
+        48
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "768-avisos": {
+      "altura": 1024,
+      "blocos": 0,
+      "interativos": 8,
+      "tamanhosFonte": [
+        13,
+        14,
+        15,
+        16,
+        24
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "768-perfil": {
+      "altura": 1792,
+      "blocos": 5,
+      "interativos": 13,
+      "tamanhosFonte": [
+        13,
+        14,
+        15,
+        16,
+        18,
+        24,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "768-detalhe": {
+      "altura": 1048,
+      "blocos": 3,
+      "interativos": 3,
+      "tamanhosFonte": [
+        13,
+        14,
+        15,
+        16,
+        20,
+        24,
+        44
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "1440-inicio": {
+      "altura": 900,
+      "blocos": 7,
+      "interativos": 8,
+      "tamanhosFonte": [
+        13,
+        14,
+        15,
+        16,
+        18,
+        22,
+        30,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": [
+        {
+          "id": "label-content-name-mismatch",
+          "impacto": "serious",
+          "ajuda": "Elements must have their visible text as part of their accessible name",
+          "nos": 1,
+          "exemplo": ".inicio__avatar"
+        }
+      ]
+    },
+    "1440-agenda": {
+      "altura": 900,
+      "blocos": 5,
+      "interativos": 20,
+      "tamanhosFonte": [
+        12,
+        13,
+        14,
+        15,
+        16,
+        20,
+        24,
+        28,
+        30,
+        34,
+        44
+      ],
+      "rolagemLateral": false,
+      "axe": [
+        {
+          "id": "label-content-name-mismatch",
+          "impacto": "serious",
+          "ajuda": "Elements must have their visible text as part of their accessible name",
+          "nos": 9,
+          "exemplo": ".dia--ativo"
+        }
+      ]
+    },
+    "1440-aulas": {
+      "altura": 1253,
+      "blocos": 3,
+      "interativos": 4,
+      "tamanhosFonte": [
+        13,
+        14,
+        15,
+        16,
+        18,
+        22,
+        24,
+        32,
+        40,
+        48
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "1440-avisos": {
+      "altura": 900,
+      "blocos": 0,
+      "interativos": 8,
+      "tamanhosFonte": [
+        13,
+        14,
+        15,
+        16,
+        24
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "1440-perfil": {
+      "altura": 1556,
+      "blocos": 5,
+      "interativos": 13,
+      "tamanhosFonte": [
+        13,
+        14,
+        15,
+        16,
+        18,
+        24,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "1440-detalhe": {
+      "altura": 900,
+      "blocos": 3,
+      "interativos": 3,
+      "tamanhosFonte": [
+        13,
+        14,
+        15,
+        16,
+        20,
+        24,
+        44
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    }
+  },
+  "perf": {
+    "inicio": {
+      "fcpMs": 256,
+      "lcpMs": 1724,
+      "cls": 0.248,
+      "kbTransferidos": 157,
+      "requisicoes": 25,
+      "conteudoUtilMs": 702
+    },
+    "agenda": {
+      "fcpMs": 364,
+      "lcpMs": 1432,
+      "cls": 0.091,
+      "kbTransferidos": 84,
+      "requisicoes": 19,
+      "conteudoUtilMs": 821
+    },
+    "aulas": {
+      "fcpMs": 284,
+      "lcpMs": 700,
+      "cls": 1.824,
+      "kbTransferidos": 12,
+      "requisicoes": 24,
+      "conteudoUtilMs": 614
+    }
+  }
+}

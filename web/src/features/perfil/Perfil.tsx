@@ -120,11 +120,10 @@ export function Perfil() {
         </form>
       </section>
 
-      <CartaoAparencia />
+      <div className="grupo-cartoes">
+        <CartaoAparencia />
 
-      <CartaoAvisos />
-
-      <CartaoTrocarSenha />
+        <CartaoAvisos />
 
       {/* Já instalado é o padrão: não ocupa espaço. O cartão só aparece quando há o que fazer. */}
       {!instalacao.instalado && (
@@ -151,6 +150,12 @@ export function Perfil() {
           )}
         </section>
       )}
+      </div>
+
+      <details className="cartao seguranca">
+        <summary>Segurança: trocar senha</summary>
+        <CartaoTrocarSenha />
+      </details>
 
       <Botao variante="texto" className="perfil__sair" carregando={saindo} onClick={() => void sairDaConta()}>
         <Icone nome="sair" /> Sair da conta

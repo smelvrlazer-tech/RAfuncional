@@ -25,7 +25,7 @@ export function SeletorDias({ dias, selecionado, onSelecionar, marcados, comAula
       <ul ref={lista} className="seletor-dias__lista">
         {dias.map((d) => {
           const ativo = d.chave === selecionado
-          const partes = [d.hoje ? 'Hoje' : null, rotuloDiaLongo(d.chave),
+          const partes = [d.hoje ? 'hoje' : null, rotuloDiaLongo(d.chave),
             comAula.has(d.chave) ? null : 'sem aulas',
             marcados.has(d.chave) ? 'você tem aula marcada' : null].filter(Boolean)
           return (
@@ -34,11 +34,11 @@ export function SeletorDias({ dias, selecionado, onSelecionar, marcados, comAula
                 type="button"
                 className={`dia ${ativo ? 'dia--ativo' : ''} ${d.hoje ? 'dia--hoje' : ''} ${comAula.has(d.chave) ? '' : 'dia--vazio'}`}
                 aria-pressed={ativo}
-                aria-label={partes.join(', ')}
                 onClick={() => onSelecionar(d.chave)}
               >
                 <span className="dia__semana">{d.semanaCurta}</span>
                 <span className="dia__numero">{d.numero}</span>
+                <span className="sr-only">{`, ${partes.join(', ')}`}</span>
                 <span
                   className={`dia__ponto ${marcados.has(d.chave) ? 'dia__ponto--meu' : ''}`}
                   aria-hidden="true"

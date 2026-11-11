@@ -1191,7 +1191,7 @@
 .desempenho { display: grid; gap: 14px; padding: 16px; border-radius: var(--raio-g); background: var(--cor-superficie); box-shadow: var(--sombra-cartao); }
 .desempenho__titulo { font-size: var(--t-destaque); }
 .desempenho__mes { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.desempenho__numero { font-family: var(--fonte-numeros); font-size: 3rem; line-height: 1; color: var(--cor-acento); }
+.desempenho__numero { font-family: var(--fonte-numeros); font-size: var(--t-titulo); line-height: 1; color: var(--cor-acento); }
 .desempenho__numero span { font-size: var(--t-destaque); color: var(--cor-tinta); }
 .desempenho__apoio { font-size: var(--t-legenda); color: var(--cor-texto-suave); }
 .desempenho__meta { display: grid; gap: 6px; padding-top: 12px; border-top: 1px solid var(--cor-linha); }

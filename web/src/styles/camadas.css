@@ -212,4 +212,4 @@
 }
 /* Filhos da capa nunca alargam a capa (título longo quebra de linha em vez de cortar). */
 .capa { grid-template-columns: minmax(0, 1fr); }
-.agenda__capa .topo-agenda__titulo { font-size: 2.125rem; }
+.agenda__capa .topo-agenda__titulo { font-size: var(--t-numero); }

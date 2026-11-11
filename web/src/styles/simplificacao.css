@@ -1,0 +1,94 @@
+/*
+ * Fase A1 da simplificação (app do aluno), 11/11/2026. Carregado depois de polimento.css.
+ * Princípios: uma informação em um lugar; o que é secundário fica recolhido a um toque; nada de
+ * cartão para o que cabe numa linha; espaço reservado enquanto carrega (sem salto de layout).
+ */
+
+/* "Seu mês": um cartão só, três números separados por filete (antes eram três cartões). */
+.seu-mes__grade { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: var(--espaco-1); }
+.seu-mes__grade > div { padding: 0 var(--espaco-3); display: grid; align-content: start; gap: 2px; }
+.seu-mes__grade > div:first-child { padding-left: 0; }
+.seu-mes__grade > div + div { border-left: 1px solid var(--cor-linha); }
+.seu-mes .plano, .desempenho .plano {
+  margin-top: var(--espaco-4);
+  padding: var(--espaco-3) 0 0;
+  border-top: 1px solid var(--cor-linha);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  gap: 6px;
+}
+.plano--carregando { min-height: 73px; margin-top: var(--espaco-4); }
+.plano__titulo { font-family: var(--fonte-texto); font-size: var(--t-pequeno); font-weight: 650; letter-spacing: 0; }
+.plano__uso strong { font-family: var(--fonte-texto); font-size: var(--t-pequeno); font-weight: 700; }
+
+/* Espaço reservado enquanto carrega. */
+.desempenho--carregando { min-height: 358px; }
+.hero-aula--carregando { min-height: 188px; background: rgba(255, 255, 255, 0.06); box-shadow: none; }
+.coach--carregando { display: block; min-height: 28px; }
+
+/* Linha de atalho (treino de hoje): uma linha clicável no lugar de um cartão inteiro. */
+.linha-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+  min-height: 56px;
+  padding: var(--espaco-3) var(--espaco-4);
+  border-radius: var(--raio-g);
+  background: var(--cor-superficie);
+  box-shadow: var(--sombra-cartao);
+  color: var(--cor-tinta);
+  text-decoration: none;
+}
+.linha-link:hover { background: var(--cor-superficie-2); }
+.linha-link__texto { display: grid; min-width: 0; }
+.linha-link__rotulo { font-size: var(--t-legenda); font-weight: 600; color: var(--cor-texto-suave); }
+.linha-link__titulo { font-weight: 650; font-size: var(--t-texto); overflow-wrap: anywhere; }
+.dia-agenda { gap: var(--espaco-3); }
+
+/* Aulas encerradas, calendário e troca de senha: recolhidos por padrão (a informação segue a um toque). */
+.encerradas > summary, .calendario-detalhe > summary, .seguranca > summary {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 var(--espaco-4);
+  border-radius: var(--raio-g);
+  background: var(--cor-superficie);
+  box-shadow: var(--sombra-cartao);
+  font-size: var(--t-pequeno);
+  font-weight: 650;
+  color: var(--cor-texto-suave);
+  cursor: pointer;
+  list-style: none;
+}
+.encerradas > summary::-webkit-details-marker, .calendario-detalhe > summary::-webkit-details-marker, .seguranca > summary::-webkit-details-marker { display: none; }
+.encerradas > summary::after, .calendario-detalhe > summary::after, .seguranca > summary::after { content: '+'; margin-left: auto; font-size: var(--t-destaque); font-weight: 400; line-height: 1; }
+.encerradas[open] > summary::after, .calendario-detalhe[open] > summary::after, .seguranca[open] > summary::after { content: '\2212'; }
+.encerradas[open] > summary, .calendario-detalhe[open] > summary { margin-bottom: var(--espaco-3); }
+.encerradas > summary:hover, .calendario-detalhe > summary:hover, .seguranca > summary:hover { color: var(--cor-tinta); }
+.seguranca { padding: 0; background: transparent; box-shadow: none; }
+.seguranca[open] > .cartao { margin-top: var(--espaco-3); }
+
+/* Perfil: preferências (aparência, avisos, instalar) num cartão só, separadas por filete. */
+.grupo-cartoes { display: grid; border-radius: var(--raio-g); background: var(--cor-superficie); box-shadow: var(--sombra-cartao); }
+.grupo-cartoes > .cartao { border-radius: 0; background: transparent; box-shadow: none; }
+.grupo-cartoes > .cartao + .cartao { border-top: 1px solid var(--cor-linha); }
+
+/* Recado do professor e data do detalhe: mais compactos. */
+.nota-coach { padding: var(--espaco-3) var(--espaco-4); align-items: flex-start; }
+.nota-coach__titulo { font-size: var(--t-texto); }
+.nota-coach__texto { font-size: var(--t-pequeno); }
+.detalhe-aula__dia { font-size: var(--t-pequeno); font-weight: 600; color: var(--cor-texto-suave); }
+
+/* Escala tipográfica: iniciais do avatar e número do anel dentro dos tamanhos da escala. */
+.avatar { font-size: var(--t-texto); }
+.avatar--grande { font-size: var(--t-destaque); }
+.anel__texto { font-size: 20px; }
+
+/* Espaço reservado (sem salto de layout enquanto os dados chegam). */
+.seu-mes__grade > div { min-height: 76px; }
+.calendario-detalhe { min-height: 48px; }
+.seu-mes .metrica__apoio { min-height: 1.4em; }
+.seu-mes__grade .metrica__numero { min-height: 1.1em; }
+.seu-mes { min-height: 200px; }

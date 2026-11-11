@@ -115,9 +115,10 @@ export function DetalheSessao({ id: idProp, embutido = false, aoMudar }: PropsDe
 
   return (
     <div className={`tela ${embutido ? 'tela--detalhe-embutido' : 'tela--detalhe'}`}>
-      {!embutido && <BarraTopo titulo={rotuloDiaLongo(chaveDiaSP(sessao.inicia_em))} voltarPara={voltar} />}
+      {!embutido && <BarraTopo titulo="Aula" voltarPara={voltar} />}
 
       <Capa como="header" foto="aula" className={`detalhe-aula detalhe-aula--${estado.tom}`}>
+        <p className="detalhe-aula__dia">{rotuloDiaLongo(chaveDiaSP(sessao.inicia_em))}</p>
         <h2 className="detalhe-aula__titulo">{sessao.turma_nome}</h2>
         <p className="detalhe-aula__coach"><Coach /></p>
         <p className="detalhe-aula__meta">

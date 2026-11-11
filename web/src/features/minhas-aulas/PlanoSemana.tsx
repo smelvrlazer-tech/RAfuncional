@@ -4,13 +4,15 @@ import { buscarMeuPlano, type MeuPlano } from './api'
 /** Plano em aulas por semana e quanto já foi usado. Só informa: passar do limite não bloqueia a reserva. */
 export function PlanoSemana({ versao }: { versao: number }) {
   const [plano, setPlano] = useState<MeuPlano | null>(null)
+  const [carregado, setCarregado] = useState(false)
 
   useEffect(() => {
     let vivo = true
-    buscarMeuPlano().then((p) => { if (vivo) setPlano(p) }).catch(() => { if (vivo) setPlano(null) })
+    buscarMeuPlano().then((p) => { if (vivo) { setPlano(p); setCarregado(true) } }).catch(() => { if (vivo) { setPlano(null); setCarregado(true) } })
     return () => { vivo = false }
   }, [versao])
 
+  if (plano === null && !carregado) return <div className="plano plano--carregando" aria-hidden="true" />
   if (!plano?.aulas_semana) return null
   const { aulas_semana: limite, usadas_semana: usadas } = plano
   const passou = usadas > limite

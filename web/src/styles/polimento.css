@@ -26,13 +26,13 @@ h2, h3,
 .frequencia__titulo, .treino__titulo, .aula__titulo, .vazio__titulo, .em-breve__titulo {
   font-family: var(--fonte-texto);
   font-weight: 700;
-  font-size: 1.125rem;
+  font-size: var(--t-destaque);
   line-height: 1.3;
   letter-spacing: -0.012em;
   text-transform: none;
 }
-.treino__titulo { font-size: 1.25rem; }
-.detalhe-aula__titulo { font-family: var(--fonte-display); font-size: 2.75rem; font-weight: 400; letter-spacing: 0.02em; line-height: 1; }
+.treino__titulo { font-size: var(--t-destaque); }
+.detalhe-aula__titulo { font-family: var(--fonte-display); font-size: var(--t-titulo); font-weight: 400; letter-spacing: 0.02em; line-height: 1; }
 .cartao__titulo { margin-bottom: var(--espaco-3); }
 .controle__sobre, .topo-agenda__ola, .inicio__data { font-size: var(--t-pequeno); font-weight: 500; letter-spacing: 0; }
 .metrica__rotulo, .campo__rotulo { font-size: 0.8125rem; font-weight: 600; letter-spacing: 0; color: var(--cor-texto-suave); }
@@ -47,7 +47,7 @@ h2, h3,
   border: 1px solid transparent;
   border-radius: var(--raio-m);
   font-weight: 650;
-  font-size: 0.9375rem;
+  font-size: 1rem;
   letter-spacing: -0.005em;
 }
 .botao--primario {
@@ -94,7 +94,7 @@ select.campo__entrada, .plano-select { padding-right: 10px; }
   padding: 2px 10px 2px 8px;
   border-radius: var(--raio-pilula);
   font-weight: 650;
-  font-size: 0.78125rem;
+  font-size: 0.8125rem;
   letter-spacing: 0;
 }
 .plano-etiqueta { border-radius: var(--raio-pilula); padding: 3px 10px; background: rgba(255, 255, 255, 0.1); color: var(--cor-tinta); }
@@ -109,24 +109,24 @@ select.campo__entrada, .plano-select { padding-right: 10px; }
 .tela { gap: 20px; }
 .lista-sessoes { border-radius: var(--raio-g); overflow: hidden; }
 .cartao-sessao { padding: 14px 16px; }
-.cartao-sessao__hora { font-size: 1.875rem; font-weight: 400; letter-spacing: 0.02em; }
+.cartao-sessao__hora { font-size: var(--t-numero); font-weight: 400; letter-spacing: 0.02em; }
 .cartao-sessao__nome { font-weight: 650; font-size: 1rem; letter-spacing: -0.01em; }
 .cartao-sessao__meta { font-size: 0.8125rem; }
 .lista-sessoes > li:first-child .cartao-sessao { border-radius: var(--raio-g) var(--raio-g) 0 0; }
 .lista-sessoes > li:last-child .cartao-sessao { border-radius: 0 0 var(--raio-g) var(--raio-g); }
 .dia { border-radius: 12px; width: 56px; height: 70px; }
-.dia__semana { font-size: 0.75rem; font-weight: 650; letter-spacing: 0.04em; }
-.dia__numero { font-size: 1.75rem; font-weight: 400; }
+.dia__semana { font-size: 0.8125rem; font-weight: 650; letter-spacing: 0.04em; }
+.dia__numero { font-size: var(--t-numero); font-weight: 400; }
 .hero-aula { border-radius: var(--raio-g); padding: 18px; }
 .hero-aula__nome { font-weight: 650; letter-spacing: -0.01em; }
-.hero-aula__quando { font-size: 3rem; }
+.hero-aula__quando { font-size: var(--t-titulo); }
 .capa { border-radius: var(--raio-g); }
 .dia-agenda__cabeca { align-items: center; }
 .dia-agenda__contagem { font-size: 0.8125rem; font-weight: 600; }
 .inicio__link { font-weight: 650; }
 
 /* ------------------------------------------------------------ navegação */
-.nav-inferior__item { font-size: 0.71875rem; font-weight: 650; letter-spacing: 0.005em; gap: 3px; }
+.nav-inferior__item { font-size: 0.75rem; font-weight: 650; letter-spacing: 0.005em; gap: 3px; }
 .nav-inferior__item[aria-current='page']::before { height: 3px; width: 28px; border-radius: 0 0 3px 3px; }
 .lateral__item, .nav-inferior__item { border-radius: var(--raio-m); }
 @media (min-width: 900px) {
@@ -138,12 +138,10 @@ select.campo__entrada, .plano-select { padding-right: 10px; }
 .tabela thead th { font-size: 0.75rem; font-weight: 650; letter-spacing: 0.02em; color: var(--cor-texto-suave); }
 .tabela th, .tabela td { padding: 12px 10px; }
 .tabela th[scope='row'] { font-weight: 650; }
-.tabela__num { font-size: 1.5rem; font-weight: 400; letter-spacing: 0.02em; }
+.tabela__num { font-size: var(--t-numero); font-weight: 400; letter-spacing: 0.02em; }
 
 @media (prefers-reduced-motion: no-preference) {
   .cartao-sessao, .botao, .campo__entrada, .dia { transition-duration: 160ms; }
 }
 
 .metrica__numero span { letter-spacing: 0; }
-.treino-hoje .inicio__secao { font-size: 0.8125rem; font-weight: 650; color: var(--cor-texto-suave); }
-.treino-hoje .treino__titulo { font-size: 1.375rem; }
