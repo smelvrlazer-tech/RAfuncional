@@ -29,13 +29,16 @@
     radial-gradient(90% 130% at 100% 0%, color-mix(in srgb, var(--cor-acento) 20%, transparent), transparent 62%),
     linear-gradient(135deg, #0b0e10 0%, #151a1d 100%);
 }
-.capa--com-foto::before { background: var(--capa-foto) center / cover no-repeat; }
+.capa--com-foto::before { background: var(--capa-foto) var(--capa-posicao, center) / cover no-repeat; }
 .capa--com-foto::after {
   content: '';
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(180deg, rgba(8, 10, 10, 0.5) 0%, rgba(8, 10, 10, 0.9) 100%);
+  /* Véu: escurece a esquerda (onde fica o texto) e a base, deixando a foto aparecer no resto. */
+  background:
+    linear-gradient(90deg, rgba(8, 10, 10, 0.82) 0%, rgba(8, 10, 10, 0.45) 55%, rgba(8, 10, 10, 0.15) 100%),
+    linear-gradient(180deg, rgba(8, 10, 10, 0.25) 0%, rgba(8, 10, 10, 0.78) 100%);
 }
 
 /* ------------------------------------------------------------ celular: topo escuro colado na capa */
@@ -133,23 +136,6 @@
 .aparencia__texto { display: grid; }
 .aparencia__nome { font-weight: 700; }
 .aparencia__detalhe { font-size: var(--t-legenda); color: var(--cor-texto-suave); }
-.previa-capa {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  display: grid;
-  align-items: end;
-  aspect-ratio: 16 / 7;
-  margin-top: var(--espaco-3);
-  padding: var(--espaco-3);
-  border-radius: var(--raio-g);
-  background: #0b0e10;
-  color: var(--cor-tinta);
-}
-.previa-capa::before { content: ''; position: absolute; inset: 0; z-index: -1; background: radial-gradient(90% 130% at 100% 0%, color-mix(in srgb, var(--cor-acento) 20%, transparent), transparent 62%), #0b0e10; }
-.previa-capa.capa--com-foto::before { background: var(--capa-foto) center / cover no-repeat; }
-.previa-capa__texto { font-size: var(--t-legenda); font-weight: 600; color: var(--cor-texto-invertido-suave); }
-.linha-botoes--inicio { justify-content: flex-start; margin-top: var(--espaco-3); }
 
 /* ------------------------------------------------------------ computador (>= 900px): menu escuro à esquerda, conteúdo claro */
 @media (min-width: 900px) {
@@ -224,3 +210,6 @@
   .agenda__capa .seletor-dias { margin-inline: 0; }
   .agenda__capa .seletor-dias__lista { padding-inline: 0; }
 }
+/* Filhos da capa nunca alargam a capa (título longo quebra de linha em vez de cortar). */
+.capa { grid-template-columns: minmax(0, 1fr); }
+.agenda__capa .topo-agenda__titulo { font-size: 2.125rem; }

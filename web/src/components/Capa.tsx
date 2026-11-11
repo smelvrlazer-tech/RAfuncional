@@ -1,20 +1,33 @@
 import type { CSSProperties, ElementType, ReactNode } from 'react'
-import { useCapa } from '../lib/capa'
 
 /**
- * Destaque escuro no topo de uma tela: foto de capa do estúdio ao fundo (se o professor enviou) com
- * véu escuro para o texto continuar legível, ou o fundo de grafite com brilho na cor da identidade.
+ * Fotos de capa do app (arquivos em public/capas, já otimizados). Cada tela usa uma, para o conjunto
+ * ficar variado sem repetir a mesma imagem no mesmo fluxo.
  */
-export function Capa({ como: Tag = 'section', className = '', children, ...resto }: {
+export const CAPAS = {
+  inicio: { arquivo: '/capas/capa-kettlebell.webp', posicao: 'right center' },
+  agenda: { arquivo: '/capas/capa-estudio.webp', posicao: 'center 40%' },
+  aula: { arquivo: '/capas/capa-treino.webp', posicao: 'center 25%' },
+} as const
+
+export type NomeCapa = keyof typeof CAPAS
+
+/**
+ * Destaque escuro no topo de uma tela: foto ao fundo com véu escuro (para o texto continuar legível)
+ * ou, sem foto, grafite com brilho na cor da identidade.
+ */
+export function Capa({ como: Tag = 'section', foto, className = '', children, ...resto }: {
   como?: ElementType
+  foto?: NomeCapa
   className?: string
   children: ReactNode
   [chave: string]: unknown
 }) {
-  const url = useCapa()
-  const estilo = (url ? { '--capa-foto': `url("${url}")` } : undefined) as CSSProperties | undefined
+  const estilo = (foto
+    ? { '--capa-foto': `url("${CAPAS[foto].arquivo}")`, '--capa-posicao': CAPAS[foto].posicao }
+    : undefined) as CSSProperties | undefined
   return (
-    <Tag className={`capa sup-escura ${url ? 'capa--com-foto' : ''} ${className}`.trim()} style={estilo} {...resto}>
+    <Tag className={`capa sup-escura ${foto ? 'capa--com-foto' : ''} ${className}`.trim()} style={estilo} {...resto}>
       {children}
     </Tag>
   )

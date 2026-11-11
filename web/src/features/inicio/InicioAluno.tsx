@@ -33,7 +33,7 @@ export function InicioAluno() {
 
   return (
     <div className="tela tela--inicio">
-      <Capa className="inicio__capa">
+      <Capa foto="inicio" className="inicio__capa">
       <header className="inicio__topo">
         <div className="inicio__texto">
           <h1 className="inicio__titulo">Olá, {primeiroNome || 'bem-vindo'}</h1>

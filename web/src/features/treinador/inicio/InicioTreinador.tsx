@@ -87,7 +87,7 @@ export function InicioTreinador() {
 
   return (
     <div className="tela-treinador tela-inicio-treinador">
-      <Capa como="header" className="controle inicio-treinador__capa">
+      <Capa como="header" foto="agenda" className="controle inicio-treinador__capa">
         <div className="controle__texto inicio-treinador__ola">
           <Link to="/treinador/perfil" className="inicio__avatar" aria-label="Abrir meu perfil e trocar a foto">
             <Avatar nome={perfil?.nome ?? ''} foto={perfil?.foto_url} className="avatar--grande" />

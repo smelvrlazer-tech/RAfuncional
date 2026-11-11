@@ -75,7 +75,7 @@ export function Agenda() {
     <div className="tela tela--agenda">
       <div className="agenda__lista">
         {/* Uma linha: quem é e qual dia está aberto. O dia escolhido é o título da tela. */}
-        <Capa className="agenda__capa">
+        <Capa foto="agenda" className="agenda__capa">
         <header className="topo-agenda">
           <div className="topo-agenda__texto">
             <p className="topo-agenda__ola">{primeiroNome ? `Olá, ${primeiroNome}` : 'RA Funcional'}</p>
