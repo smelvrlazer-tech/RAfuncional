@@ -46,7 +46,7 @@ PWA para o treinador Rafael Alvarenga: alunos reservam vaga ("check-in") e cance
 4. **Contas no e-mail do Rafael**: hoje tudo (GitHub, Supabase, Netlify) está na conta de infraestrutura do Pedro; transferir quando o Rafael tiver um e-mail dele.
 5. **Segurança:** revogar a chave de API do Stitch e trocar a senha do GitHub (coladas em conversa); trocar a senha provisória do Rafael no primeiro acesso.
 6. Criar um **projeto Supabase de desenvolvimento** separado quando houver vaga no plano grátis (ver acima).
-7. Refazer as capturas do manual no ciano (hoje estão no lima).
+7. ~~Refazer as capturas do manual~~ (feito em 13/11/2026, visual atual; a figura "aula lotada" foi removida porque não dá para reproduzir sem uma aula cheia).
 8. "Esqueci minha senha" automático por e-mail (exige e-mail transacional); hoje só o professor gera senha provisória (alunos) e o Pedro redefine a do professor com `scripts/criar-treinador.mjs`.
 9. Página de vendas (bônus): **próxima sessão**, projeto separado. Fora de escopo no v1: pagamentos.
 

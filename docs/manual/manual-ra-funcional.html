@@ -78,7 +78,7 @@
   <nav class="sumario" aria-label="Sumário">
     <a href="#bem-vindo">1. Bem-vindo<span>Como o app funciona em 1 minuto</span></a>
     <a href="#aluno">2. Para o aluno<span>Reservar, cancelar, fila, metas</span></a>
-    <a href="#professor">3. Para o professor<span>Início, chamada, turmas, treinos</span></a>
+    <a href="#professor">3. Para o professor<span>Hoje, turmas, treinos, alunos</span></a>
     <a href="#regras">4. Regras de ouro<span>O que vale para todo mundo</span></a>
     <a href="#duvidas">5. Dúvidas comuns<span>E o que fazer quando algo trava</span></a>
   </nav>
@@ -155,13 +155,12 @@
       <p>Toque em <b>Entrar na fila</b>. Você recebe um número (Nº1, Nº2…). Se alguém cancelar, o Nº1 é <b>confirmado automaticamente</b> e recebe uma notificação. Você pode sair da fila quando quiser.</p>
       <div class="atencao"><b>Fila fecha junto com a aula.</b> A promoção automática só acontece até 1 hora antes do início.</div>
     </div>
-    <figure class="tela"><img src="img/aluno-05-aula-lotada.png" alt="Aula lotada com fila"><figcaption>Aula lotada: você na fila</figcaption></figure>
   </div>
 
   <div class="missao">
     <div>
       <h3><span class="num">6</span>Acompanhar sua evolução</h3>
-      <p>Em <b>Aulas</b> ficam suas reservas em três abas: <i>Próximas</i>, <i>Lista de espera</i> e <i>Histórico</i>. Mais abaixo, a <b>frequência do mês</b>.</p>
+      <p>Em <b>Aulas</b> ficam suas reservas em três abas: <i>Próximas</i>, <i>Lista de espera</i> e <i>Histórico</i>. Mais abaixo, o <b>desempenho do mês</b>, as <b>últimas 8 semanas</b> (uma barra por semana, com uma linha tracejada no seu plano) e o <b>calendário de presença</b> (toque para abrir).</p>
       <ul>
         <li><b>Plano:</b> se o professor definiu um plano (ex.: 3 aulas por semana), você vê quanto já usou na semana. É só um aviso, a reserva continua valendo.</li>
         <li><b>Constância:</b> o anel mostra quantas das aulas que você reservou você realmente fez no mês.</li>
@@ -188,7 +187,7 @@
   <div class="missao">
     <div>
       <h3>Avisos e perfil</h3>
-      <p><b>Avisos:</b> vaga liberada, aula cancelada, treinos da semana e recados do professor. Use os filtros <i>Todas</i>, <i>Vagas liberadas</i> e <i>Avisos</i>. O ponto verde marca o que ainda não foi lido.</p>
+      <p><b>Avisos</b> (toque no <b>sino</b> no topo; no computador, em <i>Avisos</i> no menu lateral; o número mostra quantos não foram lidos): vaga liberada, aula cancelada, treinos da semana e recados do professor. Use os filtros <i>Todas</i>, <i>Vagas liberadas</i> e <i>Avisos</i>. O ponto verde marca o que ainda não foi lido.</p>
       <p><b>Perfil:</b> troque sua <b>foto</b>, ajuste nome e telefone, <b>troque sua senha</b> quando quiser, ative as notificações no celular e instale o app.</p>
       <div class="dica"><b>Ative as notificações.</b> É assim que você descobre na hora que abriu uma vaga na fila.</div>
     </div>
@@ -207,7 +206,7 @@
 
 <section id="professor">
   <h2>3. Para o professor</h2>
-  <p class="lead">Você comanda o dia pelo celular ou pelo computador. São seis áreas no menu: <b>Início, Chamada, Turmas, Treinos, Alunos e Perfil</b>.</p>
+  <p class="lead">Você comanda o dia pelo celular ou pelo computador. São cinco áreas no menu: <b>Hoje, Turmas, Treinos, Alunos e Perfil</b>.</p>
 
   <div class="missao larga">
     <div>
@@ -215,18 +214,18 @@
       <p><b>Entrar:</b> na tela de login, digite o seu <b>código de acesso</b> (no lugar do e-mail) e a sua senha. Ao receber a senha provisória, troque por uma só sua em <i>Perfil → Trocar senha</i>.</p>
       <div class="regra"><b>Rotina depois de cada aula (2 minutos):</b>
         <ol>
-          <li>Abra <b>Chamada</b> e toque na aula que acabou de começar ou terminar.</li>
+          <li>Em <b>Hoje</b>, toque em <i>Chamada</i> na aula que acabou de começar ou terminar (para outro dia, use <i>Outros dias</i>).</li>
           <li>Ao lado de cada aluno, toque em <b>Compareceu</b> ou <b>Faltou</b>.</li>
           <li>Quem não vier e não tiver marcação continua contando como falta; por isso vale marcar todos.</li>
         </ol>
         É essa marcação que alimenta a <b>frequência do mês</b>, as <b>metas Bronze, Prata e Ouro</b>, a <b>sequência de semanas</b> dos alunos e o <b>relatório de no-show</b>. Se esquecer, dá para marcar depois: a aula fica aberta para marcação a qualquer momento.</div>
-      <div class="dica"><b>Dica:</b> o Início mostra quantas aulas encerradas ainda estão <i>sem presença marcada</i>. Zere esse número uma vez por dia.</div>
+      <div class="dica"><b>Dica:</b> a tela Hoje mostra quantas aulas encerradas ainda estão <i>sem presença marcada</i>. Zere esse número uma vez por dia.</div>
     </div>
   </div>
 
   <div class="missao larga">
     <div>
-      <h3><span class="num">1</span>Início: o estúdio num olhar</h3>
+      <h3><span class="num">1</span>Hoje: o estúdio num olhar</h3>
       <p>Logo ao entrar você vê os números de hoje:</p>
       <ul>
         <li><b>Alunos esperados hoje</b> e a ocupação das vagas.</li>
@@ -234,15 +233,15 @@
         <li><b>Fila de espera</b> e qual aula tem a maior fila.</li>
         <li><b>Frequência do mês:</b> presenças sobre aulas reservadas, e quantas aulas ainda estão sem marcação.</li>
       </ul>
-      <p>Abaixo: <b>turmas de hoje</b> (com atalho para a chamada), o <b>treino de hoje</b>, o <b>gráfico de ocupação da semana</b> e o <b>Aviso aos alunos</b>.</p>
+      <p>Abaixo: <b>turmas de hoje</b> (com atalho para a chamada), o <b>treino de hoje</b>, o <b>aviso aos alunos</b>, a <b>frequência do estúdio</b> (ocupação das últimas 8 semanas), a lista <b>Precisa de atenção</b> (alunos com 2 ou mais faltas em 30 dias ou sem aula há mais de 14 dias) e a <b>ocupação da semana</b>.</p>
     </div>
-    <figure class="tela-larga"><img src="img/prof-01-inicio.png" alt="Início do professor"><figcaption>Início do professor</figcaption></figure>
+    <figure class="tela-larga"><img src="img/prof-01-inicio.png" alt="Hoje (professor)"><figcaption>Hoje, no computador</figcaption></figure>
   </div>
 
   <div class="missao larga">
     <div>
-      <h3><span class="num">2</span>Chamada: ver e marcar presença</h3>
-      <p>A aba <b>Chamada</b> mostra as aulas do dia (use <i>Ontem / Hoje / Amanhã</i> e as setas para trocar de dia). Toque na aula para abrir a lista.</p>
+      <h3><span class="num">2</span>Chamada: ver e marcar presença (outros dias)</h3>
+      <p>Em <b>Hoje</b>, toque em <i>Outros dias</i> para ver as aulas de ontem, de amanhã ou de qualquer dia (use <i>Ontem / Hoje / Amanhã</i> e as setas). Toque na aula para abrir a lista e marcar presença.</p>
       <ul>
         <li><b>Confirmados</b> em ordem alfabética, com foto, e a <b>lista de espera</b> na ordem da fila.</li>
         <li>Quando a aula começa, aparecem os botões <b>Compareceu</b> e <b>Faltou</b> ao lado de cada nome. Toque de novo no botão marcado para desfazer.</li>
@@ -282,13 +281,14 @@
 
   <div class="missao larga">
     <div>
-      <h3><span class="num">5</span>Alunos: convites, planos e relatório</h3>
+      <h3><span class="num">5</span>Alunos: lista, relatório e convites</h3>
+      <p>A tela tem três abas: <i>Lista</i>, <i>Relatório</i> e <i>Convites</i>.</p>
       <ul>
-        <li><b>Convidar:</b> digite o nome (opcional) e toque em <i>Gerar link de convite</i>. Depois <i>Copiar link</i> ou <i>Enviar no WhatsApp</i>. O convite vale 30 dias.</li>
-        <li><b>Plano:</b> em cada aluno escolha quantas aulas por semana ele tem (1x a 7x). O aluno vê o uso na semana. É só aviso, não bloqueia.</li>
+        <li><b>Convidar</b> (aba <i>Convites</i>): digite o nome (opcional) e toque em <i>Gerar link de convite</i>. Depois <i>Copiar link</i> ou <i>Enviar no WhatsApp</i>. O convite vale 30 dias.</li>
+        <li><b>Plano</b> (aba <i>Lista</i>): em cada aluno escolha quantas aulas por semana ele tem (1x a 7x). O aluno vê o uso na semana. É só aviso, não bloqueia.</li>
         <li><b>Desativar / Reativar:</b> aluno desativado <b>não consegue mais entrar no app</b> (e é desconectado dos aparelhos). Para liberar, toque em <i>Reativar</i>. As reservas já feitas em aulas futuras não são canceladas sozinhas: remova-as na Chamada, se quiser.</li>
         <li><b>Nova senha (esqueci a senha):</b> toque em <i>Nova senha</i> na linha do aluno e confirme. O app mostra uma senha provisória <b>uma única vez</b>, com botões para copiar a mensagem ou enviar no WhatsApp. A senha antiga deixa de valer, e o aluno é obrigado a criar uma senha própria no primeiro acesso.</li>
-        <li><b>Relatório do mês:</b> por aluno, reservas, compareceu, faltou, sem marcação e <b>no-show</b> (faltas + sem marcação). Use as setas para trocar o mês.</li>
+        <li><b>Relatório do mês</b> (aba <i>Relatório</i>): por aluno, reservas, compareceu, faltou, sem marcação e <b>no-show</b> (faltas + sem marcação). Use as setas para trocar o mês.</li>
       </ul>
     </div>
     <figure class="tela-larga"><img src="img/prof-06-alunos.png" alt="Alunos e relatório"><figcaption>Alunos, plano e relatório do mês</figcaption></figure>
@@ -297,7 +297,7 @@
   <div class="missao">
     <div>
       <h3><span class="num">6</span>Aviso aos alunos</h3>
-      <p>No Início, escreva uma mensagem curta (até 300 caracteres) e toque em <b>Enviar a todos os alunos</b>. Cada aluno ativo recebe a notificação, e o último recado aparece no Início dele como <i>Recado do coach</i>.</p>
+      <p>Em Hoje, escreva uma mensagem curta (até 300 caracteres) e toque em <b>Enviar a todos os alunos</b>. Cada aluno ativo recebe a notificação, e o último recado aparece no Início dele como <i>Recado do coach</i>.</p>
       <div class="dica"><b>Ideias:</b> mudança de horário, foco do treino, “cheguem 10 minutos antes”, lembrete de levar garrafa.</div>
     </div>
     <figure class="tela"><img src="img/prof-07-celular-inicio.png" alt="Início do professor no celular"><figcaption>Início no celular</figcaption></figure>
@@ -335,7 +335,7 @@
   <details><summary>Cancelei tarde demais. E agora?</summary><p>Depois que o prazo de 1 hora fecha, só o professor consegue remover sua reserva. Avise-o pelo WhatsApp.</p></details>
   <details><summary>Entrei na fila, mas ninguém me chamou.</summary><p>A fila só anda se alguém cancelar até 1 hora antes. Ative as notificações no Perfil para ser avisado na hora.</p></details>
   <details><summary>Esqueci minha senha.</summary><p>Avise o professor. Em <b>Alunos</b>, ele toca em <i>Nova senha</i> e te entrega uma senha provisória (por WhatsApp, por exemplo). Entre com seu e-mail e essa senha: o app pede para você criar uma senha nova na hora, e só então libera o uso.</p></details>
-  <details><summary>Minha constância está baixa, mas eu fui às aulas.</summary><p>Ela só conta aulas com presença marcada pelo professor. Se faltou marcar, peça a ele para ajustar na Chamada.</p></details>
+  <details><summary>Minha constância está baixa, mas eu fui às aulas.</summary><p>Ela só conta aulas com presença marcada pelo professor. Se faltou marcar, peça a ele para ajustar na tela da aula (Hoje).</p></details>
   <details><summary>(Professor) Marquei “Compareceu” errado.</summary><p>Toque novamente no botão marcado para limpar, ou toque no outro botão para trocar.</p></details>
   <details><summary>(Professor) O aluno não aparece na lista.</summary><p>Ele pode ainda não ter aceitado o convite ou estar desativado. Veja em Alunos e em Convites.</p></details>
   <details><summary>O app não atualiza.</summary><p>Feche e abra o app. Se estiver sem internet, ele avisa no topo e volta ao normal quando a conexão voltar.</p></details>
