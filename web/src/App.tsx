@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { Link, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { AuthProvider } from './auth/AuthContext'
 import { ExigeAluno, ExigeTreinador, SomenteDeslogado } from './auth/guards'
@@ -74,8 +75,15 @@ function Conteudo() {
   const treinador = pathname === '/treinador' || pathname.startsWith('/treinador/')
   const acesso = pathname === '/entrar' || pathname === '/convite' || pathname.startsWith('/convite/')
   const classe = treinador ? 'coluna coluna--larga' : acesso ? 'coluna coluna--acesso' : 'coluna'
+  // Ao trocar de tela, o ponto de partida do Tab volta ao topo do conteúdo (senão continua no botão que acabou de sumir).
+  const anterior = useRef(pathname)
+  useEffect(() => {
+    if (anterior.current === pathname) return
+    anterior.current = pathname
+    document.getElementById('conteudo')?.focus({ preventScroll: true })
+  }, [pathname])
   return (
-    <div id="conteudo" className={classe}>
+    <div id="conteudo" className={classe} tabIndex={-1}>
       <Rotas />
     </div>
   )

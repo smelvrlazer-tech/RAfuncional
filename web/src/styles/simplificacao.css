@@ -180,3 +180,9 @@
   @keyframes tela-entrar { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
   .tela, .tela-treinador { animation: tela-entrar 180ms var(--curva-saida) both; }
 }
+
+/* Abas de Minhas aulas: três colunas iguais, sem quebrar em duas linhas no celular. */
+.segmentado--tres { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; }
+.segmentado--tres .segmentado__opcao { white-space: normal; text-align: center; padding-inline: 4px; line-height: 1.2; min-height: 44px; }
+@media (min-width: 640px) { .segmentado--tres { width: fit-content; } .segmentado--tres .segmentado__opcao { padding-inline: 16px; white-space: nowrap; } }
+#conteudo:focus { outline: none; }

@@ -1,0 +1,54 @@
+{
+ "antes": {
+  "hoje": {
+   "fcpMs": 180,
+   "lcpMs": 1628,
+   "cls": 0.001,
+   "kb": 78,
+   "req": 13,
+   "conteudoUtilMs": 1062
+  },
+  "turmas": {
+   "fcpMs": 172,
+   "lcpMs": 1136,
+   "cls": 0.05,
+   "kb": 3,
+   "req": 12,
+   "conteudoUtilMs": 1058
+  },
+  "alunos": {
+   "fcpMs": 344,
+   "lcpMs": 988,
+   "cls": 0.018,
+   "kb": 5,
+   "req": 18,
+   "conteudoUtilMs": 883
+  }
+ },
+ "depois": {
+  "hoje": {
+   "fcpMs": 348,
+   "lcpMs": 1712,
+   "cls": 0,
+   "kb": 144,
+   "req": 28,
+   "conteudoUtilMs": 1069
+  },
+  "turmas": {
+   "fcpMs": 332,
+   "lcpMs": 844,
+   "cls": 0,
+   "kb": 136,
+   "req": 14,
+   "conteudoUtilMs": 717
+  },
+  "alunos": {
+   "fcpMs": 244,
+   "lcpMs": 1284,
+   "cls": 0,
+   "kb": 135,
+   "req": 19,
+   "conteudoUtilMs": 948
+  }
+ }
+}

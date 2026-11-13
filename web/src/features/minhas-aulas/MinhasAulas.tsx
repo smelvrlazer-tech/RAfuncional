@@ -38,7 +38,7 @@ export function MinhasAulas() {
         <p className="titulo-aba__resumo">{linhas ? textoResumoMinhasAulas(resumo) : 'Carregando…'}</p>
       </header>
 
-      <div className="segmentado" role="group" aria-label="Mostrar">
+      <div className="segmentado segmentado--tres" role="group" aria-label="Mostrar">
         <button type="button" className="segmentado__opcao" aria-pressed={aba === 'proximas'} onClick={() => setAba('proximas')}>
           Próximas <span className="segmentado__num">{resumo.confirmadas}</span>
         </button>
