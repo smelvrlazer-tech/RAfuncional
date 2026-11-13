@@ -3,7 +3,6 @@ import { useSearchParams } from 'react-router-dom'
 import { useAuth } from '../../auth/AuthContext'
 import { Aviso, Botao, EsqueletoLista } from '../../components/Basicos'
 import { Capa } from '../../components/Capa'
-import { Sino } from '../../components/Sino'
 import { chaveDiaSP, rotuloDiaLongo, semanaSeguinte } from '../../lib/datetime'
 import { mensagemErro } from '../../lib/erros'
 import { enderecoNoPainel } from '../../lib/rotas'
@@ -77,7 +76,6 @@ export function Agenda() {
             <p className="topo-agenda__ola">{primeiroNome ? `Olá, ${primeiroNome}` : 'RA Funcional'}</p>
             <h1 className="topo-agenda__titulo" id="rotulo-dia">{rotuloDiaLongo(selecionado)}</h1>
           </div>
-          <Sino />
         </header>
         <SeletorDias
           dias={dias}

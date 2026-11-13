@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom'
 import { Logo } from '../components/Logo'
+import { Sino } from '../components/Sino'
 import { EspacoNavInferior, NavInferior } from '../components/NavInferior'
 
 /**
@@ -10,9 +11,12 @@ import { EspacoNavInferior, NavInferior } from '../components/NavInferior'
 export function LayoutAluno() {
   return (
     <div className="app-aluno">
-      <div className="app-aluno__topo sup-escura" aria-hidden="true">
-        <Logo altura={26} />
-        <span className="app-aluno__topo-nome">RA Funcional</span>
+      <div className="app-aluno__topo sup-escura">
+        <span className="app-aluno__marca" aria-hidden="true">
+          <Logo altura={26} />
+          <span className="app-aluno__topo-nome">RA Funcional</span>
+        </span>
+        <Sino />
       </div>
       <div className="app-aluno__conteudo">
         <Outlet />

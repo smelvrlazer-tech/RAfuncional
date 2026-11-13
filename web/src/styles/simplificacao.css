@@ -146,3 +146,14 @@
 .atencao__item:last-child { border-bottom: 0; }
 .atencao__nome { font-weight: 650; }
 .atencao__motivo { font-size: var(--t-pequeno); color: var(--cor-perigo-texto); }
+
+/* ---- Fase C (aluno): 4 abas; Avisos vira o sino no topo (celular) e fica no menu lateral (computador) ---- */
+.app-aluno__topo { justify-content: space-between; padding-block: 8px; }
+.app-aluno__marca { display: inline-flex; align-items: center; gap: 10px; }
+.nav-inferior__so-computador { display: none; }
+.nav-inferior__contagem { margin-left: auto; min-width: 20px; padding: 0 6px; border-radius: var(--raio-pilula); background: var(--cor-acento-forte); color: var(--cor-sobre-acento); font-size: var(--t-legenda); font-weight: 700; text-align: center; }
+@media (min-width: 900px) {
+  .nav-inferior__so-computador { display: block; }
+}
+.nav-inferior > ul { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (min-width: 900px) { .nav-inferior > ul { grid-template-columns: none; } }
