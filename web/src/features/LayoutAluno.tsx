@@ -1,4 +1,6 @@
+import { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
+import { precarregarCapas } from '../lib/precarga'
 import { Logo } from '../components/Logo'
 import { Sino } from '../components/Sino'
 import { EspacoNavInferior, NavInferior } from '../components/NavInferior'
@@ -9,6 +11,7 @@ import { EspacoNavInferior, NavInferior } from '../components/NavInferior'
  * vira um menu lateral e o conteúdo ocupa o resto da largura.
  */
 export function LayoutAluno() {
+  useEffect(() => { precarregarCapas() }, [])
   return (
     <div className="app-aluno">
       <div className="app-aluno__topo sup-escura">
@@ -18,11 +21,12 @@ export function LayoutAluno() {
         </span>
         <Sino />
       </div>
+      {/* A navegação vem antes do conteúdo no código: no computador ela é o menu lateral (ordem de foco = ordem visual). */}
+      <NavInferior />
       <div className="app-aluno__conteudo">
         <Outlet />
       </div>
       <EspacoNavInferior />
-      <NavInferior />
     </div>
   )
 }

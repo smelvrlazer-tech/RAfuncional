@@ -1,0 +1,286 @@
+{
+  "rotulo": "depois",
+  "papel": "aluno",
+  "telas": {
+    "375-inicio": {
+      "altura": 1044,
+      "blocos": 6,
+      "interativos": 7,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        20,
+        28,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "375-agenda": {
+      "altura": 812,
+      "blocos": 2,
+      "interativos": 18,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        28
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "375-aulas": {
+      "altura": 1598,
+      "blocos": 3,
+      "interativos": 4,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        20,
+        28,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "375-avisos": {
+      "altura": 812,
+      "blocos": 0,
+      "interativos": 8,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        20
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "375-perfil": {
+      "altura": 1517,
+      "blocos": 4,
+      "interativos": 13,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        20,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "375-detalhe": {
+      "altura": 812,
+      "blocos": 3,
+      "interativos": 2,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        20,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "768-inicio": {
+      "altura": 1026,
+      "blocos": 6,
+      "interativos": 7,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        20,
+        28,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "768-agenda": {
+      "altura": 1024,
+      "blocos": 2,
+      "interativos": 18,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        28
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "768-aulas": {
+      "altura": 1530,
+      "blocos": 3,
+      "interativos": 4,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        20,
+        28,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "768-avisos": {
+      "altura": 1024,
+      "blocos": 0,
+      "interativos": 8,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        20
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "768-perfil": {
+      "altura": 1477,
+      "blocos": 4,
+      "interativos": 13,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        20,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "768-detalhe": {
+      "altura": 1048,
+      "blocos": 3,
+      "interativos": 2,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        20,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "1440-inicio": {
+      "altura": 900,
+      "blocos": 6,
+      "interativos": 7,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        20,
+        28,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "1440-agenda": {
+      "altura": 900,
+      "blocos": 5,
+      "interativos": 18,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        20,
+        28,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "1440-aulas": {
+      "altura": 1219,
+      "blocos": 3,
+      "interativos": 4,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        20,
+        28,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "1440-avisos": {
+      "altura": 900,
+      "blocos": 0,
+      "interativos": 8,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        20
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "1440-perfil": {
+      "altura": 1234,
+      "blocos": 4,
+      "interativos": 13,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        20,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "1440-detalhe": {
+      "altura": 900,
+      "blocos": 3,
+      "interativos": 2,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        20,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    }
+  },
+  "perf": {
+    "inicio": {
+      "fcpMs": 212,
+      "lcpMs": 1964,
+      "cls": 0.115,
+      "kbTransferidos": 157,
+      "requisicoes": 27,
+      "conteudoUtilMs": 1048
+    },
+    "agenda": {
+      "fcpMs": 304,
+      "lcpMs": 1392,
+      "cls": 0,
+      "kbTransferidos": 139,
+      "requisicoes": 18,
+      "conteudoUtilMs": 741
+    },
+    "aulas": {
+      "fcpMs": 136,
+      "lcpMs": 1064,
+      "cls": 0.735,
+      "kbTransferidos": 15,
+      "requisicoes": 33,
+      "conteudoUtilMs": 595
+    }
+  }
+}

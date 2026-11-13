@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { precarregarCapas } from '../../lib/precarga'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../../auth/AuthContext'
 import { Botao } from '../../components/Basicos'
@@ -17,6 +18,7 @@ const ITENS: { para: string; rotulo: string; icone: NomeIcone; fim?: boolean }[]
 export function ShellTreinador() {
   const { perfil, sair } = useAuth()
   const [saindo, setSaindo] = useState(false)
+  useEffect(() => { precarregarCapas() }, [])
   const primeiroNome = perfil?.nome.split(/\s+/)[0] ?? ''
   const caminho = useLocation().pathname
   const sessaoAberta = caminho.startsWith('/treinador/sessao/')
