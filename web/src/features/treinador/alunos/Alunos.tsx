@@ -91,7 +91,7 @@ export function Alunos() {
                 ))}
               </div>
             </div>
-            <div className="tabela-rolagem">
+            <div className="tabela-rolagem" tabIndex={0} role="region" aria-label="Lista de alunos (role para o lado)">
               <table className="tabela">
                 <caption className="sr-only">Alunos cadastrados, com telefone, aulas no mês e situação</caption>
                 <thead>

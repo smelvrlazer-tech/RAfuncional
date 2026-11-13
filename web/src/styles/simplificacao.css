@@ -101,3 +101,25 @@
 .inicio__link { display: inline-flex; align-items: center; min-height: 44px; }
 .segmentado__opcao { min-height: 44px; }
 .cartao-sessao .botao { min-height: 44px; }
+
+/* ---- Fase A2 (professor) ---- */
+/* Números de hoje: um cartão só, com divisórias (eram 4 cartões). */
+.metricas--quatro { gap: 0; background: var(--cor-superficie); border-radius: var(--raio-g); box-shadow: var(--sombra-cartao); overflow: hidden; }
+.metricas--quatro > .metrica { background: transparent; box-shadow: none; border-radius: 0; border-top: 1px solid var(--cor-linha); border-left: 1px solid var(--cor-linha); }
+.metricas--quatro > .metrica:nth-child(-n+2) { border-top: 0; }
+.metricas--quatro > .metrica:nth-child(odd) { border-left: 0; }
+@media (min-width: 900px) {
+  .metricas--quatro { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .metricas--quatro > .metrica { border-top: 0; border-left: 1px solid var(--cor-linha); }
+  .metricas--quatro > .metrica:first-child { border-left: 0; }
+}
+.tabela-rolagem:focus-visible { outline: 2px solid var(--cor-foco); outline-offset: 2px; }
+.semana-barras__rotulo, .semana-barras__valor { white-space: nowrap; font-size: var(--t-legenda); }
+@media (max-width: 899px) {
+  .metricas--quatro .metrica__numero span { display: block; margin-top: 2px; }
+  .metricas--quatro .metrica__rotulo { min-height: 2.6em; }
+}
+/* Alvos de toque do painel do professor: pelo menos 44px. */
+.navegar-dia__atalho { min-height: 44px; }
+.aula__link { display: inline-flex; align-items: center; min-height: 44px; }
+.tabela a[href^='tel:'] { display: inline-flex; align-items: center; min-height: 44px; }

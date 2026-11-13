@@ -177,7 +177,7 @@ export function Turmas() {
         tituloVazio="Nenhuma turma cadastrada" textoVazio="Crie a primeira turma com o botão “Nova turma”."
         onTentar={() => void recarregar()}>
         {largo ? (
-          <div className="tabela-rolagem">
+          <div className="tabela-rolagem" tabIndex={0} role="region" aria-label="Grade de turmas da semana">
             <table className="grade-turmas">
               <caption className="sr-only">Turmas da semana por horário e dia</caption>
               <thead>

@@ -1,0 +1,57 @@
+[
+ {
+  "n": "Início do professor mostra números, turmas de hoje, treino e aviso",
+  "ok": true,
+  "d": ""
+ },
+ {
+  "n": "Abrir uma aula a partir do Início",
+  "ok": true,
+  "d": "1 toque(s)"
+ },
+ {
+  "n": "Tela da aula mostra lista de alunos/chamada",
+  "ok": true,
+  "d": "sessao/5a372816-3d9a-4315-aa16-5c1b02bdcce3"
+ },
+ {
+  "n": "Abrir Chamada",
+  "ok": true,
+  "d": ""
+ },
+ {
+  "n": "Abrir Turmas",
+  "ok": true,
+  "d": ""
+ },
+ {
+  "n": "Abrir Treinos",
+  "ok": true,
+  "d": ""
+ },
+ {
+  "n": "Abrir Alunos",
+  "ok": true,
+  "d": ""
+ },
+ {
+  "n": "Abrir Perfil",
+  "ok": true,
+  "d": ""
+ },
+ {
+  "n": "Editar uma turma abre o formulário",
+  "ok": true,
+  "d": "1 toque(s)"
+ },
+ {
+  "n": "Escolher um dia em Treinos abre o editor",
+  "ok": true,
+  "d": "1 toque(s)"
+ },
+ {
+  "n": "Alunos mostra lista e relatório mensal",
+  "ok": true,
+  "d": ""
+ }
+]

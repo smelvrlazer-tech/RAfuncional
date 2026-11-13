@@ -74,7 +74,7 @@ export function Treinos() {
                 <button type="button" aria-pressed={selecionado === d.chave}
                   className={`dia-treino dia-treino--${estado} ${d.hoje ? 'dia-treino--hoje' : ''}`}
                   onClick={() => { setRetorno(null); setSelecionado(d.chave) }}
-                  aria-label={`${rotuloDiaLongo(d.chave)}${d.hoje ? ' (hoje)' : ''}: ${t ? `${t.titulo}, ${estado}` : 'sem treino, cadastrar'}`}>
+>
                   <span className="dia-treino__dia">{d.semanaCurta} <strong>{d.numero}</strong></span>
                   <span className="dia-treino__titulo">{t?.titulo ?? 'Sem treino'}</span>
                   {t ? (
@@ -82,6 +82,7 @@ export function Treinos() {
                   ) : (
                     <span className="dia-treino__cadastrar"><Icone nome="mais" /> Cadastrar</span>
                   )}
+                  <span className="sr-only">{`. ${rotuloDiaLongo(d.chave)}${d.hoje ? ' (hoje)' : ''}: ${t ? `${t.titulo}, ${estado}` : 'sem treino, cadastrar'}`}</span>
                 </button>
               </li>
             )

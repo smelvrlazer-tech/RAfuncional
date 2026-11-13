@@ -40,7 +40,7 @@ export function RelatorioMensal({ hoje }: { hoje: string }) {
             contam como falta até você marcar na tela da aula.
           </p>
         )}
-        <div className="tabela-rolagem">
+        <div className="tabela-rolagem" tabIndex={0} role="region" aria-label="Relatório mensal por aluno (role para o lado)">
           <table className="tabela">
             <caption className="sr-only">Reservas, presenças e faltas por aluno no mês</caption>
             <thead>

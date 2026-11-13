@@ -1,0 +1,276 @@
+{
+  "rotulo": "depois",
+  "papel": "prof",
+  "telas": {
+    "375-inicio": {
+      "altura": 1900,
+      "blocos": 10,
+      "interativos": 9,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        20,
+        28,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "375-chamada": {
+      "altura": 1256,
+      "blocos": 4,
+      "interativos": 8,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        20,
+        28,
+        36,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "375-turmas": {
+      "altura": 2519,
+      "blocos": 0,
+      "interativos": 31,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        20,
+        28,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "375-treinos": {
+      "altura": 1211,
+      "blocos": 0,
+      "interativos": 11,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        28,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "375-alunos": {
+      "altura": 1701,
+      "blocos": 4,
+      "interativos": 17,
+      "tamanhosFonte": [
+        12,
+        13,
+        14,
+        16,
+        20,
+        28,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "375-perfil": {
+      "altura": 1445,
+      "blocos": 4,
+      "interativos": 13,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        20,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "768-inicio": {
+      "altura": 1720,
+      "blocos": 10,
+      "interativos": 9,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        20,
+        28,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "768-chamada": {
+      "altura": 1024,
+      "blocos": 4,
+      "interativos": 8,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        20,
+        28,
+        36,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "768-turmas": {
+      "altura": 1840,
+      "blocos": 0,
+      "interativos": 31,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        20,
+        28,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "768-treinos": {
+      "altura": 1024,
+      "blocos": 0,
+      "interativos": 11,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        28,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "768-alunos": {
+      "altura": 1537,
+      "blocos": 4,
+      "interativos": 17,
+      "tamanhosFonte": [
+        12,
+        13,
+        14,
+        16,
+        20,
+        28,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "768-perfil": {
+      "altura": 1342,
+      "blocos": 4,
+      "interativos": 13,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        20,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "1440-inicio": {
+      "altura": 1145,
+      "blocos": 10,
+      "interativos": 9,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        20,
+        28,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "1440-chamada": {
+      "altura": 900,
+      "blocos": 4,
+      "interativos": 8,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        20,
+        28,
+        36,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "1440-turmas": {
+      "altura": 900,
+      "blocos": 0,
+      "interativos": 31,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        28,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "1440-treinos": {
+      "altura": 900,
+      "blocos": 0,
+      "interativos": 11,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        28,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "1440-alunos": {
+      "altura": 1108,
+      "blocos": 4,
+      "interativos": 17,
+      "tamanhosFonte": [
+        12,
+        13,
+        14,
+        16,
+        20,
+        28,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    },
+    "1440-perfil": {
+      "altura": 1191,
+      "blocos": 4,
+      "interativos": 13,
+      "tamanhosFonte": [
+        13,
+        14,
+        16,
+        20,
+        40
+      ],
+      "rolagemLateral": false,
+      "axe": []
+    }
+  },
+  "perf": {}
+}

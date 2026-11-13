@@ -1,0 +1,162 @@
+{
+ "telas": {
+  "Início": {
+   "estrutura": {
+    "lang": "pt-BR",
+    "h1": 1,
+    "pulosDeNivel": 0,
+    "main": true,
+    "nav": true,
+    "pularConteudo": true,
+    "imgsSemAlt": 0,
+    "semNomeAcessivel": []
+   },
+   "alvos": [],
+   "alvosMenos24": [],
+   "teclado": {
+    "elementosAlcancados": 16,
+    "semIndicadorDeFoco": []
+   },
+   "reflow320": {
+    "sobra": 0
+   },
+   "espacamentoTexto": {
+    "sobra": 0,
+    "cortados": 1
+   }
+  },
+  "Chamada": {
+   "estrutura": {
+    "lang": "pt-BR",
+    "h1": 1,
+    "pulosDeNivel": 0,
+    "main": true,
+    "nav": true,
+    "pularConteudo": true,
+    "imgsSemAlt": 0,
+    "semNomeAcessivel": []
+   },
+   "alvos": [],
+   "alvosMenos24": [],
+   "teclado": {
+    "elementosAlcancados": 16,
+    "semIndicadorDeFoco": [
+     "A|/treinador/sessao/e728f68b-37cd-44ee-8db9-0fb460c0fe19|Funcional Manhã",
+     "A|/treinador/sessao/1cb998e5-60ad-4434-bfd4-9bccd895f6d5|Funcional Cedo",
+     "A|/treinador/sessao/5a372816-3d9a-4315-aa16-5c1b02bdcce3|Funcional Noite"
+    ]
+   },
+   "reflow320": {
+    "sobra": 0
+   },
+   "espacamentoTexto": {
+    "sobra": 0,
+    "cortados": 3
+   }
+  },
+  "Turmas": {
+   "estrutura": {
+    "lang": "pt-BR",
+    "h1": 1,
+    "pulosDeNivel": 0,
+    "main": true,
+    "nav": true,
+    "pularConteudo": true,
+    "imgsSemAlt": 0,
+    "semNomeAcessivel": []
+   },
+   "alvos": [],
+   "alvosMenos24": [],
+   "teclado": {
+    "elementosAlcancados": 12,
+    "semIndicadorDeFoco": []
+   },
+   "reflow320": {
+    "sobra": 0
+   },
+   "espacamentoTexto": {
+    "sobra": 0,
+    "cortados": 0
+   }
+  },
+  "Treinos": {
+   "estrutura": {
+    "lang": "pt-BR",
+    "h1": 1,
+    "pulosDeNivel": 0,
+    "main": true,
+    "nav": true,
+    "pularConteudo": true,
+    "imgsSemAlt": 0,
+    "semNomeAcessivel": []
+   },
+   "alvos": [],
+   "alvosMenos24": [],
+   "teclado": {
+    "elementosAlcancados": 19,
+    "semIndicadorDeFoco": []
+   },
+   "reflow320": {
+    "sobra": 0
+   },
+   "espacamentoTexto": {
+    "sobra": 0,
+    "cortados": 9
+   }
+  },
+  "Alunos": {
+   "estrutura": {
+    "lang": "pt-BR",
+    "h1": 1,
+    "pulosDeNivel": 0,
+    "main": true,
+    "nav": true,
+    "pularConteudo": true,
+    "imgsSemAlt": 0,
+    "semNomeAcessivel": []
+   },
+   "alvos": [],
+   "alvosMenos24": [],
+   "teclado": {
+    "elementosAlcancados": 22,
+    "semIndicadorDeFoco": []
+   },
+   "reflow320": {
+    "sobra": 0
+   },
+   "espacamentoTexto": {
+    "sobra": 0,
+    "cortados": 1
+   }
+  },
+  "Perfil": {
+   "estrutura": {
+    "lang": "pt-BR",
+    "h1": 1,
+    "pulosDeNivel": 0,
+    "main": true,
+    "nav": true,
+    "pularConteudo": true,
+    "imgsSemAlt": 0,
+    "semNomeAcessivel": [
+     "<button type=\"submit\" class=\"botao botao--primario \"><span>Salvar nova senha</sp"
+    ]
+   },
+   "alvos": [],
+   "alvosMenos24": [],
+   "teclado": {
+    "elementosAlcancados": 15,
+    "semIndicadorDeFoco": []
+   },
+   "reflow320": {
+    "sobra": 0
+   },
+   "espacamentoTexto": {
+    "sobra": 0,
+    "cortados": 0
+   }
+  }
+ },
+ "recolhidos": [],
+ "movimentoReduzido": true
+}
