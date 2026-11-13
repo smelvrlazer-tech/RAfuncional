@@ -44,6 +44,7 @@ describe('Alunos', () => {
   it('gera convite: link com a origem do app e WhatsApp com mensagem pronta', async () => {
     h.estado.rpc.mockResolvedValue({ data: { codigo: 'A1B2C3D4E5F6' }, error: null })
     render(<Alunos />)
+    await userEvent.click(await screen.findByRole('tab', { name: 'Convites' }))
     await userEvent.type(screen.getByLabelText('Nome do aluno (opcional)'), 'Maria Silva')
     await userEvent.click(screen.getByRole('button', { name: 'Gerar link de convite' }))
     expect(h.estado.rpc).toHaveBeenCalledWith('criar_convite', { p_nome: 'Maria Silva' })
@@ -68,6 +69,7 @@ describe('Alunos', () => {
 
   it('revogar convite: confirma e só atualiza se ainda estiver pendente', async () => {
     render(<Alunos />)
+    await userEvent.click(await screen.findByRole('tab', { name: 'Convites' }))
     await userEvent.click(await screen.findByRole('button', { name: 'Revogar convite ABCDEF123456' }))
     await userEvent.click(screen.getByRole('button', { name: 'Revogar convite' }))
     expect(await screen.findByText(/Convite ABCDEF123456 revogado/)).toBeInTheDocument()

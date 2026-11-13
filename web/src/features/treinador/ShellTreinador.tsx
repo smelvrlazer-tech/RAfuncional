@@ -6,8 +6,7 @@ import { Icone, type NomeIcone } from '../../components/Icone'
 import { Logo } from '../../components/Logo'
 
 const ITENS: { para: string; rotulo: string; icone: NomeIcone; fim?: boolean }[] = [
-  { para: '/treinador', rotulo: 'Início', icone: 'grade', fim: true },
-  { para: '/treinador/chamada', rotulo: 'Chamada', icone: 'check' },
+  { para: '/treinador', rotulo: 'Hoje', icone: 'grade', fim: true },
   { para: '/treinador/turmas', rotulo: 'Turmas', icone: 'calendario' },
   { para: '/treinador/treinos', rotulo: 'Treinos', icone: 'prancheta' },
   { para: '/treinador/alunos', rotulo: 'Alunos', icone: 'pessoas' },
@@ -19,7 +18,9 @@ export function ShellTreinador() {
   const { perfil, sair } = useAuth()
   const [saindo, setSaindo] = useState(false)
   const primeiroNome = perfil?.nome.split(/\s+/)[0] ?? ''
-  const sessaoAberta = useLocation().pathname.startsWith('/treinador/sessao/')
+  const caminho = useLocation().pathname
+  const sessaoAberta = caminho.startsWith('/treinador/sessao/')
+  const chamadaAberta = caminho === '/treinador/chamada'
 
   return (
     <div className="painel">
@@ -38,9 +39,9 @@ export function ShellTreinador() {
                 <NavLink
                   to={i.para}
                   end={i.fim}
-                  // A visão da sessão é um detalhe da chamada: mantém "Chamada" marcado.
+                  // Chamada (outros dias) e a visão da sessão fazem parte de "Hoje": mantém a aba marcada.
                   className={({ isActive }) =>
-                    `lateral__item ${isActive || (i.para === '/treinador/chamada' && sessaoAberta) ? 'active' : ''}`}
+                    `lateral__item ${isActive || (i.para === '/treinador' && (sessaoAberta || chamadaAberta)) ? 'active' : ''}`}
                 >
                   <Icone nome={i.icone} tamanho={20} />
                   <span>{i.rotulo}</span>

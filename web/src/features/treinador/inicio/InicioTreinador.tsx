@@ -101,7 +101,7 @@ export function InicioTreinador() {
           </div>
         </div>
         <div className="controle__lado">
-          <Link to="/treinador/chamada" className="botao botao--contorno">Painel do dia</Link>
+          <Link to="/treinador/chamada" className="botao botao--contorno">Outros dias</Link>
           <Link to="/treinador/turmas" className="botao botao--primario">Nova turma</Link>
         </div>
       </Capa>

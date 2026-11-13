@@ -157,3 +157,8 @@
 }
 .nav-inferior > ul { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 @media (min-width: 900px) { .nav-inferior > ul { grid-template-columns: none; } }
+
+/* ---- Fase C (professor): abas em Alunos ---- */
+[hidden] { display: none !important; }
+.abas-alunos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; }
+@media (min-width: 640px) { .abas-alunos { width: fit-content; } }

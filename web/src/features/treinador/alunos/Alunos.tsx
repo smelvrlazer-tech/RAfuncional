@@ -16,6 +16,9 @@ import { NovaSenhaAluno } from './NovaSenhaAluno'
 import { NovoConvite } from './NovoConvite'
 import { RelatorioMensal } from './RelatorioMensal'
 
+type AbaAlunos = 'lista' | 'relatorio' | 'convites'
+const ABAS: [AbaAlunos, string][] = [['lista', 'Lista'], ['relatorio', 'Relatório'], ['convites', 'Convites']]
+
 export function Alunos() {
   const agora = useAgora()
   const alunos = useCarga(listarAlunos, 'alunos')
@@ -27,6 +30,7 @@ export function Alunos() {
   const [retorno, setRetorno] = useState<Retorno>(null)
   const [busca, setBusca] = useState('')
   const [filtro, setFiltro] = useState<FiltroAlunos>('todos')
+  const [aba, setAba] = useState<AbaAlunos>('lista')
   const hoje = chaveDiaSP(agora)
   // Aulas do mês corrente até agora, por aluno. Se falhar, a coluna mostra traço (é informação extra).
   const aulasMes = useCarga(() => contarAulasNoPeriodo(inicioDoDiaSP(inicioDoMes(hoje)), new Date()), `mes-${hoje}`)
@@ -70,8 +74,26 @@ export function Alunos() {
       <Controle titulo="Alunos"
         subtitulo={alunos.dados ? `${ativos} ${ativos === 1 ? 'ativo' : 'ativos'} de ${lista.length} ${lista.length === 1 ? 'aluno' : 'alunos'}` : 'Carregando…'} />
 
+      <div className="segmentado abas-alunos" role="tablist" aria-label="Seções de Alunos"
+        onKeyDown={(e) => {
+          const i = ABAS.findIndex(([v]) => v === aba)
+          const novo = e.key === 'ArrowRight' ? (i + 1) % ABAS.length : e.key === 'ArrowLeft' ? (i + ABAS.length - 1) % ABAS.length : -1
+          if (novo < 0) return
+          e.preventDefault()
+          setAba(ABAS[novo]![0])
+          document.getElementById(`aba-alunos-${ABAS[novo]![0]}`)?.focus()
+        }}>
+        {ABAS.map(([valor, rotulo]) => (
+          <button key={valor} id={`aba-alunos-${valor}`} type="button" role="tab" className="segmentado__opcao"
+            aria-selected={aba === valor} aria-controls={`painel-alunos-${valor}`} tabIndex={aba === valor ? 0 : -1}
+            onClick={() => setAba(valor)}>
+            {rotulo}
+          </button>
+        ))}
+      </div>
+
       <div className="alunos-grade">
-        <section className="cartao" aria-labelledby="titulo-alunos">
+        <section className="cartao" aria-labelledby="titulo-alunos" id="painel-alunos-lista" role="tabpanel" hidden={aba !== 'lista'}>
           <h2 className="cartao__titulo" id="titulo-alunos">Lista de alunos</h2>
           <Anuncio retorno={retorno} />
           <EstadoLista carregando={alunos.carregando} erro={alunos.erro} vazio={!lista.length}
@@ -141,13 +163,15 @@ export function Alunos() {
           </EstadoLista>
         </section>
 
-        <div className="alunos-grade__lado">
+        <div className="alunos-grade__lado" id="painel-alunos-convites" role="tabpanel" aria-label="Convites" hidden={aba !== 'convites'}>
           <NovoConvite onCriado={() => void convites.recarregar()} />
           <ListaConvites carga={convites} agora={agora} />
         </div>
       </div>
 
-      <RelatorioMensal hoje={hoje} />
+      <div id="painel-alunos-relatorio" role="tabpanel" aria-label="Relatório do mês" hidden={aba !== 'relatorio'}>
+        <RelatorioMensal hoje={hoje} />
+      </div>
 
       <NovaSenhaAluno aluno={alvoSenha} onFechar={() => setAlvoSenha(null)} />
 

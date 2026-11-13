@@ -1,0 +1,62 @@
+[
+ {
+  "n": "375px: aba lista mostra o conteúdo",
+  "ok": true,
+  "d": ""
+ },
+ {
+  "n": "375px: aba relatorio mostra o conteúdo",
+  "ok": true,
+  "d": ""
+ },
+ {
+  "n": "375px: aba convites mostra o conteúdo",
+  "ok": true,
+  "d": ""
+ },
+ {
+  "n": "375px: seta do teclado troca de aba",
+  "ok": true,
+  "d": ""
+ },
+ {
+  "n": "375px: menu do professor",
+  "ok": true,
+  "d": "Hoje|Turmas|Treinos|Alunos|Perfil"
+ },
+ {
+  "n": "375px: Chamada de outros dias continua acessível e marca \"Hoje\"",
+  "ok": true,
+  "d": ""
+ },
+ {
+  "n": "1440px: aba lista mostra o conteúdo",
+  "ok": true,
+  "d": ""
+ },
+ {
+  "n": "1440px: aba relatorio mostra o conteúdo",
+  "ok": true,
+  "d": ""
+ },
+ {
+  "n": "1440px: aba convites mostra o conteúdo",
+  "ok": true,
+  "d": ""
+ },
+ {
+  "n": "1440px: seta do teclado troca de aba",
+  "ok": true,
+  "d": ""
+ },
+ {
+  "n": "1440px: menu do professor",
+  "ok": true,
+  "d": "Hoje|Turmas|Treinos|Alunos|Perfil"
+ },
+ {
+  "n": "1440px: Chamada de outros dias continua acessível e marca \"Hoje\"",
+  "ok": true,
+  "d": ""
+ }
+]
