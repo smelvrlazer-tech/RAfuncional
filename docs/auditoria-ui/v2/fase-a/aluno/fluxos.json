@@ -1,0 +1,40 @@
+{
+ "toquesReservar": 2,
+ "res": [
+  {
+   "n": "Estado inicial lido",
+   "ok": true,
+   "d": "sem reserva"
+  },
+  {
+   "n": "Reservar a partir do Início",
+   "ok": true,
+   "d": "2 toques, 3074 ms"
+  },
+  {
+   "n": "Confirmação visível após reservar",
+   "ok": true,
+   "d": "Confirmado"
+  },
+  {
+   "n": "Reserva aparece no Início (hero)",
+   "ok": true,
+   "d": ""
+  },
+  {
+   "n": "Reserva aparece em Minhas aulas",
+   "ok": true,
+   "d": ""
+  },
+  {
+   "n": "Cancelar reserva",
+   "ok": true,
+   "d": "2 toques, 7408 ms; pediu confirmação: true"
+  },
+  {
+   "n": "Estado restaurado (sem reserva ativa)",
+   "ok": true,
+   "d": "não tem aula reservada"
+  }
+ ]
+}

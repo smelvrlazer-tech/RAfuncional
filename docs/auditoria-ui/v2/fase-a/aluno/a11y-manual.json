@@ -1,0 +1,264 @@
+{
+ "telas": {
+  "Início": {
+   "estrutura": {
+    "lang": "pt-BR",
+    "h1": 1,
+    "pulosDeNivel": 0,
+    "main": false,
+    "nav": true,
+    "pularConteudo": true,
+    "imgsSemAlt": 0,
+    "semNomeAcessivel": [
+     "<a class=\"cartao-sessao__link\" href=\"/sessao/e728f68b-37cd-44ee-8db9-0fb460c0fe1"
+    ]
+   },
+   "alvos": [
+    {
+     "w": 144,
+     "h": 22,
+     "t": "Ver agenda completa"
+    },
+    {
+     "w": 299,
+     "h": 40,
+     "t": "07:00\nFuncional Cedo\nEm andame"
+    },
+    {
+     "w": 204,
+     "h": 40,
+     "t": "18:30\nFuncional Noite\n10 vagas"
+    },
+    {
+     "w": 95,
+     "h": 40,
+     "t": "Reservar"
+    },
+    {
+     "w": 299,
+     "h": 40,
+     "t": "cartao-sessao__link"
+    }
+   ],
+   "alvosMenos24": [
+    {
+     "w": 144,
+     "h": 22,
+     "t": "Ver agenda completa"
+    }
+   ],
+   "teclado": {
+    "elementosAlcancados": 13,
+    "semIndicadorDeFoco": [
+     "A|/sessao/1cb998e5-60ad-4434-bfd4-9bccd895f6d5|07:00\nFuncional Cedo",
+     "A|/sessao/5a372816-3d9a-4315-aa16-5c1b02bdcce3|18:30\nFuncional Noit"
+    ]
+   },
+   "reflow320": {
+    "sobra": 0
+   },
+   "espacamentoTexto": {
+    "sobra": 0,
+    "cortados": 1
+   }
+  },
+  "Agenda": {
+   "estrutura": {
+    "lang": "pt-BR",
+    "h1": 1,
+    "pulosDeNivel": 0,
+    "main": false,
+    "nav": true,
+    "pularConteudo": true,
+    "imgsSemAlt": 0,
+    "semNomeAcessivel": []
+   },
+   "alvos": [
+    {
+     "w": 299,
+     "h": 40,
+     "t": "06:00\nFuncional Manhã\nEncerrad"
+    },
+    {
+     "w": 299,
+     "h": 40,
+     "t": "07:00\nFuncional Cedo\nEm andame"
+    },
+    {
+     "w": 204,
+     "h": 40,
+     "t": "18:30\nFuncional Noite\n10 vagas"
+    },
+    {
+     "w": 95,
+     "h": 40,
+     "t": "Reservar"
+    }
+   ],
+   "alvosMenos24": [],
+   "teclado": {
+    "elementosAlcancados": 25,
+    "semIndicadorDeFoco": [
+     "A|/sessao/e728f68b-37cd-44ee-8db9-0fb460c0fe19|06:00\nFuncional Manh",
+     "A|/sessao/1cb998e5-60ad-4434-bfd4-9bccd895f6d5|07:00\nFuncional Cedo",
+     "A|/sessao/5a372816-3d9a-4315-aa16-5c1b02bdcce3|18:30\nFuncional Noit"
+    ]
+   },
+   "reflow320": {
+    "sobra": 0
+   },
+   "espacamentoTexto": {
+    "sobra": 0,
+    "cortados": 14
+   }
+  },
+  "Minhas aulas": {
+   "estrutura": {
+    "lang": "pt-BR",
+    "h1": 1,
+    "pulosDeNivel": 0,
+    "main": false,
+    "nav": true,
+    "pularConteudo": true,
+    "imgsSemAlt": 0,
+    "semNomeAcessivel": []
+   },
+   "alvos": [
+    {
+     "w": 104,
+     "h": 38,
+     "t": "Próximas 0"
+    },
+    {
+     "w": 144,
+     "h": 38,
+     "t": "Lista de espera 0"
+    },
+    {
+     "w": 90,
+     "h": 38,
+     "t": "Histórico"
+    }
+   ],
+   "alvosMenos24": [],
+   "teclado": {
+    "elementosAlcancados": 11,
+    "semIndicadorDeFoco": []
+   },
+   "reflow320": {
+    "sobra": 0
+   },
+   "espacamentoTexto": {
+    "sobra": 0,
+    "cortados": 1
+   }
+  },
+  "Avisos": {
+   "estrutura": {
+    "lang": "pt-BR",
+    "h1": 1,
+    "pulosDeNivel": 0,
+    "main": false,
+    "nav": true,
+    "pularConteudo": true,
+    "imgsSemAlt": 0,
+    "semNomeAcessivel": []
+   },
+   "alvos": [
+    {
+     "w": 69,
+     "h": 38,
+     "t": "Todas"
+    },
+    {
+     "w": 136,
+     "h": 38,
+     "t": "Vagas liberadas"
+    },
+    {
+     "w": 74,
+     "h": 38,
+     "t": "Avisos"
+    }
+   ],
+   "alvosMenos24": [],
+   "teclado": {
+    "elementosAlcancados": 13,
+    "semIndicadorDeFoco": []
+   },
+   "reflow320": {
+    "sobra": 0
+   },
+   "espacamentoTexto": {
+    "sobra": 0,
+    "cortados": 3
+   }
+  },
+  "Perfil": {
+   "estrutura": {
+    "lang": "pt-BR",
+    "h1": 1,
+    "pulosDeNivel": 0,
+    "main": false,
+    "nav": true,
+    "pularConteudo": true,
+    "imgsSemAlt": 0,
+    "semNomeAcessivel": [
+     "<button type=\"submit\" class=\"botao botao--primario \"><span>Salvar nova senha</sp"
+    ]
+   },
+   "alvos": [],
+   "alvosMenos24": [],
+   "teclado": {
+    "elementosAlcancados": 13,
+    "semIndicadorDeFoco": []
+   },
+   "reflow320": {
+    "sobra": 0
+   },
+   "espacamentoTexto": {
+    "sobra": 0,
+    "cortados": 0
+   }
+  }
+ },
+ "recolhidos": [
+  {
+   "nome": "Aulas já encerradas hoje",
+   "existe": true,
+   "rotulo": "Aulas já encerradas hoje (1)",
+   "altura": 48,
+   "abertoAntes": false,
+   "distanciaDoTopo": 872,
+   "emTelaCom3Rolagens": true,
+   "abreComEnter": true,
+   "conteudoVisivel": true,
+   "fechaComEspaco": true
+  },
+  {
+   "nome": "Calendário de presença do mês",
+   "existe": true,
+   "rotulo": "Calendário de presença do mês",
+   "altura": 48,
+   "abertoAntes": false,
+   "distanciaDoTopo": 908,
+   "emTelaCom3Rolagens": true,
+   "abreComEnter": true,
+   "conteudoVisivel": true,
+   "fechaComEspaco": true
+  },
+  {
+   "nome": "Troca de senha (Segurança)",
+   "existe": true,
+   "rotulo": "Segurança: trocar senha",
+   "altura": 48,
+   "abertoAntes": false,
+   "distanciaDoTopo": 1229,
+   "emTelaCom3Rolagens": true,
+   "abreComEnter": true,
+   "conteudoVisivel": true,
+   "fechaComEspaco": true
+  }
+ ],
+ "movimentoReduzido": true
+}

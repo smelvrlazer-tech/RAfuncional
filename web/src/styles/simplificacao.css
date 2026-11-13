@@ -92,3 +92,12 @@
 .seu-mes .metrica__apoio { min-height: 1.4em; }
 .seu-mes__grade .metrica__numero { min-height: 1.1em; }
 .seu-mes { min-height: 200px; }
+
+/* Carregamento que demorou (ex.: sem internet): mensagem + tentar de novo, nunca fica preso. */
+.carregando--demora { display: grid; gap: var(--espaco-2); justify-items: center; text-align: center; padding: var(--espaco-6) var(--espaco-4); font-weight: 650; }
+.carregando__apoio { font-size: var(--t-pequeno); font-weight: 400; color: var(--cor-texto-suave); }
+
+/* Alvos de toque: links e abas com pelo menos 44px (WCAG 2.5.8 pede 24px; o app adota 44px). */
+.inicio__link { display: inline-flex; align-items: center; min-height: 44px; }
+.segmentado__opcao { min-height: 44px; }
+.cartao-sessao .botao { min-height: 44px; }

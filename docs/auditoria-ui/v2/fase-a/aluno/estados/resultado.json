@@ -35,19 +35,14 @@
   "d": ""
  },
  {
-  "n": "Detalhe da aula abre",
-  "ok": true,
-  "d": "http://127.0.0.1:4173/sessao/e728f68b-37cd-44ee-8db9-0fb460c0fe19"
- },
- {
   "n": "Estado de erro/offline informa o problema",
-  "ok": false,
+  "ok": true,
   "d": "Pular para o conteúdo | Você está sem internet. A agenda e o check-in voltam a funcionar qua"
  },
  {
   "n": "Estado vazio mostra chamada para reservar",
   "ok": true,
-  "d": "Pular para o conteúdo | RA FUNCIONAL | Olá, Ana |  | Quarta-feira, 11 de novembro |  | AS | Meu perfil |  | "
+  "d": "Pular para o conteúdo | RA FUNCIONAL | Olá, Ana |  | Sexta-feira, 13 de novembro |  | AS | Meu perfil |  | V"
  },
  {
   "n": "Estado carregando tem espaço reservado",

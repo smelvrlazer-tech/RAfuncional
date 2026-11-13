@@ -3,9 +3,9 @@
   "papel": "aluno",
   "telas": {
     "375-inicio": {
-      "altura": 1042,
+      "altura": 1107,
       "blocos": 6,
-      "interativos": 8,
+      "interativos": 7,
       "tamanhosFonte": [
         13,
         14,
@@ -31,7 +31,7 @@
       "axe": []
     },
     "375-aulas": {
-      "altura": 1231,
+      "altura": 1243,
       "blocos": 3,
       "interativos": 4,
       "tamanhosFonte": [
@@ -60,7 +60,7 @@
     },
     "375-perfil": {
       "altura": 1511,
-      "blocos": 6,
+      "blocos": 4,
       "interativos": 13,
       "tamanhosFonte": [
         13,
@@ -75,7 +75,7 @@
     "375-detalhe": {
       "altura": 812,
       "blocos": 3,
-      "interativos": 3,
+      "interativos": 2,
       "tamanhosFonte": [
         13,
         14,
@@ -87,9 +87,9 @@
       "axe": []
     },
     "768-inicio": {
-      "altura": 1024,
+      "altura": 1089,
       "blocos": 6,
-      "interativos": 8,
+      "interativos": 7,
       "tamanhosFonte": [
         13,
         14,
@@ -115,7 +115,7 @@
       "axe": []
     },
     "768-aulas": {
-      "altura": 1169,
+      "altura": 1175,
       "blocos": 3,
       "interativos": 4,
       "tamanhosFonte": [
@@ -144,7 +144,7 @@
     },
     "768-perfil": {
       "altura": 1471,
-      "blocos": 6,
+      "blocos": 4,
       "interativos": 13,
       "tamanhosFonte": [
         13,
@@ -159,7 +159,7 @@
     "768-detalhe": {
       "altura": 1048,
       "blocos": 3,
-      "interativos": 3,
+      "interativos": 2,
       "tamanhosFonte": [
         13,
         14,
@@ -173,7 +173,7 @@
     "1440-inicio": {
       "altura": 900,
       "blocos": 6,
-      "interativos": 8,
+      "interativos": 7,
       "tamanhosFonte": [
         13,
         14,
@@ -188,7 +188,7 @@
     "1440-agenda": {
       "altura": 900,
       "blocos": 5,
-      "interativos": 20,
+      "interativos": 19,
       "tamanhosFonte": [
         13,
         14,
@@ -230,7 +230,7 @@
     },
     "1440-perfil": {
       "altura": 1234,
-      "blocos": 6,
+      "blocos": 4,
       "interativos": 13,
       "tamanhosFonte": [
         13,
@@ -245,7 +245,7 @@
     "1440-detalhe": {
       "altura": 900,
       "blocos": 3,
-      "interativos": 3,
+      "interativos": 2,
       "tamanhosFonte": [
         13,
         14,
@@ -259,28 +259,28 @@
   },
   "perf": {
     "inicio": {
-      "fcpMs": 468,
-      "lcpMs": 2232,
+      "fcpMs": 436,
+      "lcpMs": 1844,
       "cls": 0.117,
-      "kbTransferidos": 155,
-      "requisicoes": 26,
-      "conteudoUtilMs": 1081
+      "kbTransferidos": 158,
+      "requisicoes": 27,
+      "conteudoUtilMs": 830
     },
     "agenda": {
-      "fcpMs": 520,
-      "lcpMs": 1872,
-      "cls": 0.002,
+      "fcpMs": 548,
+      "lcpMs": 1856,
+      "cls": 0.082,
       "kbTransferidos": 82,
       "requisicoes": 17,
-      "conteudoUtilMs": 1201
+      "conteudoUtilMs": 1255
     },
     "aulas": {
-      "fcpMs": 720,
-      "lcpMs": 2220,
-      "cls": 0.02,
-      "kbTransferidos": 8,
+      "fcpMs": 380,
+      "lcpMs": 1912,
+      "cls": 0.006,
+      "kbTransferidos": 10,
       "requisicoes": 21,
-      "conteudoUtilMs": 1328
+      "conteudoUtilMs": 1165
     }
   }
 }

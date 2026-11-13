@@ -32,7 +32,7 @@ function ErroPerfil() {
 export function ExigeAluno() {
   const { carregando, sessao, perfil, erroPerfil } = useAuth()
   const local = useLocation()
-  if (carregando) return <Carregando />
+  if (carregando) return <Carregando limiteMs={8000} />
   if (!sessao) return <Navigate to="/entrar" replace state={{ de: local.pathname + local.search }} />
   if (erroPerfil) return <ErroPerfil />
   if (!perfil) return <Convite semPerfil />
@@ -48,7 +48,7 @@ export function ExigeAluno() {
 /** Área do treinador: só `perfis.papel = 'treinador'`; aluno volta para a agenda. */
 export function ExigeTreinador({ children }: { children: ReactNode }) {
   const { carregando, sessao, perfil, erroPerfil } = useAuth()
-  if (carregando) return <Carregando />
+  if (carregando) return <Carregando limiteMs={8000} />
   if (!sessao) return <Navigate to="/entrar" replace />
   if (erroPerfil) return <ErroPerfil />
   if (!perfil) return <Convite semPerfil />
@@ -60,7 +60,7 @@ export function ExigeTreinador({ children }: { children: ReactNode }) {
 export function SomenteDeslogado({ children }: { children: ReactNode }) {
   const { carregando, sessao, perfil } = useAuth()
   const local = useLocation()
-  if (carregando) return <Carregando />
+  if (carregando) return <Carregando limiteMs={8000} />
   if (sessao) {
     const de = (local.state as { de?: string } | null)?.de
     const destino = perfil?.papel === 'treinador' ? '/treinador' : de && de !== '/entrar' ? de : '/'

@@ -1,5 +1,5 @@
 import type { ButtonHTMLAttributes, InputHTMLAttributes, ReactNode } from 'react'
-import { useId, useState } from 'react'
+import { useEffect, useId, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Icone, type NomeIcone } from './Icone'
 import { iniciais } from '../lib/texto'
@@ -90,7 +90,23 @@ export function BarraTopo({ titulo, voltarPara = '/' }: { titulo: string; voltar
   )
 }
 
-export function Carregando({ texto = 'Carregando…' }: { texto?: string }) {
+export function Carregando({ texto = 'Carregando…', limiteMs }: { texto?: string; limiteMs?: number }) {
+  const [demorou, setDemorou] = useState(false)
+  useEffect(() => {
+    if (!limiteMs) return
+    const t = window.setTimeout(() => setDemorou(true), limiteMs)
+    return () => window.clearTimeout(t)
+  }, [limiteMs])
+  if (demorou) {
+    const offline = typeof navigator !== 'undefined' && navigator.onLine === false
+    return (
+      <div className="carregando carregando--demora" role="status">
+        <span>{offline ? 'Sem conexão com a internet.' : 'Está demorando mais que o normal.'}</span>
+        <span className="carregando__apoio">Verifique sua conexão. Suas reservas continuam salvas.</span>
+        <Botao variante="contorno" onClick={() => window.location.reload()}>Tentar de novo</Botao>
+      </div>
+    )
+  }
   return (
     <div className="carregando" role="status">
       <span className="carregando__marca" aria-hidden="true" />
