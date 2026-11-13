@@ -27,3 +27,17 @@ export async function buscarMeuPlano(): Promise<MeuPlano> {
   const d = (data ?? {}) as Partial<MeuPlano>
   return { aulas_semana: d.aulas_semana ?? null, usadas_semana: d.usadas_semana ?? 0 }
 }
+
+export interface SemanaDoAluno {
+  semana_inicio: string
+  reservas: number
+  compareceu: number
+  faltas: number
+}
+
+/** Últimas semanas do aluno (da mais antiga para a atual). Exige a migration 0020; sem ela, lança erro. */
+export async function buscarMinhasSemanas(semanas = 8): Promise<SemanaDoAluno[]> {
+  const { data, error } = await supabase.rpc('meu_historico_semanal', { p_semanas: semanas })
+  if (error) throw error
+  return (data ?? []) as SemanaDoAluno[]
+}

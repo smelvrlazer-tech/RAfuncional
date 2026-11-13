@@ -123,3 +123,26 @@
 .navegar-dia__atalho { min-height: 44px; }
 .aula__link { display: inline-flex; align-items: center; min-height: 44px; }
 .tabela a[href^='tel:'] { display: inline-flex; align-items: center; min-height: 44px; }
+
+/* ---- Fase B: barras semanais e lista de atenção ---- */
+.barras-sem { margin: 0; display: grid; gap: var(--espaco-2); }
+.barras-sem__lista { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 6px; align-items: end; }
+.barras-sem__item { display: grid; justify-items: center; gap: 4px; min-width: 0; }
+.barras-sem__valor { font-family: var(--fonte-numeros); font-size: var(--t-destaque); line-height: 1; font-variant-numeric: tabular-nums; }
+.barras-sem__coluna { position: relative; width: 100%; max-width: 40px; height: 96px; border-radius: var(--raio-p); background: var(--cor-superficie-2); box-shadow: inset 0 0 0 1px var(--cor-linha); display: flex; align-items: flex-end; }
+.barras-sem__preenchido { display: block; width: 100%; background: var(--cor-acento-texto); border-radius: var(--raio-p) var(--raio-p) 0 0; min-height: 0; }
+.barras-sem__item--atual .barras-sem__preenchido { background: var(--cor-acento); box-shadow: inset 0 0 0 1px var(--cor-acento-texto); }
+.barras-sem__marco { position: absolute; left: -3px; right: -3px; height: 0; border-top: 2px dashed var(--cor-tinta); }
+.barras-sem__rotulo { font-size: var(--t-legenda); color: var(--cor-texto-suave); white-space: nowrap; }
+.barras-sem__item--atual .barras-sem__rotulo { color: var(--cor-tinta); font-weight: 650; }
+.barras-sem__legenda { display: flex; align-items: center; gap: 8px; font-size: var(--t-legenda); color: var(--cor-texto-suave); }
+.barras-sem__traco { display: inline-block; width: 18px; border-top: 2px dashed var(--cor-tinta); }
+.evolucao { display: grid; gap: var(--espaco-2); margin-top: var(--espaco-4); padding-top: var(--espaco-3); border-top: 1px solid var(--cor-linha); }
+.evolucao__titulo { font-family: var(--fonte-texto); font-size: var(--t-pequeno); font-weight: 650; letter-spacing: 0; }
+.frequencia-estudio { display: grid; gap: var(--espaco-4); grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 900px) { .frequencia-estudio:has(> :nth-child(2)) { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); } }
+.atencao { list-style: none; margin: 0 0 var(--espaco-2); padding: 0; display: grid; }
+.atencao__item { display: grid; gap: 2px; padding: var(--espaco-2) 0; border-bottom: 1px solid var(--cor-linha); }
+.atencao__item:last-child { border-bottom: 0; }
+.atencao__nome { font-weight: 650; }
+.atencao__motivo { font-size: var(--t-pequeno); color: var(--cor-perigo-texto); }

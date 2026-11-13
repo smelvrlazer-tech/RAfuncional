@@ -2,6 +2,7 @@ import { useMemo, useState, type FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../../auth/AuthContext'
 import { Aviso, Avatar, Botao } from '../../../components/Basicos'
+import { FrequenciaEstudio } from './FrequenciaEstudio'
 import { Capa } from '../../../components/Capa'
 import { Chip } from '../../../components/Chip'
 import { chaveDiaSP, formatarHora, rotuloDiaLongo } from '../../../lib/datetime'
@@ -184,6 +185,8 @@ export function InicioTreinador() {
             </section>
           </div>
         </div>
+
+        <FrequenciaEstudio />
 
         <section className="cartao" aria-labelledby="titulo-semana">
           <h2 className="cartao__titulo" id="titulo-semana">Ocupação da semana</h2>

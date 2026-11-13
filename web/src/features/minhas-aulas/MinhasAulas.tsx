@@ -12,6 +12,7 @@ import { Historico } from './Historico'
 import { useMeuPainel } from '../../lib/useInicio'
 import { chaveDiaSP } from '../../lib/datetime'
 import { Desempenho } from './Desempenho'
+import { EvolucaoSemanal } from './EvolucaoSemanal'
 import { PlanoSemana } from './PlanoSemana'
 
 /** Aba "Minhas aulas": o que a pessoa reservou (confirmado ou fila) e a frequência do mês. */
@@ -91,6 +92,7 @@ export function MinhasAulas() {
 
       {painel ? (
         <Desempenho painel={painel} hoje={chaveDiaSP(agora)}>
+          <EvolucaoSemanal versao={linhas?.length ?? 0} />
           <PlanoSemana versao={linhas?.length ?? 0} />
         </Desempenho>
       ) : (

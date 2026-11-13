@@ -36,7 +36,10 @@ PWA para o treinador Rafael Alvarenga: alunos reservam vaga ("check-in") e cance
 - Repositório privado no GitHub (`smelvrlazer-tech/RAfuncional`). Suíte: front 33 arquivos / 299 testes; backend em `tests/`.
 - DEV deixado só com Rafael, Ana e Bruno (`scripts/limpar-dev-manter-tres.mjs`).
 
+- **Simplificação de UI (nov/2026):** Fase A1 (aluno) e A2 (professor) **aprovadas pelo Pedro em 13/11/2026** (relatórios e capturas em `docs/auditoria-ui/v2/fase-a/`). Fase B (barras de 8 semanas do aluno e do estúdio, lista "Precisa de atenção") implementada no código, aguardando a migration 0020 (abaixo) e aprovação visual. Fase C (abas e telas combinadas) e D (acabamento) ainda não iniciadas; C muda rótulos e precisa de aprovação.
+
 ## Falta fazer
+0. **Aplicar a migration `supabase/migrations/0020_series_semanais.sql`** no SQL Editor do Supabase (cria `meu_historico_semanal`, `treinador_estudio_semanal`, `treinador_alunos_atencao`; só leitura). Enquanto não for aplicada, as telas novas da Fase B ficam ocultas, sem erro.
 1. **Desligar "Confirm email"** no Supabase (Authentication → Sign In / Providers) se ainda estiver ligado, e testar um convite de ponta a ponta no site no ar.
 2. **Testar no celular real** (Android e iPhone): instalar o app, foto, troca de senha, e **push** (ativar avisos no Perfil e mandar um aviso do professor).
 3. **Apagar as contas de demonstração** (Ana e Bruno) e as turmas de teste antes do uso real; o Rafael cadastra as turmas dele.

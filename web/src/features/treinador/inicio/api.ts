@@ -46,3 +46,32 @@ export async function buscarTreinoDoDia(chave: string): Promise<TreinoDoDia | nu
   const t = data as { titulo: string; descricao: string | null; publicado_em: string | null } | null
   return t ? { titulo: t.titulo, descricao: t.descricao, publicado: t.publicado_em !== null } : null
 }
+
+export interface SemanaEstudio {
+  semana_inicio: string
+  aulas: number
+  vagas: number
+  confirmados: number
+  compareceu: number
+}
+
+export interface AlunoEmAtencao {
+  aluno_id: string
+  nome: string
+  faltas_30d: number
+  dias_sem_aula: number | null
+  motivo: 'faltas' | 'afastado' | 'faltas_e_afastado'
+}
+
+/** Ocupação das últimas semanas (exige a migration 0020; sem ela, lança erro). */
+export async function buscarEstudioSemanal(semanas = 8): Promise<SemanaEstudio[]> {
+  const { data, error } = await supabase.rpc('treinador_estudio_semanal', { p_semanas: semanas })
+  if (error) throw error
+  return (data ?? []) as SemanaEstudio[]
+}
+
+export async function buscarAlunosAtencao(): Promise<AlunoEmAtencao[]> {
+  const { data, error } = await supabase.rpc('treinador_alunos_atencao')
+  if (error) throw error
+  return (data ?? []) as AlunoEmAtencao[]
+}
